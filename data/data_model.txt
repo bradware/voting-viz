@@ -1,0 +1,30 @@
+state_primaries data model
+{
+	name: String,
+	population: Number,
+	dem_delegates: Number,
+	rep_delegates: Number,
+	dem_candidates: [ {
+		name: String,
+		votes: Number,
+		percentage_total_votes: Number,
+		total_delegates: Number,
+		super_delegates: Number,
+		twitter_username: String,
+	} ],
+	rep_candidates: [ {
+		name: String,
+		votes: Number,
+		percentage_total_votes: Number,
+		total_delegates: Number,
+		super_delegates: Number,
+		twitter_username: String,
+	} ]
+}
+
+resources
+http://www.politico.com/2016-election/results/map/president
+http://www.infoplease.com/us/states/population-by-rank.html
+
+
+
