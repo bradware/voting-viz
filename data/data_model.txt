@@ -22,9 +22,9 @@ state_primaries data model
 	} ]
 }
 
-resources
+sources
 http://www.politico.com/2016-election/results/map/president
 http://www.infoplease.com/us/states/population-by-rank.html
-
+https://twitter.com
 
 
