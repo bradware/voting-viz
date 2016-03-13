@@ -3,7 +3,7 @@ html {
   min-height: 100%;
 }
 body {
-  border-top: 6px solid #FF69B4;
+  border-top: 6px solid #FF69B4; /* change this */
   /* Margin bottom by footer height */
   margin-bottom: 80px;
   background-color: #FFFFFF;
@@ -13,7 +13,7 @@ body {
   padding-bottom: 10px;
 }
 a, a:hover {
- color: #FF69B4;
+ color: #FF69B4; /* change this */
 }
 
 /*
