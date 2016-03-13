@@ -6,6 +6,7 @@ body {
   border-top: 6px solid #FF69B4;
   /* Margin bottom by footer height */
   margin-bottom: 80px;
+  background-color: #FFFFFF;
 }
 .content {
   padding-top: 10px;
@@ -23,12 +24,12 @@ a, a:hover {
   pointer-events: all;
 }
 
-.feature {
+.state {
   fill: #CCCCCC;
   cursor: pointer;
 }
 
-.feature.active {
+.state.active {
   fill: red;
 }
 
@@ -38,8 +39,6 @@ a, a:hover {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-
-
 
 /*
  Footer styling
