@@ -23,16 +23,16 @@ a, a:hover {
   fill: none;
   pointer-events: all;
 }
-
 .state {
   fill: #CCCCCC;
   cursor: pointer;
 }
-
 .state.active {
-  fill: red;
+  fill: red !important;
 }
-
+.state:hover {
+  fill: blue;
+}
 .mesh {
   fill: none;
   stroke: #FFFFFF;
