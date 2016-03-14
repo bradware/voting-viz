@@ -15,6 +15,9 @@ body {
 a, a:hover {
  color: #FF69B4; /* change this */
 }
+.tables {
+  padding-top: 25px;
+}
 
 /*
   US map block styling: http://bl.ocks.org/mbostock/4699541

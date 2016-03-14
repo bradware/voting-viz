@@ -1,3 +1,3 @@
 # #VotingViz
 
-Check it out at [votingviz.com](//votingviz.com)
+Check it out at [votingviz.com](http://votingviz.com)

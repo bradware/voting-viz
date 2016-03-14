@@ -1,18 +1,21 @@
 $(document).ready(function() {
-  var width = 960,
-      height = 500,
+  // load templates
+  $('.tables').load('templates/tables.html');
+
+  var width = 900,
+      height = 450,
       active = d3.select(null);
 
   var projection = d3.geo.albersUsa()
-      .scale(1000)
-      .translate([width / 2, height / 2]);
+                    .scale(1000)
+                    .translate([width / 2, height / 2]);
 
   var path = d3.geo.path()
-      .projection(projection);
+              .projection(projection);
 
-  var svg = d3.select('main').append('svg')
-      .attr('width', width)
-      .attr('height', height);
+  var svg = d3.select('.chart').append('svg')
+              .attr('width', width)
+              .attr('height', height);
 
   svg.append('rect')
       .attr('class', 'background')
@@ -21,17 +24,17 @@ $(document).ready(function() {
       .on('click', reset);
 
   var g = svg.append('g')
-      .style('stroke-width', '1.5px');
+            .style('stroke-width', '1.5px');
 
   d3.json('/data/us_states.json', function(error, us) {
     if (error) throw error;
 
     g.selectAll('path')
         .data(topojson.feature(us, us.objects.states).features)
-      .enter().append('path')
-        .attr('d', path)
-        .attr('class', 'state')
-        .on('click', clicked);
+        .enter().append('path')
+          .attr('d', path)
+          .attr('class', 'state')
+          .on('click', clicked);
 
     g.append('path')
         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
@@ -40,7 +43,13 @@ $(document).ready(function() {
   });
 
   function clicked(d) {
-    if (active.node() === this) return reset();
+    console.log('clicked called');
+    console.log(this);
+
+    if (active.node() === this) {
+      return reset();
+    }
+
     active.classed('active', false);
     active = d3.select(this).classed('active', true);
 
@@ -56,9 +65,12 @@ $(document).ready(function() {
         .duration(750)
         .style('stroke-width', 1.5 / scale + 'px')
         .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
+    
   }
 
   function reset() {
+    console.log('reset called');
+
     active.classed('active', false);
     active = d3.select(null);
 
@@ -67,4 +79,5 @@ $(document).ready(function() {
         .style('stroke-width', '1.5px')
         .attr('transform', '');
   }
+
 });
