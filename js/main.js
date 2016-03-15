@@ -78,7 +78,7 @@ $(document).ready(function() {
         .style('stroke-width', 1.5 / scale + 'px')
         .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
 
-    connectStateData(d);
+    findStateData(d);
   }
 
   function reset() {
@@ -93,7 +93,7 @@ $(document).ready(function() {
         .attr('transform', '');
   }
 
-  function connectStateData(d) {
+  function findStateData(d) {
     var stateObj = stateIdMapData.find(function(state) {
       // state.id is a String so use '==' instead of '==='
       return d.id == state.id; 
@@ -101,8 +101,7 @@ $(document).ready(function() {
 
     if (stateObj === undefined) {
       console.log('ERROR MATCHING STATE ID TO OBJECT');
-    } 
-    else {
+    } else {
       var statePrimaryObj = statePrimariesData.find(function(state) {
         return state.code === stateObj.code;
       });
@@ -111,12 +110,20 @@ $(document).ready(function() {
         console.log('ERROR MATCHING STATE CODE TO OBJECT');
       }
 
-      populateTable(statePrimaryObj);
+      populateTables(statePrimaryObj);
     }
   }
 
-  function populateTable(d) {
+  function populateTables(d) {
+    // get the tables
+    var tables = $('.table').children('tbody');
+
+    tables.each(function() {
+      console.log(this);
+    })
     
+
+
   }
 
 });
