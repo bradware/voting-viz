@@ -1,6 +1,7 @@
 [
 	{
 		"name": "Maine",
+		"code": "ME",
 		"population": 1329328,
 		"dem_delegates": 30,
 		"rep_delegates": 23,
@@ -59,6 +60,7 @@
 	},
 	{
 		"name": "New Hampshire",
+		"code": "NH",
 		"population": 1330608,
 		"dem_delegates": 32,
 		"rep_delegates": 23,
@@ -117,6 +119,7 @@
 	},
 	{
 		"name": "Vermont",
+		"code": "VT",
 		"population": 626042,
 		"dem_delegates": 26,
 		"rep_delegates": 16,
@@ -175,6 +178,7 @@
 	},
 	{
 		"name": "Massachusetts",
+		"code": "MA",
 		"population": 6794422,
 		"dem_delegates": 116,
 		"rep_delegates": 42,
@@ -233,6 +237,7 @@
 	},
 	{
 		"name": "Michigan",
+		"code": "MI",
 		"population": 9922576,
 		"dem_delegates": 147,
 		"rep_delegates": 59,
@@ -291,6 +296,7 @@
 	},
 	{
 		"name": "Minnesota",
+		"code": "MN",
 		"population": 5489594,
 		"dem_delegates": 93,
 		"rep_delegates": 38,
@@ -349,6 +355,7 @@
 	},
 	{
 		"name": "Iowa",
+		"code": "IA",
 		"population": 3123899,
 		"dem_delegates": 52,
 		"rep_delegates": 30,
@@ -407,6 +414,7 @@
 	},
 	{
 		"name": "Virginia",
+		"code": "VA",
 		"population": 8382993,
 		"dem_delegates": 110,
 		"rep_delegates": 49,
@@ -465,6 +473,7 @@
 	},
 	{
 		"name": "Kentucky",
+		"code": "KY",
 		"population": 4425092,
 		"dem_delegates": 0,
 		"rep_delegates": 46,
@@ -523,6 +532,7 @@
 	},
 	{
 		"name": "Tennessee",
+		"code": "TN",
 		"population": 6600299,
 		"dem_delegates": 76,
 		"rep_delegates": 58,
@@ -581,6 +591,7 @@
 	},
 	{
 		"name": "South Carolina",
+		"code": "SC",
 		"population": 4896146,
 		"dem_delegates": 59,
 		"rep_delegates": 50,
@@ -639,6 +650,7 @@
 	},
 	{
 		"name": "Georgia",
+		"code": "GA",
 		"population": 10214860,
 		"dem_delegates": 116,
 		"rep_delegates": 76,
@@ -697,6 +709,7 @@
 	},
 	{
 		"name": "Alabama",
+		"code": "AL",
 		"population": 4858979,
 		"dem_delegates": 60,
 		"rep_delegates": 50,
@@ -755,6 +768,7 @@
 	},
 	{
 		"name": "Mississippi",
+		"code": "MS",
 		"population": 2992333,
 		"dem_delegates": 41,
 		"rep_delegates": 40,
@@ -813,6 +827,7 @@
 	},
 	{
 		"name": "Louisiana",
+		"code": "LA",
 		"population": 4670724,
 		"dem_delegates": 58,
 		"rep_delegates": 46,
@@ -871,6 +886,7 @@
 	},
 	{
 		"name": "Arkansas",
+		"code": "AR",
 		"population": 2978204,
 		"dem_delegates": 37,
 		"rep_delegates": 40,
@@ -929,6 +945,7 @@
 	},
 	{
 		"name": "Texas",
+		"code": "TX",
 		"population": 27469114,
 		"dem_delegates": 252,
 		"rep_delegates": 155,
@@ -987,6 +1004,7 @@
 	},
 	{
 		"name": "Oklahoma",
+		"code": "OK",
 		"population": 3911338,
 		"dem_delegates": 42,
 		"rep_delegates": 43,
@@ -1045,6 +1063,7 @@
 	},
 	{
 		"name": "Kansas",
+		"code": "KS",
 		"population": 2911641,
 		"dem_delegates": 37,
 		"rep_delegates": 40,
@@ -1103,6 +1122,7 @@
 	},
 	{
 		"name": "Nebraska",
+		"code": "NE",
 		"population": 1896190,
 		"dem_delegates": 30,
 		"rep_delegates": 0,
@@ -1161,6 +1181,7 @@
 	},
 	{
 		"name": "Colorado",
+		"code": "CO",
 		"population": 5456574,
 		"dem_delegates": 79,
 		"rep_delegates": 0,
@@ -1219,6 +1240,7 @@
 	},
 	{
 		"name": "Nevada",
+		"code": "NV",
 		"population": 2890845,
 		"dem_delegates": 43,
 		"rep_delegates": 30,
@@ -1277,6 +1299,7 @@
 	},
 	{
 		"name": "Idaho",
+		"code": "ID",
 		"population": 1431603,
 		"dem_delegates": 0,
 		"rep_delegates": 32,
@@ -1335,6 +1358,7 @@
 	},
 	{
 		"name": "Alaska",
+		"code": "AK",
 		"population": 738432,
 		"dem_delegates": 0,
 		"rep_delegates": 28,
@@ -1393,6 +1417,7 @@
 	},
 	{
 		"name": "Hawaii",
+		"code": "HI",
 		"population": 1431603,
 		"dem_delegates": 0,
 		"rep_delegates": 19,

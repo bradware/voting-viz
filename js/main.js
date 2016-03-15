@@ -2,6 +2,9 @@ $(document).ready(function() {
   // load templates
   $('.tables').load('templates/tables.html');
 
+  var stateIdMapData;
+  var statePrimariesData;
+
   var width = 900,
       height = 450,
       active = d3.select(null);
@@ -26,25 +29,34 @@ $(document).ready(function() {
   var g = svg.append('g')
             .style('stroke-width', '1.5px');
 
-  d3.json('/data/us_states.json', function(error, us) {
+  d3.json('/data/us_states.json', function(error, data) {
     if (error) throw error;
 
     g.selectAll('path')
-        .data(topojson.feature(us, us.objects.states).features)
+        .data(topojson.feature(data, data.objects.states).features)
         .enter().append('path')
           .attr('d', path)
           .attr('class', 'state')
           .on('click', clicked);
 
     g.append('path')
-        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+        .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
         .attr('class', 'mesh')
         .attr('d', path);
   });
 
+  d3.json('/data/state_primaries.json', function(error, data) {
+    if (error) throw error;
+    statePrimariesData = data;
+  });
+
+  d3.csv('/data/state_id_mappings.csv', function(error, data) {
+    if (error) throw error;
+    stateIdMapData = data;
+  });
+
   function clicked(d) {
     console.log('clicked called');
-    console.log(this);
 
     if (active.node() === this) {
       return reset();
@@ -65,7 +77,8 @@ $(document).ready(function() {
         .duration(750)
         .style('stroke-width', 1.5 / scale + 'px')
         .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
-    
+
+    connectStateData(d);
   }
 
   function reset() {
@@ -78,6 +91,32 @@ $(document).ready(function() {
         .duration(750)
         .style('stroke-width', '1.5px')
         .attr('transform', '');
+  }
+
+  function connectStateData(d) {
+    var stateObj = stateIdMapData.find(function(state) {
+      // state.id is a String so use '==' instead of '==='
+      return d.id == state.id; 
+    });
+
+    if (stateObj === undefined) {
+      console.log('ERROR MATCHING STATE ID TO OBJECT');
+    } 
+    else {
+      var statePrimaryObj = statePrimariesData.find(function(state) {
+        return state.code === stateObj.code;
+      });
+
+      if (statePrimaryObj === undefined) {
+        console.log('ERROR MATCHING STATE CODE TO OBJECT');
+      }
+
+      populateTable(statePrimaryObj);
+    }
+  }
+
+  function populateTable(d) {
+    
   }
 
 });

@@ -1,6 +1,7 @@
 state_primaries data model
 {
 	name: String,
+	code: String,
 	population: Number,
 	dem_delegates: Number,
 	rep_delegates: Number,
