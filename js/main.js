@@ -114,26 +114,33 @@ $(document).ready(function() {
   }
 
   function populateTables(d) {
-    //var tables = $('.table').children('tbody');
     var tables = $('.table');
-    tables.each(function() {
+    tables.each(function() { // jQuery element for each loop
       updateCandidatesInfo(this, d);
     }); 
   }
 
   function updateCandidatesInfo(table, d) {
     var candidates = d[table.id];
-    candidates.forEach(function(cand) {
+    candidates.forEach(function(cand) { // js array element for each loop
       var fullNameArr = cand.name.split(' ');
       var lastName = fullNameArr[fullNameArr.length - 1];
-      var tableRow = $('#'.concat(lastName));
-      updateRowInfo(tableRow, d);
+      var tableRow = $('#'.concat(lastName.toLowerCase()));
+      updateRowInfo(tableRow, cand);
     });
 
   }
 
-  function updateRowInfo(tableRow, d) {
+  function updateRowInfo(tableRow, cand) {
     // start here
+    var children = tableRow.children();
+    children.each(function() { // jQuery element for each loop
+      if (cand[this.className]) {
+        this.innerHTML = cand[this.className];
+      }
+    });
   }
+
+  // handle errors tmrw
 
 });
