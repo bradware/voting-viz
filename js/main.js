@@ -115,14 +115,14 @@ $(document).ready(function() {
 
   function populateTables(d) {
     var tables = $('.table');
-    tables.each(function() { // jQuery element for each loop
+    tables.each(function() {    // jQuery obj for each loop
       updateCandidatesInfo(this, d);
     }); 
   }
 
   function updateCandidatesInfo(table, d) {
     var candidates = d[table.id];
-    candidates.forEach(function(cand) { // js array element for each loop
+    candidates.forEach(function(cand) {   // js array obj for each loop
       var fullNameArr = cand.name.split(' ');
       var lastName = fullNameArr[fullNameArr.length - 1];
       var tableRow = $('#'.concat(lastName.toLowerCase()));
@@ -134,7 +134,7 @@ $(document).ready(function() {
   function updateRowInfo(tableRow, cand) {
     // start here
     var children = tableRow.children();
-    children.each(function() { // jQuery element for each loop
+    children.each(function() {    // jQuery obj for each loop
       if (cand[this.className]) {
         this.innerHTML = cand[this.className];
       }
