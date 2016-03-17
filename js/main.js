@@ -136,7 +136,7 @@ $(document).ready(function() {
     var children = tableRow.children();
     children.each(function() {    // jQuery obj for each loop
       if (cand[this.className]) {
-        this.innerHTML = cand[this.className];
+        $(this).html(cand[this.className]);
       }
     });
   }
