@@ -109,21 +109,31 @@ $(document).ready(function() {
       if (statePrimaryObj === undefined) {
         console.log('ERROR MATCHING STATE CODE TO OBJECT');
       }
-
       populateTables(statePrimaryObj);
     }
   }
 
   function populateTables(d) {
-    // get the tables
-    var tables = $('.table').children('tbody');
-
+    //var tables = $('.table').children('tbody');
+    var tables = $('.table');
     tables.each(function() {
-      console.log(this);
-    })
-    
+      updateCandidatesInfo(this, d);
+    }); 
+  }
 
+  function updateCandidatesInfo(table, d) {
+    var candidates = d[table.id];
+    candidates.forEach(function(cand) {
+      var fullNameArr = cand.name.split(' ');
+      var lastName = fullNameArr[fullNameArr.length - 1];
+      var tableRow = $('#'.concat(lastName));
+      updateRowInfo(tableRow, d);
+    });
 
+  }
+
+  function updateRowInfo(tableRow, d) {
+    // start here
   }
 
 });
