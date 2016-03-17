@@ -135,7 +135,8 @@ $(document).ready(function() {
     // start here
     var children = tableRow.children();
     children.each(function() {    // jQuery obj for each loop
-      if (cand[this.className]) {
+      if (cand.hasOwnProperty(this.className)) {
+        //this.innerHTML = cand[this.className];
         $(this).html(cand[this.className]);
       }
     });
