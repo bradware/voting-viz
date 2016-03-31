@@ -1,7 +1,6 @@
 $(document).ready(function() {
   // load templates
-  $('#rep-table').load('templates/rep-table.html');
-  $('#dem-table').load('templates/dem-table.html');
+  $('.table-wrapper').load('templates/tables.html');
 
   var stateIdMapData;
   var statePrimariesData;
