@@ -480,18 +480,18 @@
 		"dem_candidates": [
 			{
 				"name": "Hillary Clinton",
-				"votes": 0,
-				"percentage_total_votes": 0.0,
-				"total_delegates": 0,
-				"super_delegates": 0,
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
 				"twitter_username": "HillaryClinton"
 			},
 			{
 				"name": "Bernie Sanders",
-				"votes": 0,
-				"percentage_total_votes": 0.0,
-				"total_delegates": 0,
-				"super_delegates": 0,
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
 				"twitter_username": "BernieSanders"
 			} 
 		],

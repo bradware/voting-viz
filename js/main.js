@@ -1,20 +1,24 @@
 $(document).ready(function() {
-  // load templates
+  // load external html
   $('.table-wrapper').load('templates/tables.html');
 
+  // setup
   var stateIdMapData;
   var statePrimariesData;
+  var dataWrapper = $('.data-wrapper').hide();
+  var dataError = $('.data-error').hide();
+  
 
   var width = 960,
       height = 500,
       active = d3.select(null);
 
   var projection = d3.geo.albersUsa()
-                    .scale(1000)
-                    .translate([width / 2, height / 2]);
+                     .scale(1000)
+                     .translate([width / 2, height / 2]);
 
   var path = d3.geo.path()
-              .projection(projection);
+               .projection(projection);
 
   var svg = d3.select('#us-states-chart').append('svg')
               .attr('width', width)
@@ -37,7 +41,7 @@ $(document).ready(function() {
         .enter().append('path')
           .attr('d', path)
           .attr('class', 'state')
-          .on('click', clicked);
+          .on('click', stateClicked);
 
     g.append('path')
         .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
@@ -55,13 +59,10 @@ $(document).ready(function() {
     stateIdMapData = data;
   });
 
-  function clicked(d) {
-    console.log('clicked called');
-
+  function stateClicked(d) {
     if (active.node() === this) {
       return reset();
     }
-
     active.classed('active', false);
     active = d3.select(this).classed('active', true);
 
@@ -78,12 +79,16 @@ $(document).ready(function() {
         .style('stroke-width', 1.5 / scale + 'px')
         .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
 
-    findStateData(d);
+    if (findStateData(d)) {
+      dataError.hide();
+      dataWrapper.show();
+    } else {
+      dataWrapper.hide();
+      dataError.show();
+    }
   }
 
   function reset() {
-    console.log('reset called');
-
     active.classed('active', false);
     active = d3.select(null);
 
@@ -91,6 +96,9 @@ $(document).ready(function() {
         .duration(750)
         .style('stroke-width', '1.5px')
         .attr('transform', '');
+
+    dataWrapper.hide();
+    dataError.hide();
   }
 
   function findStateData(d) {
@@ -101,15 +109,21 @@ $(document).ready(function() {
 
     if (stateObj === undefined) {
       console.log('ERROR MATCHING STATE ID TO OBJECT');
-    } else {
+      return false;
+    } 
+    else {
       var statePrimaryObj = statePrimariesData.find(function(state) {
         return state.code === stateObj.code;
       });
 
       if (statePrimaryObj === undefined) {
         console.log('ERROR MATCHING STATE CODE TO OBJECT');
+        return false;
+      } 
+      else {
+        populateTables(statePrimaryObj);
+        return true;
       }
-      populateTables(statePrimaryObj);
     }
   }
 
@@ -141,7 +155,5 @@ $(document).ready(function() {
       }
     });
   }
-
-  // handle errors tmrw
 
 });

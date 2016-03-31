@@ -15,7 +15,7 @@ body {
 a, a:hover {
  color: #FF69B4; /* change this */
 }
-.table-wrapper {
+.data-wrapper, .data-error {
   padding: 15px;
 }
 
