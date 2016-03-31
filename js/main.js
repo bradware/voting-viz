@@ -1,12 +1,13 @@
 $(document).ready(function() {
   // load templates
-  $('.tables').load('templates/tables.html');
+  $('#rep-table').load('templates/rep-table.html');
+  $('#dem-table').load('templates/dem-table.html');
 
   var stateIdMapData;
   var statePrimariesData;
 
-  var width = 900,
-      height = 450,
+  var width = 960,
+      height = 500,
       active = d3.select(null);
 
   var projection = d3.geo.albersUsa()
@@ -16,7 +17,7 @@ $(document).ready(function() {
   var path = d3.geo.path()
               .projection(projection);
 
-  var svg = d3.select('.chart').append('svg')
+  var svg = d3.select('#us-states-chart').append('svg')
               .attr('width', width)
               .attr('height', height);
 
@@ -114,7 +115,7 @@ $(document).ready(function() {
   }
 
   function populateTables(d) {
-    var tables = $('.table');
+    var tables = $('table');
     tables.each(function() {    // jQuery obj for each loop
       updateCandidatesInfo(this, d);
     }); 

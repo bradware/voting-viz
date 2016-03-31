@@ -15,8 +15,8 @@ body {
 a, a:hover {
  color: #FF69B4; /* change this */
 }
-.tables {
-  padding-top: 25px;
+.table-wrapper {
+  padding: 15px;
 }
 
 /*
