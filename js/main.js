@@ -37,15 +37,13 @@ $(document).ready(function() {
   var pieChartsDrawn = false;
   var pieChartRepPath, pieChartDemPath;
   var pie = d3.layout.pie()
-                     .value(function(d) { return d.percentage_total_votes; })
+                     .value(function(d) { 
+                        if (isNaN(d.percentage_total_votes)) { return 0; }
+                        else { return +d.percentage_total_votes; } 
+                     })
                      .sort(null);
   var pieChartColorMap = {"Cruz": "red", "Kasich": "yellow", "Rubio": "green", 
                           "Trump": "blue", "Clinton": "purple", "Sanders": "orange"};
-  /*
-  var pie = d3.layout.pie()
-      .value(function(d) { return d.apples; })
-      .sort(null);
-  */
 
   var pieChartArc = d3.svg.arc()
                       .innerRadius(pieChartRadius - 100)
@@ -160,53 +158,42 @@ $(document).ready(function() {
   }
 
   /*
-      Helper functions to populate the state pie chart
+      Helper functions to populate the state pie charts
   */
   function populatePieCharts(d) {
     if(pieChartsDrawn) {
-      updatePieChart(d.rep_candidates, true);
-      updatePieChart(d.dem_candidates, false);
+      updatePieCharts(d);
     } 
     else {
-      drawPieChart(d.rep_candidates, true);
-      drawPieChart(d.dem_candidates, false);
+      drawPieCharts(d);
     }
   }
 
-  function drawPieChart(d, isRepChart) {
+  function drawPieCharts(d) {
     pieChartsDrawn = true;
+    pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
+                          .data(pie)
+                          .enter().append('path')
+                            .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
+                            .attr('d', pieChartArc)
+                            .each(function(d) { this._current = d; }); // store the initial angles
     
-    if (isRepChart) {
-      pieChartRepPath = pieChartRepSvg.datum(d).selectAll('path')
+    pieChartDemPath = pieChartDemSvg.datum(d.dem_candidates).selectAll('path')
                           .data(pie)
                           .enter().append('path')
                             .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
                             .attr('d', pieChartArc)
                             .each(function(d) { this._current = d; }); // store the initial angles
-    } 
-    else {
-      pieChartDemPath = pieChartDemSvg.datum(d).selectAll('path')
-                          .data(pie)
-                          .enter().append('path')
-                            .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
-                            .attr('d', pieChartArc)
-                            .each(function(d) { this._current = d; }); // store the initial angles
-    }
   }
 
-  function updatePieChart(d, isRepChart) {
-    //var value = this.value;
-    //clearTimeout(timeout);
-    if (isRepChart) {
-      pie.value(function(d) { return d.percentage_total_votes; }); // change the value function
-      pieChartRepPath = pieChartRepPath.data(pie); // compute the new angles
-      pieChartRepPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
-    } 
-    else {
-      pie.value(function(d) { return d.percentage_total_votes; }); // change the value function
-      pieChartDemPath = pieChartDemPath.data(pie); // compute the new angles
-      pieChartDemPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
-    }
+  function updatePieCharts(d) {
+    console.log(d);
+    // rep_candidates
+    pieChartRepPath.data(pie(d.rep_candidates));
+    pieChartRepPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
+    // dem_candidates
+    pieChartDemPath.data(pie(d.dem_candidates));
+    pieChartDemPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
   }
 
   // Store the displayed angles in _current.
@@ -246,7 +233,6 @@ $(document).ready(function() {
   }
 
   function updateRowInfo(tableRow, cand) {
-    // start here
     var children = tableRow.children();
     children.each(function() {    // jQuery obj for each loop
       if (cand.hasOwnProperty(this.className)) {
