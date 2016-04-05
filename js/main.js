@@ -128,11 +128,11 @@ $(document).ready(function() {
                 .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
 
     if (findStateData(d)) {
-      dataError.hide();
-      dataWrapper.show();
+      dataError.fadeOut();
+      dataWrapper.fadeIn();
     } else {
-      dataWrapper.hide();
-      dataError.show();
+      dataWrapper.fadeOut();
+      dataError.fadeIn();
     }
   }
 
@@ -145,8 +145,8 @@ $(document).ready(function() {
                 .style('stroke-width', '1.5px')
                 .attr('transform', '');
 
-    dataWrapper.hide();
-    dataError.hide();
+    dataWrapper.fadeOut();
+    dataError.fadeOut();
   }
 
   function findStateData(d) {
