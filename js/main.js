@@ -1,6 +1,6 @@
 $(document).ready(function() {
   // setup and global vars
-  $('#tables-wrapper').load('templates/tables.html');
+  $('.tables-wrapper').load('templates/tables.html');
   var stateIdMapData;
   var statePrimariesData;
   var dataWrapper = $('.data-wrapper').hide();
@@ -31,6 +31,7 @@ $(document).ready(function() {
   var statesChartG = statesChartSvg.append('g')
                         .style('stroke-width', '1.5px');
 
+  // state pie chart properties                     
   var pieChartWidth = 500;
   var pieChartHeight = 500;
   var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
@@ -42,8 +43,8 @@ $(document).ready(function() {
                         else { return +d.percentage_total_votes; } 
                      })
                      .sort(null);
-  var pieChartColorMap = {"Cruz": "red", "Kasich": "yellow", "Rubio": "green", 
-                          "Trump": "blue", "Clinton": "purple", "Sanders": "orange"};
+  var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
+                          'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
 
   var pieChartArc = d3.svg.arc()
                       .innerRadius(pieChartRadius - 100)
@@ -61,32 +62,50 @@ $(document).ready(function() {
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
 
+  // state bar chart properties                       
+  var barChartOuterWidth = 500; 
+  var barChartOuterHeight = 500;
+  var barChartMargin = { top: 20, right: 30, bottom: 30, left: 40 };
+  var barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
+  var barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
+   
+  var repBarChartXScale = d3.scale.ordinal()
+                            .rangeRoundBands([0, barChartWidth], .1);
+  var repBarChartYScale = d3.scale.linear()
+                            .range([barChartHeight, 0]);
+  var demBarChartXScale = d3.scale.ordinal()
+                            .rangeRoundBands([0, barChartWidth], .1);
+  var demBarChartYScale = d3.scale.linear()
+                            .range([barChartHeight, 0]);
+   
+  var repBarChartXAxis = d3.svg.axis()
+                           .scale(repBarChartXScale)
+                           .orient('bottom');
+  var repBarChartYAxis = d3.svg.axis()
+                           .scale(repBarChartYScale)
+                           .orient('left')
+                           .ticks(10);
+  var demBarChartXAxis = d3.svg.axis()
+                           .scale(demBarChartXScale)
+                           .orient('bottom');
+  var demBarChartYAxis = d3.svg.axis()
+                           .scale(demBarChartYScale)
+                           .orient('left')
+                           .ticks(10);
+  
+  var repBarChart = d3.select('#rep-bar-chart')
+                      .append('svg')
+                        .attr('width', barChartOuterWidth)
+                        .attr('height', barChartOuterHeight)
+                      .append('g')
+                        .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
-  d3.json('/data/us_states.json', function(error, data) {
-    if (error) throw error;
-
-    statesChartG.selectAll('path')
-        .data(topojson.feature(data, data.objects.states).features)
-        .enter().append('path')
-          .attr('d', statesChartPath)
-          .attr('class', 'state')
-          .on('click', stateClicked);
-
-    statesChartG.append('path')
-        .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
-        .attr('class', 'mesh')
-        .attr('d', statesChartPath);
-  });
-
-  d3.json('/data/state_primaries.json', function(error, data) {
-    if (error) throw error;
-    statePrimariesData = data;
-  });
-
-  d3.csv('/data/state_id_mappings.csv', function(error, data) {
-    if (error) throw error;
-    stateIdMapData = data;
-  });
+  var demBarChart = d3.select('#dem-bar-chart')
+                      .append('svg')
+                        .attr('width', barChartOuterWidth)
+                        .attr('height', barChartOuterHeight)
+                      .append('g')
+                        .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
   
   function stateClicked(d) {
     if (stateActive.node() === this) {
@@ -151,11 +170,88 @@ $(document).ready(function() {
       } 
       else {
         populateTables(statePrimaryObj);
-        populatePieCharts(statePrimaryObj)
+        populatePieCharts(statePrimaryObj);
+        populateBarCharts(statePrimaryObj);
         return true;
       }
     }
   }
+
+  /*
+      Helper functions to populate the state bar charts
+  */
+  function populateBarCharts(d) {
+    repBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
+    repBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.votes; })]);
+    demBarChartXScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
+    demBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.votes; })]);
+ 
+    repBarChart.append('g')
+               .attr('class', 'x axis')
+               .attr('transform', 'translate(0,' + barChartHeight + ')') 
+               .call(repBarChartXAxis);
+
+    demBarChart.append('g')
+               .attr('class', 'x axis')
+               .attr('transform', 'translate(0,' + barChartHeight + ')') 
+               .call(demBarChartXAxis);
+    
+    repBarChart.select('.y.axis').remove();
+    demBarChart.select('.y.axis').remove();
+
+    repBarChart.append('g')
+               .attr('class', 'y axis')
+               .call(repBarChartYAxis)
+               .append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', 6)
+                .attr('dy', '.71em')
+                .style('text-anchor', 'end')
+                .text('Frequency');
+
+    demBarChart.append('g')
+               .attr('class', 'y axis')
+               .call(demBarChartYAxis)
+               .append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', 6)
+                .attr('dy', '.71em')
+                .style('text-anchor', 'end')
+                .text('Frequency');
+ 
+    var repBars = repBarChart.selectAll('.bar')
+                             .data(d.rep_candidates, function(cand) { return lastName(cand.name); });
+    var demBars = demBarChart.selectAll('.bar')
+                             .data(d.dem_candidates, function(cand) { return lastName(cand.name); });
+
+    // new data
+    repBars.enter().append('rect')
+           .attr('class', 'bar')
+           .attr('x', function(cand) { return repBarChartXScale(lastName(cand.name)); })
+           .attr('y', function(cand) { return repBarChartYScale(cand.votes); })
+           .attr('height', function(cand) { return barChartHeight - repBarChartYScale(cand.votes); })
+           .attr('width', repBarChartXScale.rangeBand());
+    demBars.enter().append('rect')
+           .attr('class', 'bar')
+           .attr('x', function(cand) { return demBarChartXScale(lastName(cand.name)); })
+           .attr('y', function(cand) { return demBarChartYScale(cand.votes); })
+           .attr('height', function(cand) { return barChartHeight - demBarChartYScale(cand.votes); })
+           .attr('width', demBarChartXScale.rangeBand());
+
+    // remove data
+    repBars.exit().remove();
+    demBars.exit().remove();
+    // update data
+    repBars.transition()
+           .duration(750)
+            .attr('y', function(cand) { return repBarChartYScale(cand.votes); })
+            .attr('height', function(cand) { return barChartHeight - repBarChartYScale(cand.votes); });
+    demBars.transition()
+           .duration(750)
+            .attr('y', function(cand) { return demBarChartYScale(cand.votes); })
+            .attr('height', function(cand) { return barChartHeight - demBarChartYScale(cand.votes); });
+  }
+
 
   /*
       Helper functions to populate the state pie charts
@@ -174,20 +270,19 @@ $(document).ready(function() {
     pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
                           .data(pie)
                           .enter().append('path')
-                            .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
+                            .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
                             .attr('d', pieChartArc)
                             .each(function(d) { this._current = d; }); // store the initial angles
     
     pieChartDemPath = pieChartDemSvg.datum(d.dem_candidates).selectAll('path')
                           .data(pie)
                           .enter().append('path')
-                            .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
+                            .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
                             .attr('d', pieChartArc)
                             .each(function(d) { this._current = d; }); // store the initial angles
   }
 
   function updatePieCharts(d) {
-    console.log(d);
     // rep_candidates
     pieChartRepPath.data(pie(d.rep_candidates));
     pieChartRepPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
@@ -241,5 +336,32 @@ $(document).ready(function() {
       }
     });
   }
+
+    // loading the actual data files
+  d3.json('/data/us_states.json', function(error, data) {
+    if (error) throw error;
+
+    statesChartG.selectAll('path')
+        .data(topojson.feature(data, data.objects.states).features)
+        .enter().append('path')
+          .attr('d', statesChartPath)
+          .attr('class', 'state')
+          .on('click', stateClicked);
+
+    statesChartG.append('path')
+        .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
+        .attr('class', 'mesh')
+        .attr('d', statesChartPath);
+  });
+
+  d3.json('/data/state_primaries.json', function(error, data) {
+    if (error) throw error;
+    statePrimariesData = data;
+  });
+
+  d3.csv('/data/state_id_mappings.csv', function(error, data) {
+    if (error) throw error;
+    stateIdMapData = data;
+  });
 
 });

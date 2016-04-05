@@ -43,6 +43,32 @@ a, a:hover {
   stroke-linejoin: round;
 }
 
+/* 
+  Bar chart styling
+*/
+.bar {
+  fill: steelblue;
+}
+.bar:hover {
+    fill: brown;
+}
+ 
+.axis text {
+  font: 10px sans-serif;
+}
+ 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+ 
+.x.axis path {
+    display: none;
+}
+
+
 /*
  Footer styling
 */
