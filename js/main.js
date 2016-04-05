@@ -1,6 +1,5 @@
 $(document).ready(function() {
   // setup and global vars
-  $('.tables-wrapper').load('templates/tables.html');
   var stateIdMapData;
   var statePrimariesData;
   var dataWrapper = $('.data-wrapper').hide();

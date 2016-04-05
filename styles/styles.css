@@ -13,14 +13,14 @@ body {
   padding-bottom: 10px;
 }
 a, a:hover {
- color: #FF69B4; /* change this */
+ color: blue; /* change this */
 }
 .data-wrapper, .data-error {
   padding: 15px;
 }
 
 /*
-  US map block styling: http://bl.ocks.org/mbostock/4699541
+  us states chart styling:
 */
 .background {
   fill: none;
@@ -44,7 +44,7 @@ a, a:hover {
 }
 
 /* 
-  Bar chart styling
+  bar chart styling
 */
 .bar:hover {
     fill: brown;
@@ -70,6 +70,6 @@ a, a:hover {
   width: 100%;
   height: 80px;
 }
-.footer-text {
+.copyright {
   margin: 10px 0;
 }
