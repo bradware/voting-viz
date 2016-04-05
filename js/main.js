@@ -39,8 +39,8 @@ $(document).ready(function() {
   var pieChartRepPath, pieChartDemPath;
   var pie = d3.layout.pie()
                      .value(function(d) { 
-                        if (isNaN(d.percentage_total_votes)) { return 0; }
-                        else { return +d.percentage_total_votes; } 
+                        if (isNaN(d.percentage_total_votes)) return 0;
+                        else return d.percentage_total_votes;
                      })
                      .sort(null);
   var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
@@ -65,7 +65,7 @@ $(document).ready(function() {
   // state bar chart properties                       
   var barChartOuterWidth = 500; 
   var barChartOuterHeight = 500;
-  var barChartMargin = { top: 20, right: 30, bottom: 30, left: 40 };
+  var barChartMargin = { top: 20, right: 30, bottom: 30, left: 60 };
   var barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
   var barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
    
@@ -107,6 +107,7 @@ $(document).ready(function() {
                       .append('g')
                         .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
   
+  // functions based on user actions
   function stateClicked(d) {
     if (stateActive.node() === this) {
       return reset();
@@ -178,83 +179,94 @@ $(document).ready(function() {
   }
 
   /*
-      Helper functions to populate the state bar charts
+      Populates state bar chart with data
   */
   function populateBarCharts(d) {
-    repBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
-    repBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.votes; })]);
-    demBarChartXScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
-    demBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.votes; })]);
- 
-    repBarChart.append('g')
+    if (!validatePartiesData(d.rep_candidates)) {
+      // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
+      $('#rep-bar-chart').css('visibility', 'hidden').css('height', '0');
+    } 
+    else {
+      repBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
+      repBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.votes; })]);
+      repBarChart.append('g')
                .attr('class', 'x axis')
                .attr('transform', 'translate(0,' + barChartHeight + ')') 
                .call(repBarChartXAxis);
-
-    demBarChart.append('g')
-               .attr('class', 'x axis')
-               .attr('transform', 'translate(0,' + barChartHeight + ')') 
-               .call(demBarChartXAxis);
-    
-    repBarChart.select('.y.axis').remove();
-    demBarChart.select('.y.axis').remove();
-
-    repBarChart.append('g')
+      repBarChart.select('.y.axis').remove();
+      repBarChart.append('g')
                .attr('class', 'y axis')
                .call(repBarChartYAxis)
                .append('text')
-                .attr('transform', 'rotate(-90)')
-                .attr('y', 6)
+                .attr('x', -5)
+                .attr('y', -15)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
-                .text('Frequency');
+                .text('Votes');
+      var repBars = repBarChart.selectAll('.bar').data(d.rep_candidates, function(cand) { return lastName(cand.name); });
+      // new data appended
+      repBars.enter().append('rect')
+             .attr('class', 'bar')
+             .attr('x', function(cand) { return repBarChartXScale(lastName(cand.name)); })
+             .attr('y', function(cand) { return repBarChartYScale(cand.votes); })
+             .attr('height', function(cand) { return barChartHeight - repBarChartYScale(cand.votes); })
+             .attr('width', repBarChartXScale.rangeBand())
+             .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+      // remove old data
+      repBars.exit().remove();
+      // update data bindings
+      repBars.transition()
+             .duration(750)
+             .attr('y', function(cand) { return repBarChartYScale(cand.votes); })
+             .attr('height', function(cand) { return barChartHeight - repBarChartYScale(cand.votes); })
+      // show new bar chart
+      $('#rep-bar-chart').css('visibility', 'visible').css('height', 'auto');
+    }
 
-    demBarChart.append('g')
-               .attr('class', 'y axis')
-               .call(demBarChartYAxis)
-               .append('text')
-                .attr('transform', 'rotate(-90)')
-                .attr('y', 6)
-                .attr('dy', '.71em')
-                .style('text-anchor', 'end')
-                .text('Frequency');
- 
-    var repBars = repBarChart.selectAll('.bar')
-                             .data(d.rep_candidates, function(cand) { return lastName(cand.name); });
-    var demBars = demBarChart.selectAll('.bar')
-                             .data(d.dem_candidates, function(cand) { return lastName(cand.name); });
-
-    // new data
-    repBars.enter().append('rect')
-           .attr('class', 'bar')
-           .attr('x', function(cand) { return repBarChartXScale(lastName(cand.name)); })
-           .attr('y', function(cand) { return repBarChartYScale(cand.votes); })
-           .attr('height', function(cand) { return barChartHeight - repBarChartYScale(cand.votes); })
-           .attr('width', repBarChartXScale.rangeBand());
-    demBars.enter().append('rect')
-           .attr('class', 'bar')
-           .attr('x', function(cand) { return demBarChartXScale(lastName(cand.name)); })
-           .attr('y', function(cand) { return demBarChartYScale(cand.votes); })
-           .attr('height', function(cand) { return barChartHeight - demBarChartYScale(cand.votes); })
-           .attr('width', demBarChartXScale.rangeBand());
-
-    // remove data
-    repBars.exit().remove();
-    demBars.exit().remove();
-    // update data
-    repBars.transition()
-           .duration(750)
-            .attr('y', function(cand) { return repBarChartYScale(cand.votes); })
-            .attr('height', function(cand) { return barChartHeight - repBarChartYScale(cand.votes); });
-    demBars.transition()
-           .duration(750)
-            .attr('y', function(cand) { return demBarChartYScale(cand.votes); })
-            .attr('height', function(cand) { return barChartHeight - demBarChartYScale(cand.votes); });
+    if (!validatePartiesData(d.dem_candidates)) {
+      // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
+      $('#dem-bar-chart').css('visibility', 'hidden').css('height', '0');
+    } 
+    else {
+      demBarChartXScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
+      demBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.votes; })]);
+      demBarChart.append('g')
+                 .attr('class', 'x axis')
+                 .attr('transform', 'translate(0,' + barChartHeight + ')') 
+                 .call(demBarChartXAxis);
+      demBarChart.select('.y.axis').remove();
+      demBarChart.append('g')
+                 .attr('class', 'y axis')
+                 .call(demBarChartYAxis)
+                 .append('text')
+                  .attr('x', -5)
+                  .attr('y', -15)
+                  .attr('dy', '.71em')
+                  .style('text-anchor', 'end')
+                  .text('Votes');
+      var demBars = demBarChart.selectAll('.bar').data(d.dem_candidates, function(cand) { return lastName(cand.name); });
+      // new data appended
+      demBars.enter().append('rect')
+             .attr('class', 'bar')
+             .attr('x', function(cand) { return demBarChartXScale(lastName(cand.name)); })
+             .attr('y', function(cand) { return demBarChartYScale(cand.votes); })
+             .attr('height', function(cand) { return barChartHeight - demBarChartYScale(cand.votes); })
+             .attr('width', demBarChartXScale.rangeBand())
+             .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+      // remove old data
+      demBars.exit().remove();
+      // update data bindings
+      demBars.transition()
+             .duration(750)
+             .attr('y', function(cand) { return demBarChartYScale(cand.votes); })
+             .attr('height', function(cand) { return barChartHeight - demBarChartYScale(cand.votes); })
+      // show new bar chart
+      $('#dem-bar-chart').css('visibility', 'visible').css('height', 'auto');
+    }
   }
 
-
   /*
-      Helper functions to populate the state pie charts
+      Populates state pie charts with data
   */
   function populatePieCharts(d) {
     if(pieChartsDrawn) {
@@ -267,28 +279,45 @@ $(document).ready(function() {
 
   function drawPieCharts(d) {
     pieChartsDrawn = true;
+    if (!validatePartiesData(d.rep_candidates)) {
+      $('#rep-pie-chart').css('visibility', 'hidden').css('height', '0');
+    }
+    if (!validatePartiesData(d.dem_candidates)) {
+      $('#dem-pie-chart').css('visibility', 'hidden').css('height', '0');
+    }
+    // necessary to set the variables to a DOM element
+    // pie chart will not show up if data does not exist
     pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
-                          .data(pie)
-                          .enter().append('path')
-                            .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
-                            .attr('d', pieChartArc)
-                            .each(function(d) { this._current = d; }); // store the initial angles
-    
+                        .data(pie)
+                        .enter().append('path')
+                          .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
+                          .attr('d', pieChartArc)
+                          .each(function(d) { this._current = d; }); // store the initial angles
     pieChartDemPath = pieChartDemSvg.datum(d.dem_candidates).selectAll('path')
-                          .data(pie)
-                          .enter().append('path')
-                            .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
-                            .attr('d', pieChartArc)
-                            .each(function(d) { this._current = d; }); // store the initial angles
+                        .data(pie)
+                        .enter().append('path')
+                          .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
+                          .attr('d', pieChartArc)
+                          .each(function(d) { this._current = d; }); // store the initial angles
   }
 
   function updatePieCharts(d) {
-    // rep_candidates
-    pieChartRepPath.data(pie(d.rep_candidates));
-    pieChartRepPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
-    // dem_candidates
-    pieChartDemPath.data(pie(d.dem_candidates));
-    pieChartDemPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
+    if (!validatePartiesData(d.rep_candidates)) {
+      $('#rep-pie-chart').css('visibility', 'hidden').css('height', '0');
+    }
+    else {
+      pieChartRepPath.data(pie(d.rep_candidates));
+      pieChartRepPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
+      $('#rep-pie-chart').css('visibility', 'visible').css('height', 'auto');
+    }
+    if (!validatePartiesData(d.dem_candidates)) {
+      $('#dem-pie-chart').css('visibility', 'hidden').css('height', '0');
+    }
+    else {
+      pieChartDemPath.data(pie(d.dem_candidates));
+      pieChartDemPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
+      $('#dem-pie-chart').css('visibility', 'visible').css('height', 'auto');
+    }
   }
 
   // Store the displayed angles in _current.
@@ -300,6 +329,11 @@ $(document).ready(function() {
     return function(t) { return pieChartArc(i(t)); };
   }
 
+  function validatePartiesData(d) {
+    if (isNaN(d[0].votes)) return false;
+    return true;
+  }
+
   function lastName(name) {
     var splitName = name.split(' ');
     if (splitName.length === 0) { return ''; } 
@@ -307,7 +341,7 @@ $(document).ready(function() {
   }
 
   /*
-      Helper functions to populate the state tables
+      Populates state tables with data
   */
   function populateTables(d) {
     var tables = $('table');
@@ -337,7 +371,7 @@ $(document).ready(function() {
     });
   }
 
-    // loading the actual data files
+  // External data files loaded
   d3.json('/data/us_states.json', function(error, data) {
     if (error) throw error;
 

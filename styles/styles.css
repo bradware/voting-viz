@@ -46,28 +46,20 @@ a, a:hover {
 /* 
   Bar chart styling
 */
-.bar {
-  fill: steelblue;
-}
 .bar:hover {
     fill: brown;
 }
- 
 .axis text {
-  font: 10px sans-serif;
+  font: 11px sans-serif;
 }
- 
-.axis path,
-.axis line {
+.axis path, .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
- 
 .x.axis path {
-    display: none;
+  display: none;
 }
-
 
 /*
  Footer styling
