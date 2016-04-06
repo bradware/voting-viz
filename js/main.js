@@ -36,6 +36,7 @@ $(document).ready(function() {
 
   function resizeCharts() {
     resizeStatesChart();
+    console.log($(window).width());
     //resizePieCharts();
     //resizeBarCharts();
   }
@@ -59,10 +60,16 @@ $(document).ready(function() {
     console.log('how do i resize bar charts');
   }
 
-  function calcChartsWidth(width) {
-    if (width <= 1000) { return 300; }
-    if (width >= 1600) { return 750; }
-    else return 500;
+  function calcChartsWidth(width) { 
+    if (width <= 350) { return 250; } // iPhone5
+    else if (width <= 400) { return 275; } // iPhone6
+    else if (width <= 600) { return 300; } // iPhone6+
+    else if (width <= 900) { return 550; } // one column width
+    else if (width <= 1184) { return 600; } // one column width
+    else if (width <= 1250) { return 500; } // two column width
+    else if (width <= 1400) { return 550; } // two column width
+    else if (width <= 1800) { return 600; } // two column width
+    else return 750; // two column width
   }
 
   // state pie chart properties
@@ -95,7 +102,7 @@ $(document).ready(function() {
   // state bar chart properties
   var barChartOuterWidth = calcChartsWidth($(window).width()); 
   var barChartOuterHeight = barChartOuterWidth;
-  var barChartMargin = { top: 20, right: 30, bottom: 30, left: 60 };
+  var barChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
   var barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
   var barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
    
