@@ -3,7 +3,7 @@ html {
   min-height: 100%;
 }
 body {
-  border-top: 6px solid #FF69B4; /* change this */
+  border-top: 6px solid red; /* change this */
   /* Margin bottom by footer height */
   margin-bottom: 80px;
   background-color: #FFFFFF;
@@ -15,8 +15,8 @@ body {
 a, a:hover {
  color: #FF69B4; /* change this */
 }
-.tables {
-  padding-top: 25px;
+.data-wrapper, .data-error {
+  padding: 15px;
 }
 
 /*
@@ -55,3 +55,28 @@ a, a:hover {
 .footer-text {
   margin: 10px 0;
 }
+
+/*
+Tooltip Styling
+*/
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/*.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 50%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}*/
