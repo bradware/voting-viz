@@ -29,6 +29,10 @@ $(document).ready(function() {
   var g = svg.append('g')
             .style('stroke-width', '1.5px');
 
+  var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 6);
+
   d3.json('/data/us_states.json', function(error, data) {
     if (error) throw error;
 
@@ -37,6 +41,7 @@ $(document).ready(function() {
         .enter().append('path')
           .attr('d', path)
           .attr('class', 'state')
+          .on('mouseover', tool)
           .on('click', clicked);
 
     g.append('path')
@@ -54,6 +59,22 @@ $(document).ready(function() {
     if (error) throw error;
     stateIdMapData = data;
   });
+
+  function tool(d) {
+
+    tooltip.transition().duration(50).style("opacity", .9);
+
+    tooltip.html(d["name"])
+      .style("left", (d3.event.pageX + 5) + "px")
+      .style("top", (d3.event.pageY - 28) + "px");
+        // tooltip.transition()
+        //        .duration(200)
+        //        .style("opacity", .9);
+        //   tooltip.html(d["Cereal Name"] + "<br/>" + "Sugars: " 
+        //   + d.Sugars + " Calories: " + d.Calories)
+        //        .style("left", (d3.event.pageX + 5) + "px")
+        //        .style("top", (d3.event.pageY - 28) + "px");
+  }
 
   function clicked(d) {
     console.log('clicked called');
