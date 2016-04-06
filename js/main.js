@@ -1,11 +1,15 @@
 $(document).ready(function() {
   // setup and global vars
-  d3.select(window).on('resize', resize);
+  d3.select(window).on('resize', resizeCharts);
   var stateIdMapData;
   var statePrimariesData;
   var usStatesData;
   var dataWrapper = $('.data-wrapper').hide();
   var dataError = $('.data-error').hide();
+  var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
+                          'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
+  var stateChartsDrawn = false;
+
 
   // us states chart properties
   var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
@@ -31,11 +35,25 @@ $(document).ready(function() {
 
   var statesChartG = statesChartSvg.append('g').style('stroke-width', '1.5px');
 
-  // state pie chart properties                     
-  var pieChartWidth = 500;
+  function resizeStatesChart() {
+    statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
+    statesChartHeight = statesChartWidth * statesChartRatio;
+    projection.translate([statesChartWidth / 2, statesChartHeight / 2]).scale(statesChartWidth);
+    statesChartSvg.style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
+    statesChartSvg.select('rect').style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
+    statesChartG.selectAll('.state').attr('d', statesChartPath);
+    statesChartG.selectAll('path').remove();
+    drawStatePaths(usStatesData);
+  }
+
+  function resizePieCharts() {
+    console.log('how do i resize pie charts');
+  }
+
+  // state pie chart properties
+  var pieChartWidth =  500;
   var pieChartHeight = 500;
   var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
-  var pieChartsDrawn = false;
   var pieChartRepPath, pieChartDemPath;
   var pie = d3.layout.pie()
                      .value(function(d) { 
@@ -43,18 +61,15 @@ $(document).ready(function() {
                         else return d.percentage_total_votes;
                      })
                      .sort(null);
-  var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
-                          'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
 
-  var pieChartArc = d3.svg.arc()
-                      .innerRadius(pieChartRadius - 100)
-                      .outerRadius(pieChartRadius - 20);
+  var pieChartArc = d3.svg.arc().innerRadius(pieChartRadius - 100).outerRadius(pieChartRadius - 20);
 
   var pieChartRepSvg = d3.select('#rep-pie-chart').append('svg')
                          .attr('width', pieChartWidth)
                          .attr('height', pieChartHeight)
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
+                         
 
   var pieChartDemSvg = d3.select('#dem-pie-chart').append('svg')
                          .attr('width', pieChartWidth)
@@ -269,7 +284,7 @@ $(document).ready(function() {
       Populates state pie charts with data
   */
   function populatePieCharts(d) {
-    if(pieChartsDrawn) {
+    if(stateChartsDrawn) {
       updatePieCharts(d);
     } 
     else {
@@ -278,7 +293,7 @@ $(document).ready(function() {
   }
 
   function drawPieCharts(d) {
-    pieChartsDrawn = true;
+    stateChartsDrawn = true;
     if (!validatePartiesData(d.rep_candidates)) {
       $('#rep-pie-chart').css('visibility', 'hidden').css('height', '0');
     }
@@ -402,21 +417,9 @@ $(document).ready(function() {
     stateIdMapData = data;
   });
 
-  function resize() {
+  function resizeCharts() {
     resizeStatesChart();
-    
-  }
-
-  function resizeStatesChart() {
-    statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
-    statesChartHeight = statesChartWidth * statesChartRatio;
-    projection.translate([statesChartWidth / 2, statesChartHeight / 2]).scale(statesChartWidth);
-    statesChartSvg.style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
-    statesChartSvg.select('rect').style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
-    statesChartG.selectAll('.state').attr('d', statesChartPath);
-    // remove current states that are drawn to old size
-    statesChartG.selectAll('path').remove();
-    drawStatePaths(usStatesData);
+    resizePieCharts();
   }
 
 });
