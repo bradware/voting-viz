@@ -10,10 +10,10 @@
 		<meta name="author" content="Brad Ware, Spencer Powell, McKenzie Elliott, Joel Anderson">
 
 		<!-- CSS -->
-    	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    	<link href="styles/styles.css" rel="stylesheet">
+		<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="styles/styles.css" rel="stylesheet">
 
-    	<!-- JS -->
+		<!-- JS -->
 	    <script src="bower_components/jquery/dist/jquery.min.js"></script>
 	    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	    <script src="bower_components/d3/d3.min.js"></script>
@@ -26,10 +26,18 @@
 	    <header class="row panel-heading"></header>
 	    <!-- End of Header -->
 	    <main class="content">
-	    	<div class="row">
-	    		<div class="chart text-center col-xs-12 col-sm-12 col-md-9 col-lg-8"></div>
-	    		<div class="tables col-xs-12 col-sm-12 col-md-3 col-lg-4"></div>
-	    	</div>
+	    	<div id="us-states-chart" class="text-center"></div>
+	    	<div class="data-wrapper">
+		    	<div id="tables-wrapper" class="row"></div>
+		    	<div class="pie-charts-wrapper">
+		    		<div id="rep-pie-chart" class="col-md-12 col-lg-6"></div>
+		    		<div id="dem-pie-chart" class="col-md-12 col-lg-6"></div>
+		    	</div>
+		    </div>
+		    <div class="data-error text-center">
+		    	<h3>Primary results have not come in for this state!</h3>
+		    	<h4>Please select another one</h4>
+		    </div>
 	    </main>
 	    <!-- Footer Inserted -->
 	    <footer class="row panel-footer"></footer>

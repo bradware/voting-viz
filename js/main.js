@@ -1,53 +1,99 @@
 $(document).ready(function() {
-  // load templates
-  $('.tables').load('templates/tables.html');
-
+  // setup and global vars
+  $('#tables-wrapper').load('templates/tables.html');
   var stateIdMapData;
   var statePrimariesData;
+  var dataWrapper = $('.data-wrapper').hide();
+  var dataError = $('.data-error').hide();
 
-  var width = 900,
-      height = 450,
-      active = d3.select(null);
+  // us states chart properties
+  var statesChartWidth = 960,
+      statesChartHeight = 500,
+      stateActive = d3.select(null);
 
   var projection = d3.geo.albersUsa()
-                    .scale(1000)
-                    .translate([width / 2, height / 2]);
+                     .scale(1000)
+                     .translate([statesChartWidth / 2, statesChartHeight / 2]);
 
-  var path = d3.geo.path()
-              .projection(projection);
+  var statesChartPath = d3.geo.path()
+                          .projection(projection);
 
-  var svg = d3.select('.chart').append('svg')
-              .attr('width', width)
-              .attr('height', height);
+  var statesChartSvg = d3.select('#us-states-chart').append('svg')
+                         .attr('width', statesChartWidth)
+                         .attr('height', statesChartHeight);
 
-  svg.append('rect')
-      .attr('class', 'background')
-      .attr('width', width)
-      .attr('height', height)
-      .on('click', reset);
+  statesChartSvg.append('rect')
+                .attr('class', 'background')
+                .attr('width', statesChartWidth)
+                .attr('height', statesChartHeight)
+                .on('click', reset);
 
-  var g = svg.append('g')
-            .style('stroke-width', '1.5px');
+  var statesChartG = statesChartSvg.append('g')
+                        .style('stroke-width', '1.5px');
 
-  var tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip")
+  var pieChartWidth = 500;
+  var pieChartHeight = 500;
+  var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
+  var pieChartsDrawn = false;
+  var pieChartRepPath, pieChartDemPath;
+  var pie = d3.layout.pie()
+                     .value(function(d) { 
+                        if (isNaN(d.percentage_total_votes)) { return 0; }
+                        else { return +d.percentage_total_votes; } 
+                     })
+                     .sort(null);
+  var pieChartColorMap = {"Cruz": "red", "Kasich": "yellow", "Rubio": "green", 
+                          "Trump": "blue", "Clinton": "purple", "Sanders": "orange"};
+
+  var pieChartArc = d3.svg.arc()
+                      .innerRadius(pieChartRadius - 100)
+                      .outerRadius(pieChartRadius - 20);
+
+  var pieChartRepSvg = d3.select('#rep-pie-chart').append('svg')
+                         .attr('width', pieChartWidth)
+                         .attr('height', pieChartHeight)
+                         .append('g')
+                          .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
+
+  var pieChartDemSvg = d3.select('#dem-pie-chart').append('svg')
+                         .attr('width', pieChartWidth)
+                         .attr('height', pieChartHeight)
+                         .append('g')
+                          .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
+
+var tooltip = d3.select("body").append("div")
+    .attr('class', 'd3-tip')
     .style("opacity", 6);
+
 
   d3.json('/data/us_states.json', function(error, data) {
     if (error) throw error;
 
-    g.selectAll('path')
+    statesChartG.selectAll('path')
         .data(topojson.feature(data, data.objects.states).features)
         .enter().append('path')
-          .attr('d', path)
+          .attr('d', statesChartPath)
           .attr('class', 'state')
-          .on('mouseover', tool)
-          .on('click', clicked);
+          .on('click', stateClicked)
+          .on("mouseover", function(d) {
+            tooltip.transition()
+               .duration(200)
+               .style("opacity", 1);
+                tooltip.html(d.id + "<br/>" + " Population: " + d.population + "  Democratic Delegates: " + d["dem_delegates"] + "  Republican Delegates: " + d["rep_delegates"])
+               .style("center", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
 
-    g.append('path')
+      })
+      .on("mouseout", function(d) {
+           tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+      });
+
+    statesChartG.append('path')
         .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
         .attr('class', 'mesh')
-        .attr('d', path);
+        .attr('d', statesChartPath);
   });
 
   d3.json('/data/state_primaries.json', function(error, data) {
@@ -59,59 +105,47 @@ $(document).ready(function() {
     if (error) throw error;
     stateIdMapData = data;
   });
-
-  function tool(d) {
-
-    tooltip.transition().duration(50).style("opacity", .9);
-
-    tooltip.html(d["name"])
-      .style("left", (d3.event.pageX + 5) + "px")
-      .style("top", (d3.event.pageY - 28) + "px");
-        // tooltip.transition()
-        //        .duration(200)
-        //        .style("opacity", .9);
-        //   tooltip.html(d["Cereal Name"] + "<br/>" + "Sugars: " 
-        //   + d.Sugars + " Calories: " + d.Calories)
-        //        .style("left", (d3.event.pageX + 5) + "px")
-        //        .style("top", (d3.event.pageY - 28) + "px");
-  }
-
-  function clicked(d) {
-    console.log('clicked called');
-
-    if (active.node() === this) {
+  
+  function stateClicked(d) {
+    if (stateActive.node() === this) {
       return reset();
     }
+    stateActive.classed('active', false);
+    stateActive = d3.select(this).classed('active', true);
 
-    active.classed('active', false);
-    active = d3.select(this).classed('active', true);
-
-    var bounds = path.bounds(d),
+    var bounds = statesChartPath.bounds(d),
         dx = bounds[1][0] - bounds[0][0],
         dy = bounds[1][1] - bounds[0][1],
         x = (bounds[0][0] + bounds[1][0]) / 2,
         y = (bounds[0][1] + bounds[1][1]) / 2,
-        scale = .9 / Math.max(dx / width, dy / height),
-        translate = [width / 2 - scale * x, height / 2 - scale * y];
+        scale = .9 / Math.max(dx / statesChartWidth, dy / statesChartHeight),
+        translate = [statesChartWidth / 2 - scale * x, statesChartHeight / 2 - scale * y];
 
-    g.transition()
-        .duration(750)
-        .style('stroke-width', 1.5 / scale + 'px')
-        .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
+    statesChartG.transition()
+                .duration(750)
+                .style('stroke-width', 1.5 / scale + 'px')
+                .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
 
-    findStateData(d);
+    if (findStateData(d)) {
+      dataError.hide();
+      dataWrapper.show();
+    } else {
+      dataWrapper.hide();
+      dataError.show();
+    }
   }
 
   function reset() {
-    console.log('reset called');
+    stateActive.classed('active', false);
+    stateActive = d3.select(null);
 
-    active.classed('active', false);
-    active = d3.select(null);
+    statesChartG.transition()
+                .duration(750)
+                .style('stroke-width', '1.5px')
+                .attr('transform', '');
 
-    g.transition()
-        .duration(750)
-        .style('stroke-width', '1.5px')
-        .attr('transform', '');
+    dataWrapper.hide();
+    dataError.hide();
   }
 
   function findStateData(d) {
@@ -122,21 +156,85 @@ $(document).ready(function() {
 
     if (stateObj === undefined) {
       console.log('ERROR MATCHING STATE ID TO OBJECT');
-    } else {
+      return false;
+    } 
+    else {
       var statePrimaryObj = statePrimariesData.find(function(state) {
         return state.code === stateObj.code;
       });
 
       if (statePrimaryObj === undefined) {
         console.log('ERROR MATCHING STATE CODE TO OBJECT');
+        return false;
+      } 
+      else {
+        populateTables(statePrimaryObj);
+        populatePieCharts(statePrimaryObj)
+        return true;
       }
-      populateTables(statePrimaryObj);
     }
   }
 
+  /*
+      Helper functions to populate the state pie charts
+  */
+  function populatePieCharts(d) {
+    if(pieChartsDrawn) {
+      updatePieCharts(d);
+    } 
+    else {
+      drawPieCharts(d);
+    }
+  }
+
+  function drawPieCharts(d) {
+    pieChartsDrawn = true;
+    pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
+                          .data(pie)
+                          .enter().append('path')
+                            .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
+                            .attr('d', pieChartArc)
+                            .each(function(d) { this._current = d; }); // store the initial angles
+    
+    pieChartDemPath = pieChartDemSvg.datum(d.dem_candidates).selectAll('path')
+                          .data(pie)
+                          .enter().append('path')
+                            .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
+                            .attr('d', pieChartArc)
+                            .each(function(d) { this._current = d; }); // store the initial angles
+  }
+
+  function updatePieCharts(d) {
+    console.log(d);
+    // rep_candidates
+    pieChartRepPath.data(pie(d.rep_candidates));
+    pieChartRepPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
+    // dem_candidates
+    pieChartDemPath.data(pie(d.dem_candidates));
+    pieChartDemPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
+  }
+
+  // Store the displayed angles in _current.
+  // Then, interpolate from _current to the new angles.
+  // During the transition, _current is updated in-place by d3.interpolate.
+  function arcTween(angle) {
+    var i = d3.interpolate(this._current, angle);
+    this._current = i(0);
+    return function(t) { return pieChartArc(i(t)); };
+  }
+
+  function lastName(name) {
+    var splitName = name.split(' ');
+    if (splitName.length === 0) { return ''; } 
+    else { return splitName[splitName.length - 1]; }
+  }
+
+  /*
+      Helper functions to populate the state tables
+  */
   function populateTables(d) {
-    var tables = $('.table');
-    tables.each(function() {    // jQuery obj for each loop
+    var tables = $('table');
+    tables.each(function() { 
       updateCandidatesInfo(this, d);
     }); 
   }
@@ -153,7 +251,6 @@ $(document).ready(function() {
   }
 
   function updateRowInfo(tableRow, cand) {
-    // start here
     var children = tableRow.children();
     children.each(function() {    // jQuery obj for each loop
       if (cand.hasOwnProperty(this.className)) {
@@ -162,7 +259,5 @@ $(document).ready(function() {
       }
     });
   }
-
-  // handle errors tmrw
 
 });
