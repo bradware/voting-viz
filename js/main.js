@@ -1,21 +1,23 @@
 $(document).ready(function() {
   // setup and global vars
+  d3.select(window).on('resize', resize);
   var stateIdMapData;
   var statePrimariesData;
+  var usStatesData;
   var dataWrapper = $('.data-wrapper').hide();
   var dataError = $('.data-error').hide();
 
   // us states chart properties
-  var statesChartWidth = 960,
-      statesChartHeight = 500,
-      stateActive = d3.select(null);
+  var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
+  var statesChartRatio = 0.5;
+  var statesChartHeight = statesChartWidth * statesChartRatio;
+  var stateActive = d3.select(null);
 
   var projection = d3.geo.albersUsa()
-                     .scale(1000)
+                     .scale(statesChartWidth)
                      .translate([statesChartWidth / 2, statesChartHeight / 2]);
 
-  var statesChartPath = d3.geo.path()
-                          .projection(projection);
+  var statesChartPath = d3.geo.path().projection(projection);
 
   var statesChartSvg = d3.select('#us-states-chart').append('svg')
                          .attr('width', statesChartWidth)
@@ -27,8 +29,7 @@ $(document).ready(function() {
                 .attr('height', statesChartHeight)
                 .on('click', reset);
 
-  var statesChartG = statesChartSvg.append('g')
-                        .style('stroke-width', '1.5px');
+  var statesChartG = statesChartSvg.append('g').style('stroke-width', '1.5px');
 
   // state pie chart properties                     
   var pieChartWidth = 500;
@@ -370,21 +371,25 @@ $(document).ready(function() {
     });
   }
 
-  // External data files loaded
-  d3.json('/data/us_states.json', function(error, data) {
-    if (error) throw error;
-
+  function drawStatePaths(d) {
     statesChartG.selectAll('path')
-        .data(topojson.feature(data, data.objects.states).features)
+        .data(topojson.feature(d, d.objects.states).features)
         .enter().append('path')
           .attr('d', statesChartPath)
           .attr('class', 'state')
           .on('click', stateClicked);
 
     statesChartG.append('path')
-        .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
+        .datum(topojson.mesh(d, d.objects.states, function(a, b) { return a !== b; }))
         .attr('class', 'mesh')
         .attr('d', statesChartPath);
+  }
+
+  // External data files loaded
+  d3.json('/data/us_states.json', function(error, data) {
+    if (error) throw error;
+    usStatesData = data;
+    drawStatePaths(usStatesData);
   });
 
   d3.json('/data/state_primaries.json', function(error, data) {
@@ -396,5 +401,22 @@ $(document).ready(function() {
     if (error) throw error;
     stateIdMapData = data;
   });
+
+  function resize() {
+    resizeStatesChart();
+    
+  }
+
+  function resizeStatesChart() {
+    statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
+    statesChartHeight = statesChartWidth * statesChartRatio;
+    projection.translate([statesChartWidth / 2, statesChartHeight / 2]).scale(statesChartWidth);
+    statesChartSvg.style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
+    statesChartSvg.select('rect').style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
+    statesChartG.selectAll('.state').attr('d', statesChartPath);
+    // remove current states that are drawn to old size
+    statesChartG.selectAll('path').remove();
+    drawStatePaths(usStatesData);
+  }
 
 });
