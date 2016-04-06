@@ -1,15 +1,14 @@
 $(document).ready(function() {
   // setup and global vars
   d3.select(window).on('resize', resizeCharts);
+  var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
+                          'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
+  var stateChartsDrawn = false;
   var stateIdMapData;
   var statePrimariesData;
   var usStatesData;
   var dataWrapper = $('.data-wrapper').hide();
   var dataError = $('.data-error').hide();
-  var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
-                          'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
-  var stateChartsDrawn = false;
-
 
   // us states chart properties
   var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
@@ -35,6 +34,12 @@ $(document).ready(function() {
 
   var statesChartG = statesChartSvg.append('g').style('stroke-width', '1.5px');
 
+  function resizeCharts() {
+    resizeStatesChart();
+    //resizePieCharts();
+    //resizeBarCharts();
+  }
+
   function resizeStatesChart() {
     statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
     statesChartHeight = statesChartWidth * statesChartRatio;
@@ -50,9 +55,19 @@ $(document).ready(function() {
     console.log('how do i resize pie charts');
   }
 
+  function resizeBarCharts() {
+    console.log('how do i resize bar charts');
+  }
+
+  function calcChartsWidth(width) {
+    if (width <= 1000) { return 300; }
+    if (width >= 1600) { return 750; }
+    else return 500;
+  }
+
   // state pie chart properties
-  var pieChartWidth =  500;
-  var pieChartHeight = 500;
+  var pieChartWidth =  calcChartsWidth($(window).width());
+  var pieChartHeight = pieChartWidth;
   var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
   var pieChartRepPath, pieChartDemPath;
   var pie = d3.layout.pie()
@@ -77,9 +92,9 @@ $(document).ready(function() {
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
 
-  // state bar chart properties                       
-  var barChartOuterWidth = 500; 
-  var barChartOuterHeight = 500;
+  // state bar chart properties
+  var barChartOuterWidth = calcChartsWidth($(window).width()); 
+  var barChartOuterHeight = barChartOuterWidth;
   var barChartMargin = { top: 20, right: 30, bottom: 30, left: 60 };
   var barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
   var barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
@@ -416,10 +431,5 @@ $(document).ready(function() {
     if (error) throw error;
     stateIdMapData = data;
   });
-
-  function resizeCharts() {
-    resizeStatesChart();
-    resizePieCharts();
-  }
 
 });
