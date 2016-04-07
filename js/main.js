@@ -122,7 +122,6 @@ $(document).ready(function() {
       drawBarCharts(stateData);
     }
     else {
-      console.log('in here');
       stateChartsDrawn = false;
     }
   }
@@ -300,28 +299,20 @@ $(document).ready(function() {
     buildTables(d);
     // if pie chart is already drawn, then just update data
     if(!stateChartsDrawn) {
-      console.log('drawPieCharts');
       stateChartsDrawn = true;
       drawPieCharts(d);
     } 
-    else {
-      console.log('updatePieCharts');
-      updatePieCharts(d);
-    }
+    else updatePieCharts(d);
     // always draw bar charts b/c of axes
     drawBarCharts(d);
   }
 
-  /*
-      Populates state bar chart with data
-  */
+  
   function drawBarCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
       // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
-      console.log($('#rep-bar-chart').height());
-      console.log($('#dem-bar-chart').height());
       $('#rep-bar-chart').css('visibility', 'hidden').css('height', '0');
-    } 
+     } 
     else {
       repBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
       repBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.votes; })]);
@@ -413,6 +404,7 @@ $(document).ready(function() {
       $('#dem-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     
+    // must draw pie charts even with no data, will still show up
     pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
                         .data(pie)
                         .enter().append('path')
@@ -447,9 +439,6 @@ $(document).ready(function() {
     }
   }
 
-  // Store the displayed angles in _current.
-  // Then, interpolate from _current to the new angles.
-  // During the transition, _current is updated in-place by d3.interpolate.
   function arcTween(angle) {
     var i = d3.interpolate(this._current, angle);
     this._current = i(0);
@@ -467,9 +456,7 @@ $(document).ready(function() {
     else { return splitName[splitName.length - 1]; }
   }
 
-  /*
-      Populates state tables with data
-  */
+  
   function buildTables(d) {
     var tables = $('table');
     tables.each(function() { 
@@ -490,9 +477,8 @@ $(document).ready(function() {
 
   function updateRowInfo(tableRow, cand) {
     var children = tableRow.children();
-    children.each(function() {    // jQuery obj for each loop
+    children.each(function() { 
       if (cand.hasOwnProperty(this.className)) {
-        //this.innerHTML = cand[this.className];
         $(this).html(cand[this.className]);
       }
     });
