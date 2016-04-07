@@ -18,6 +18,10 @@ a, a:hover {
 .data-wrapper, .data-error {
   padding: 15px;
 }
+.tables-wrapper, .pie-charts-wrapper, .bar-charts-wrapper {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 
 /*
   us states chart styling:
