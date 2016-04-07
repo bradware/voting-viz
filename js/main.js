@@ -312,6 +312,8 @@ $(document).ready(function() {
   function drawBarCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
       // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
+      console.log($('#rep-bar-chart').height());
+      console.log($('#dem-bar-chart').height());
       $('#rep-bar-chart').css('visibility', 'hidden').css('height', '0');
     } 
     else {
