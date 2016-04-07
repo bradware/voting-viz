@@ -66,8 +66,8 @@ $(document).ready(function() {
     else if (width <= 600) { return 300; } // iPhone6+
     else if (width <= 900) { return 550; } // one column width
     else if (width <= 1184) { return 600; } // one column width
-    else if (width <= 1250) { return 500; } // two column width
-    else if (width <= 1400) { return 550; } // two column width
+    else if (width <= 1300) { return 500; } // two column width
+    else if (width <= 1500) { return 550; } // two column width
     else if (width <= 1800) { return 600; } // two column width
     else return 750; // two column width
   }
