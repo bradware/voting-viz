@@ -112,7 +112,6 @@ $(document).ready(function() {
 
   function resizeCharts() {
     resizeStatesChart();
-    console.log($(window).width());
     var newWidth = calcChartsWidth($(window).width());
     resizePieCharts(newWidth);
     resizeBarCharts(newWidth);
@@ -122,7 +121,10 @@ $(document).ready(function() {
       drawPieCharts(stateData);
       drawBarCharts(stateData);
     }
-    else stateChartsDrawn = false;
+    else {
+      console.log('in here');
+      stateChartsDrawn = false;
+    }
   }
 
   function resizeStatesChart() {
@@ -298,10 +300,14 @@ $(document).ready(function() {
     buildTables(d);
     // if pie chart is already drawn, then just update data
     if(!stateChartsDrawn) {
+      console.log('drawPieCharts');
       stateChartsDrawn = true;
       drawPieCharts(d);
     } 
-    else updatePieCharts(d);
+    else {
+      console.log('updatePieCharts');
+      updatePieCharts(d);
+    }
     // always draw bar charts b/c of axes
     drawBarCharts(d);
   }
@@ -398,9 +404,13 @@ $(document).ready(function() {
   function drawPieCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
       $('#rep-pie-chart').css('visibility', 'hidden').css('height', '0');
+    } else {
+      $('#rep-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     if (!validatePartiesData(d.dem_candidates)) {
       $('#dem-pie-chart').css('visibility', 'hidden').css('height', '0');
+    }else {
+      $('#dem-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     
     pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
@@ -415,6 +425,7 @@ $(document).ready(function() {
                           .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
                           .attr('d', pieChartArc)
                           .each(function(d) { this._current = d; }); // store the initial angles
+      
   }
 
   function updatePieCharts(d) {
