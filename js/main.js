@@ -1,14 +1,14 @@
 $(document).ready(function() {
   // setup and global vars
-  d3.select(window).on('resize', resizeCharts);
-  var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
-                          'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
   var stateChartsDrawn = false;
   var stateIdMapData;
   var statePrimariesData;
   var usStatesData;
   var dataWrapper = $('.data-wrapper').hide();
   var dataError = $('.data-error').hide();
+  d3.select(window).on('resize', resizeCharts);
+  var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
+                          'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
 
   // us states chart properties
   var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
