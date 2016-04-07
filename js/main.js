@@ -1,16 +1,20 @@
 $(document).ready(function() {
-  // setup and global vars
+  // setup and global logic vars 
   var stateChartsDrawn = false;
+  var stateChartsDrawnAfterResize = true;
   var stateIdMapData;
   var statePrimariesData;
   var usStatesData;
-  var dataWrapper = $('.data-wrapper').hide();
-  var dataError = $('.data-error').hide();
-  d3.select(window).on('resize', resizeCharts);
+  var stateData;
   var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
                           'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
 
-  // us states chart properties
+  // global vars for editing the DOM
+  var dataWrapper = $('.data-wrapper').hide();
+  var dataError = $('.data-error').hide();
+  d3.select(window).on('resize', resizeCharts);
+  
+  // global us states chart properties
   var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
   var statesChartRatio = 0.5;
   var statesChartHeight = statesChartWidth * statesChartRatio;
@@ -34,45 +38,7 @@ $(document).ready(function() {
 
   var statesChartG = statesChartSvg.append('g').style('stroke-width', '1.5px');
 
-  function resizeCharts() {
-    resizeStatesChart();
-    console.log($(window).width());
-    //resizePieCharts();
-    //resizeBarCharts();
-  }
-
-  function resizeStatesChart() {
-    statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
-    statesChartHeight = statesChartWidth * statesChartRatio;
-    projection.translate([statesChartWidth / 2, statesChartHeight / 2]).scale(statesChartWidth);
-    statesChartSvg.style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
-    statesChartSvg.select('rect').style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
-    statesChartG.selectAll('.state').attr('d', statesChartPath);
-    statesChartG.selectAll('path').remove();
-    drawStatePaths(usStatesData);
-  }
-
-  function resizePieCharts() {
-    console.log('how do i resize pie charts');
-  }
-
-  function resizeBarCharts() {
-    console.log('how do i resize bar charts');
-  }
-
-  function calcChartsWidth(width) { 
-    if (width <= 350) { return 250; } // iPhone5
-    else if (width <= 400) { return 275; } // iPhone6
-    else if (width <= 600) { return 300; } // iPhone6+
-    else if (width <= 900) { return 550; } // one column width
-    else if (width <= 1184) { return 600; } // one column width
-    else if (width <= 1300) { return 500; } // two column width
-    else if (width <= 1500) { return 550; } // two column width
-    else if (width <= 1800) { return 600; } // two column width
-    else return 750; // two column width
-  }
-
-  // state pie chart properties
+  // global state pie chart properties
   var pieChartWidth =  calcChartsWidth($(window).width());
   var pieChartHeight = pieChartWidth;
   var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
@@ -99,7 +65,7 @@ $(document).ready(function() {
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
 
-  // state bar chart properties
+  // global state bar chart properties
   var barChartOuterWidth = calcChartsWidth($(window).width()); 
   var barChartOuterHeight = barChartOuterWidth;
   var barChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
@@ -143,6 +109,119 @@ $(document).ready(function() {
                         .attr('height', barChartOuterHeight)
                       .append('g')
                         .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
+
+  function resizeCharts() {
+    resizeStatesChart();
+    console.log($(window).width());
+    var newWidth = calcChartsWidth($(window).width());
+    resizePieCharts(newWidth);
+    resizeBarCharts(newWidth);
+    
+    if (stateData != null) {
+      stateChartsDrawn = true;
+      drawPieCharts(stateData);
+      drawBarCharts(stateData);
+    }
+    else stateChartsDrawn = false;
+  }
+
+  function resizeStatesChart() {
+    statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
+    statesChartHeight = statesChartWidth * statesChartRatio;
+    projection.translate([statesChartWidth / 2, statesChartHeight / 2]).scale(statesChartWidth);
+    statesChartSvg.style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
+    statesChartSvg.select('rect').style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
+    statesChartG.selectAll('.state').attr('d', statesChartPath);
+    statesChartG.selectAll('path').remove();
+    drawStatePaths(usStatesData);
+  }
+
+  function resizePieCharts(width) {
+    pieChartWidth =  width;
+    pieChartHeight = pieChartWidth;
+    pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
+
+    pieChartArc = d3.svg.arc().innerRadius(pieChartRadius - 100).outerRadius(pieChartRadius - 20);
+
+    pieChartRepSvg = d3.select('#rep-pie-chart').selectAll('svg').remove();
+    pieChartDemSvg = d3.select('#dem-pie-chart').selectAll('svg').remove();
+
+    pieChartRepSvg = d3.select('#rep-pie-chart').append('svg')
+                           .attr('width', pieChartWidth)
+                           .attr('height', pieChartHeight)
+                           .append('g')
+                            .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
+                           
+
+    pieChartDemSvg = d3.select('#dem-pie-chart').append('svg')
+                           .attr('width', pieChartWidth)
+                           .attr('height', pieChartHeight)
+                           .append('g')
+                            .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
+  }
+
+  function resizeBarCharts(width) {
+    barChartOuterWidth = width;
+    barChartOuterHeight = barChartOuterWidth;
+    barChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
+    barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
+    barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
+     
+    repBarChartXScale = d3.scale.ordinal()
+                              .rangeRoundBands([0, barChartWidth], .1);
+    repBarChartYScale = d3.scale.linear()
+                              .range([barChartHeight, 0]);
+    demBarChartXScale = d3.scale.ordinal()
+                              .rangeRoundBands([0, barChartWidth], .1);
+    demBarChartYScale = d3.scale.linear()
+                              .range([barChartHeight, 0]);
+     
+    repBarChartXAxis = d3.svg.axis()
+                             .scale(repBarChartXScale)
+                             .orient('bottom');
+    repBarChartYAxis = d3.svg.axis()
+                             .scale(repBarChartYScale)
+                             .orient('left')
+                             .ticks(10);
+    demBarChartXAxis = d3.svg.axis()
+                             .scale(demBarChartXScale)
+                             .orient('bottom');
+    demBarChartYAxis = d3.svg.axis()
+                             .scale(demBarChartYScale)
+                             .orient('left')
+                             .ticks(10);
+    
+    repBarChart = d3.select('#rep-bar-chart').selectAll('svg').remove();
+    demBarChart = d3.select('#dem-bar-chart').selectAll('svg').remove();
+
+    repBarChart = d3.select('#rep-bar-chart')
+                        .append('svg')
+                          .attr('width', barChartOuterWidth)
+                          .attr('height', barChartOuterHeight)
+                        .append('g')
+                          .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
+
+    demBarChart = d3.select('#dem-bar-chart')
+                        .append('svg')
+                          .attr('width', barChartOuterWidth)
+                          .attr('height', barChartOuterHeight)
+                        .append('g')
+                          .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
+  }
+
+  // This is necessary because cannot d3.select the wrapper divs for the state charts
+  // Sometimes they are hidden from DOM and return width as 0 --> not good
+  function calcChartsWidth(width) { 
+    if (width <= 350) { return 250; } // iPhone5
+    else if (width <= 400) { return 275; } // iPhone6
+    else if (width <= 600) { return 300; } // iPhone6+
+    else if (width <= 900) { return 500; } // one column width
+    else if (width <= 1184) { return 550; } // one column width
+    else if (width <= 1300) { return 500; } // two column width
+    else if (width <= 1500) { return 550; } // two column width
+    else if (width <= 1800) { return 600; } // two column width
+    else return 750; // two column width
+  }
   
   // functions based on user actions
   function stateClicked(d) {
@@ -177,6 +256,7 @@ $(document).ready(function() {
   function reset() {
     stateActive.classed('active', false);
     stateActive = d3.select(null);
+    stateData = null;
 
     statesChartG.transition()
                 .duration(750)
@@ -198,27 +278,38 @@ $(document).ready(function() {
       return false;
     } 
     else {
-      var statePrimaryObj = statePrimariesData.find(function(state) {
+      stateData = statePrimariesData.find(function(state) {
         return state.code === stateObj.code;
       });
 
-      if (statePrimaryObj === undefined) {
+      if (stateData === undefined) {
         console.log('ERROR MATCHING STATE CODE TO OBJECT');
         return false;
       } 
       else {
-        populateTables(statePrimaryObj);
-        populatePieCharts(statePrimaryObj);
-        populateBarCharts(statePrimaryObj);
+        drawStateElements(stateData);
         return true;
       }
     }
   }
 
+  function drawStateElements(d) {
+    // always build table no matter what
+    buildTables(d);
+    // if pie chart is already drawn, then just update data
+    if(!stateChartsDrawn) {
+      stateChartsDrawn = true;
+      drawPieCharts(d);
+    } 
+    else updatePieCharts(d);
+    // always draw bar charts b/c of axes
+    drawBarCharts(d);
+  }
+
   /*
       Populates state bar chart with data
   */
-  function populateBarCharts(d) {
+  function drawBarCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
       // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
       $('#rep-bar-chart').css('visibility', 'hidden').css('height', '0');
@@ -302,28 +393,14 @@ $(document).ready(function() {
     }
   }
 
-  /*
-      Populates state pie charts with data
-  */
-  function populatePieCharts(d) {
-    if(stateChartsDrawn) {
-      updatePieCharts(d);
-    } 
-    else {
-      drawPieCharts(d);
-    }
-  }
-
   function drawPieCharts(d) {
-    stateChartsDrawn = true;
     if (!validatePartiesData(d.rep_candidates)) {
       $('#rep-pie-chart').css('visibility', 'hidden').css('height', '0');
     }
     if (!validatePartiesData(d.dem_candidates)) {
       $('#dem-pie-chart').css('visibility', 'hidden').css('height', '0');
     }
-    // necessary to set the variables to a DOM element
-    // pie chart will not show up if data does not exist
+    
     pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
                         .data(pie)
                         .enter().append('path')
@@ -380,7 +457,7 @@ $(document).ready(function() {
   /*
       Populates state tables with data
   */
-  function populateTables(d) {
+  function buildTables(d) {
     var tables = $('table');
     tables.each(function() { 
       updateCandidatesInfo(this, d);
