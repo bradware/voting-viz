@@ -11,8 +11,8 @@ $(document).ready(function() {
   var statePrimariesData;
   var usStatesData;
   var stateData;
-  var colorMap = {'Clinton': 'purple', 'Sanders': 'orange', 'Cruz': 'red', 
-                  'Kasich': 'yellow', 'Rubio': 'green', 'Trump': 'blue'};
+  var colorMap = {'Clinton': '#B47EE6', 'Sanders': '#FFFF44', 'Cruz': '#63D9F6', 
+                  'Kasich': '#FF7745', 'Rubio': '#80C157', 'Trump': '#FF5D5D'};
   
   // global us states chart properties
   var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
@@ -467,9 +467,8 @@ $(document).ready(function() {
   function updateCandidatesInfo(table, d) {
     var candidates = d[table.id];
     candidates.forEach(function(cand) {   // js array obj for each loop
-      var fullNameArr = cand.name.split(' ');
-      var lastName = fullNameArr[fullNameArr.length - 1];
-      var tableRow = $('#'.concat(lastName.toLowerCase()));
+      var candLastName = lastName(cand.name).toLowerCase();
+      var tableRow = $('.'.concat(candLastName));
       updateRowInfo(tableRow, cand);
     });
 

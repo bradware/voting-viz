@@ -24,6 +24,17 @@ a, a:hover {
 }
 
 /*
+  candidate styling
+*/
+.clinton { background: #B47EE6; }
+.sanders { background: #FFFF44; }
+.cruz { background: #63D9F6; }
+.kasich { background: #FF7745; }
+.rubio { background: #80C157; }
+.trump { background: #FF5D5D; }
+
+
+/*
   us states chart styling:
 */
 .background {
@@ -51,7 +62,7 @@ a, a:hover {
   bar chart styling
 */
 .bar:hover {
-    fill: brown;
+  opacity: 50%;
 }
 .axis text {
   font: 11px sans-serif;
