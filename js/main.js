@@ -112,7 +112,6 @@ $(document).ready(function() {
 
   function resizeCharts() {
     resizeStatesChart();
-    console.log($(window).width());
     var newWidth = calcChartsWidth($(window).width());
     resizePieCharts(newWidth);
     resizeBarCharts(newWidth);
@@ -122,7 +121,9 @@ $(document).ready(function() {
       drawPieCharts(stateData);
       drawBarCharts(stateData);
     }
-    else stateChartsDrawn = false;
+    else {
+      stateChartsDrawn = false;
+    }
   }
 
   function resizeStatesChart() {
@@ -306,16 +307,12 @@ $(document).ready(function() {
     drawBarCharts(d);
   }
 
-  /*
-      Populates state bar chart with data
-  */
+  
   function drawBarCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
       // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
-      console.log($('#rep-bar-chart').height());
-      console.log($('#dem-bar-chart').height());
       $('#rep-bar-chart').css('visibility', 'hidden').css('height', '0');
-    } 
+     } 
     else {
       repBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
       repBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.votes; })]);
@@ -398,11 +395,16 @@ $(document).ready(function() {
   function drawPieCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
       $('#rep-pie-chart').css('visibility', 'hidden').css('height', '0');
+    } else {
+      $('#rep-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     if (!validatePartiesData(d.dem_candidates)) {
       $('#dem-pie-chart').css('visibility', 'hidden').css('height', '0');
+    }else {
+      $('#dem-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     
+    // must draw pie charts even with no data, will still show up
     pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
                         .data(pie)
                         .enter().append('path')
@@ -415,6 +417,7 @@ $(document).ready(function() {
                           .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
                           .attr('d', pieChartArc)
                           .each(function(d) { this._current = d; }); // store the initial angles
+      
   }
 
   function updatePieCharts(d) {
@@ -436,9 +439,6 @@ $(document).ready(function() {
     }
   }
 
-  // Store the displayed angles in _current.
-  // Then, interpolate from _current to the new angles.
-  // During the transition, _current is updated in-place by d3.interpolate.
   function arcTween(angle) {
     var i = d3.interpolate(this._current, angle);
     this._current = i(0);
@@ -456,9 +456,7 @@ $(document).ready(function() {
     else { return splitName[splitName.length - 1]; }
   }
 
-  /*
-      Populates state tables with data
-  */
+  
   function buildTables(d) {
     var tables = $('table');
     tables.each(function() { 
@@ -479,9 +477,8 @@ $(document).ready(function() {
 
   function updateRowInfo(tableRow, cand) {
     var children = tableRow.children();
-    children.each(function() {    // jQuery obj for each loop
+    children.each(function() { 
       if (cand.hasOwnProperty(this.className)) {
-        //this.innerHTML = cand[this.className];
         $(this).html(cand[this.className]);
       }
     });
