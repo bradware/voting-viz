@@ -1,4 +1,9 @@
 $(document).ready(function() {
+  // global vars for editing the DOM
+  var dataWrapper = $('.data-wrapper').hide();
+  var dataError = $('.data-error').hide();
+  d3.select(window).on('resize', resizeCharts);
+
   // setup and global logic vars 
   var stateChartsDrawn = false;
   var stateChartsDrawnAfterResize = true;
@@ -8,11 +13,6 @@ $(document).ready(function() {
   var stateData;
   var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
                           'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
-
-  // global vars for editing the DOM
-  var dataWrapper = $('.data-wrapper').hide();
-  var dataError = $('.data-error').hide();
-  d3.select(window).on('resize', resizeCharts);
   
   // global us states chart properties
   var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
