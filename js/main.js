@@ -11,8 +11,8 @@ $(document).ready(function() {
   var statePrimariesData;
   var usStatesData;
   var stateData;
-  var colorMap = {'Cruz': 'red', 'Kasich': 'yellow', 'Rubio': 'green', 
-                          'Trump': 'blue', 'Clinton': 'purple', 'Sanders': 'orange'};
+  var colorMap = {'Clinton': 'purple', 'Sanders': 'orange', 'Cruz': 'red', 
+                  'Kasich': 'yellow', 'Rubio': 'green', 'Trump': 'blue'};
   
   // global us states chart properties
   var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
