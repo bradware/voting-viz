@@ -11,8 +11,8 @@ $(document).ready(function() {
   var statePrimariesData;
   var usStatesData;
   var stateData;
-  var colorMap = {'Clinton': '#B47EE6', 'Sanders': '#FFFF44', 'Cruz': '#63D9F6', 
-                  'Kasich': '#FF7745', 'Rubio': '#80C157', 'Trump': '#FF5D5D'};
+  var colorMap = {'Clinton': '#B47EE6', 'Sanders': '#FF9DCD', 'Cruz': '#63D9F6', 
+                  'Kasich': '#FFFF44', 'Rubio': '#80C157', 'Trump': '#FF5D5D'};
   
   // global us states chart properties
   var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
