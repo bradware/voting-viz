@@ -661,7 +661,7 @@ $(document).ready(function() {
     var children = tableRow.children();
     children.each(function() { 
       if (cand.hasOwnProperty(this.className)) {
-        $(this).html(cand[this.className]);
+        $(this).html(cand[this.className].toLocaleString());
       }
     });
   }
