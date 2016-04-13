@@ -3,6 +3,7 @@ html {
   min-height: 100%;
 }
 body {
+  font-family: 'Lato', sans-serif;
   border-top: 6px solid red; /* change this */
   /* Margin bottom by footer height */
   margin-bottom: 80px;

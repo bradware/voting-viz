@@ -3,20 +3,29 @@ html {
   min-height: 100%;
 }
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Lato', sans-serif;
   background-image: linear-gradient(to bottom, #1975D1, #1975D1 44%, #CC3333 46%, #CC3333);
   background-size: cover;
   background-repeat: no-repeat;
-  color: #FFFFFF;
+  color: #F2F2F2;
   /* Margin bottom by footer height */
   margin-bottom: 80px;
 }
 a, a:hover {
  color: #FFFFFF;
 }
-h1 { font-size: 55px; }
-i { font-size: 16px; }
-h2 { font-size: 35px; }
+h1 {
+  font-size: 55px;
+  font-weight: 300;
+}
+i { 
+  font-size: 16px;
+  font-weight: 400;
+}
+h2 { 
+  font-size: 35px;
+  font-weight: 700;
+}
 .content {
   padding-top: 10px;
   padding-bottom: 10px;
