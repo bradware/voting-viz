@@ -43,7 +43,7 @@ $(document).ready(function() {
   var pieChartHeight = pieChartWidth;
   var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
   var pieChartDemArc, pieChartRepArc;
-  var repText, demText;
+  var repPieChartText, demPieChartText;
   var pieChartRepPath, pieChartDemPath;
   var pie = d3.layout.pie()
                      .value(function(d) { 
@@ -603,34 +603,34 @@ $(document).ready(function() {
                           .each(function(d) { this._current = d; }); // store the initial angles
 
     //draw the republican pie labels
-    pieChartRepArc = pieChartRepSvg.selectAll("g.slice")
+    pieChartRepArc = pieChartRepSvg.selectAll('g.slice')
       .data(pie)
       .enter()
-      .append("g")
-      .attr("class", "slice");
+      .append('g')
+      .attr('class', 'slice');
 
-    repText = pieChartRepArc.append("text")
-      .attr("transform", function(d) {
-        console.log(d)
+    repPieChartText = pieChartRepArc.append('text')
+      .attr('transform', function(d) {
         var c = pieChartArc.centroid(d);
-        return "translate(" + c[0] +"," + c[1] + ")";
+        return 'translate(' + c[0] +',' + c[1] + ')';
       })
-      .text(function (d) {return d.data.percentage_total_votes + "%";});
+      .text(function (d) { return d.data.percentage_total_votes + '%'; })
+      .style('font-weight', 'bold');
 
     //draw the democrat pie labels
-    pieChartDemArc = pieChartDemSvg.selectAll("g.slice")
+    pieChartDemArc = pieChartDemSvg.selectAll('g.slice')
       .data(pie)
       .enter()
-      .append("g")
-      .attr("class", "slice");
+      .append('g')
+      .attr('class', 'slice');
 
-    demText = pieChartDemArc.append("text")
-      .attr("transform", function(d) {
-        console.log(d)
+    demPieChartText = pieChartDemArc.append('text')
+      .attr('transform', function(d) {
         var c = pieChartArc.centroid(d);
-        return "translate(" + c[0] +"," + c[1] + ")";
+        return 'translate(' + c[0] +',' + c[1] + ')';
       })
-      .text(function (d) {return d.data.percentage_total_votes + "%";});
+      .text(function (d) { return d.data.percentage_total_votes + '%'; })
+      .style('font-weight', 'bold');
   }
 
   function updatePieCharts(d) {
@@ -642,15 +642,15 @@ $(document).ready(function() {
       pieChartRepPath.data(pie(d.rep_candidates));
       pieChartRepPath.transition().duration(750).attrTween('d', arcTween);
       //move the labels
-      repText.data(pie(d.rep_candidates))
+      repPieChartText.data(pie(d.rep_candidates))
         .transition().duration(750)
-        .attr("transform", function(d) {
+        .attr('transform', function(d) {
           var c = pieChartArc.centroid(d);
-          return "translate(" + c[0] +"," + c[1] + ")";
+          return 'translate(' + c[0] +',' + c[1] + ')';
         });
       //update label percentages
-      repText.data(pie(d.rep_candidates))
-        .text(function (d) {return d.data.percentage_total_votes + "%"})
+      repPieChartText.data(pie(d.rep_candidates))
+        .text(function (d) {return d.data.percentage_total_votes + '%'})
       $('#rep-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     if (!validatePartiesData(d.dem_candidates)) {
@@ -661,15 +661,15 @@ $(document).ready(function() {
       pieChartDemPath.data(pie(d.dem_candidates));
       pieChartDemPath.transition().duration(750).attrTween('d', arcTween);
       //move the labels
-      demText.data(pie(d.dem_candidates))
+      demPieChartText.data(pie(d.dem_candidates))
         .transition().duration(750)
-        .attr("transform", function(d) {
+        .attr('transform', function(d) {
           var c = pieChartArc.centroid(d);
-          return "translate(" + c[0] +"," + c[1] + ")";
+          return 'translate(' + c[0] +',' + c[1] + ')';
         });
       //update label percentages
-      demText.data(pie(d.dem_candidates))
-        .text(function (d) {return d.data.percentage_total_votes + "%"})
+      demPieChartText.data(pie(d.dem_candidates))
+        .text(function (d) {return d.data.percentage_total_votes + '%'})
       $('#dem-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
   }

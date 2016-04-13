@@ -37,7 +37,6 @@ td {
 .rubio { background: #8CC767; }
 .trump { background: #FF6D6D; }
 
-
 /*
   us states chart styling:
 */
@@ -50,10 +49,10 @@ td {
   cursor: pointer;
 }
 .state.active {
-  fill: red !important;
+  fill: #CC3333 !important;
 }
 .state:hover {
-  fill: blue;
+  fill: #1975D1;
 }
 .mesh {
   fill: none;
@@ -69,7 +68,7 @@ td {
   opacity: 50%;
 }
 .axis text {
-  font: 11px sans-serif;
+  font-size: 12px;
 }
 .axis path, .axis line {
   fill: none;
