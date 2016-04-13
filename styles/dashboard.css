@@ -107,8 +107,8 @@ td {
 .tooltip {
   line-height: 1;
   font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 100, 0.8);
+  padding: 5px;
+  background: #9F000F; 
   color: #fff;
   border-radius: 2px;
 }

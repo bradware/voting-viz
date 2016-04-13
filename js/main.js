@@ -681,7 +681,7 @@ $(document).ready(function() {
             tooltip.transition()
                .duration(100)
                .style("opacity", 1);
-                tooltip.html(d.id + "<br/>" + " Population: " + d.population + "<br/>" + "  Democratic Delegates: " + d["dem_delegates"] + "<br/>" + "  Republican Delegates: " + d["rep_delegates"])
+                tooltip.html(d.name + "<br/>" + " Population: " + d.population + "<br/>" + "  Democratic Delegates: " + d["dem_delegates"] + "<br/>" + "  Republican Delegates: " + d["rep_delegates"])
                .style("top", (d3.event.pageX + 5) + "px")
                .style("top", (d3.event.pageY - 5) + "px");
 
