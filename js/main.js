@@ -61,10 +61,13 @@ $(document).ready(function() {
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
 
+<<<<<<< HEAD
 var tooltip = d3.select("body").append("div")
     .attr('class', 'd3-tip')
     .style("opacity", 6);
 
+=======
+>>>>>>> master
 
   d3.json('/data/us_states.json', function(error, data) {
     if (error) throw error;
@@ -74,6 +77,7 @@ var tooltip = d3.select("body").append("div")
         .enter().append('path')
           .attr('d', statesChartPath)
           .attr('class', 'state')
+<<<<<<< HEAD
           .on('click', stateClicked)
           .on("mouseover", function(d) {
             tooltip.transition()
@@ -90,6 +94,10 @@ var tooltip = d3.select("body").append("div")
                .style("opacity", 0);
       });
 
+=======
+          .on('click', stateClicked);
+
+>>>>>>> master
     statesChartG.append('path')
         .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
         .attr('class', 'mesh')
