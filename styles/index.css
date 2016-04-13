@@ -58,24 +58,3 @@ h2 {
 .copyright {
   margin: 10px 0px;
 }
-
-/*
-  large and small screens for browser
-*/
-@media only screen and (min-height: 1000px) {
-    .content {
-      height: 450px;
-    }
-}
-
-@media only screen and (max-height: 500px) {
-    .content {
-      height: 350px;
-    }
-}
-
-@media only screen and (max-height: 750px) {
-    .content {
-      height: 375px;
-    }
-}
