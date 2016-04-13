@@ -26,8 +26,6 @@
 	    		resizeContentHeight();
 		    	$(window).on('resize', resizeContentHeight);
 
-		    	// This is necessary because cannot d3.select the wrapper divs for the state charts
-			  	// Sometimes they are hidden from DOM and return width as 0 --> not good
 			  	function resizeContentHeight() { 
 			  		var windowHeight = $(window).height();
 			  		$('.content').height(calcContentHeight(windowHeight));
