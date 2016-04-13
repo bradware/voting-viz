@@ -1,75 +1,4 @@
 $(document).ready(function() {
-<<<<<<< HEAD
-  // setup and global vars
-  $('#tables-wrapper').load('templates/tables.html');
-  var stateIdMapData;
-  var statePrimariesData;
-  var dataWrapper = $('.data-wrapper').hide();
-  var dataError = $('.data-error').hide();
-
-  // us states chart properties
-  var statesChartWidth = 960,
-      statesChartHeight = 500,
-      stateActive = d3.select(null);
-
-  var projection = d3.geo.albersUsa()
-                     .scale(1000)
-                     .translate([statesChartWidth / 2, statesChartHeight / 2]);
-
-  var statesChartPath = d3.geo.path()
-                          .projection(projection);
-
-  var statesChartSvg = d3.select('#us-states-chart').append('svg')
-                         .attr('width', statesChartWidth)
-                         .attr('height', statesChartHeight);
-
-  statesChartSvg.append('rect')
-                .attr('class', 'background')
-                .attr('width', statesChartWidth)
-                .attr('height', statesChartHeight)
-                .on('click', reset);
-
-  var statesChartG = statesChartSvg.append('g')
-                        .style('stroke-width', '1.5px');
-
-  var pieChartWidth = 500;
-  var pieChartHeight = 500;
-  var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
-  var pieChartsDrawn = false;
-  var pieChartRepPath, pieChartDemPath;
-  var pie = d3.layout.pie()
-                     .value(function(d) { 
-                        if (isNaN(d.percentage_total_votes)) { return 0; }
-                        else { return +d.percentage_total_votes; } 
-                     })
-                     .sort(null);
-  var pieChartColorMap = {"Cruz": "red", "Kasich": "yellow", "Rubio": "green", 
-                          "Trump": "blue", "Clinton": "purple", "Sanders": "orange"};
-
-  var pieChartArc = d3.svg.arc()
-                      .innerRadius(pieChartRadius - 100)
-                      .outerRadius(pieChartRadius - 20);
-
-  var pieChartRepSvg = d3.select('#rep-pie-chart').append('svg')
-                         .attr('width', pieChartWidth)
-                         .attr('height', pieChartHeight)
-                         .append('g')
-                          .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
-
-  var pieChartDemSvg = d3.select('#dem-pie-chart').append('svg')
-                         .attr('width', pieChartWidth)
-                         .attr('height', pieChartHeight)
-                         .append('g')
-                          .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
-
-<<<<<<< HEAD
-var tooltip = d3.select("body").append("div")
-    .attr('class', 'd3-tip')
-    .style("opacity", 6);
-
-=======
->>>>>>> master
-=======
   // global vars for editing the DOM
   var dataWrapper = $('.data-wrapper').hide();
   var dataError = $('.data-error').hide();
@@ -108,7 +37,6 @@ var tooltip = d3.select("body").append("div")
                 .on('click', reset);
 
   var statesChartG = statesChartSvg.append('g').style('stroke-width', '1.5px');
->>>>>>> master
 
   // global state pie chart properties
   var pieChartWidth =  calcChartsWidth($(window).width());
@@ -122,39 +50,6 @@ var tooltip = d3.select("body").append("div")
                      })
                      .sort(null);
 
-<<<<<<< HEAD
-    statesChartG.selectAll('path')
-        .data(topojson.feature(data, data.objects.states).features)
-        .enter().append('path')
-          .attr('d', statesChartPath)
-          .attr('class', 'state')
-<<<<<<< HEAD
-          .on('click', stateClicked)
-          .on("mouseover", function(d) {
-            tooltip.transition()
-               .duration(200)
-               .style("opacity", 1);
-                tooltip.html(d.id + "<br/>" + " Population: " + d.population + "  Democratic Delegates: " + d["dem_delegates"] + "  Republican Delegates: " + d["rep_delegates"])
-               .style("center", (d3.event.pageX + 5) + "px")
-               .style("top", (d3.event.pageY - 28) + "px");
-
-      })
-      .on("mouseout", function(d) {
-           tooltip.transition()
-               .duration(500)
-               .style("opacity", 0);
-      });
-
-=======
-          .on('click', stateClicked);
-
->>>>>>> master
-    statesChartG.append('path')
-        .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
-        .attr('class', 'mesh')
-        .attr('d', statesChartPath);
-  });
-=======
   var pieChartArc = d3.svg.arc().innerRadius(pieChartRadius - 100).outerRadius(pieChartRadius - 20);
 
   var pieChartRepSvg = d3.select('#rep-pie-chart').append('svg')
@@ -163,7 +58,6 @@ var tooltip = d3.select("body").append("div")
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
                          
->>>>>>> master
 
   var pieChartDemSvg = d3.select('#dem-pie-chart').append('svg')
                          .attr('width', pieChartWidth)
@@ -171,20 +65,6 @@ var tooltip = d3.select("body").append("div")
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
 
-<<<<<<< HEAD
-  d3.csv('/data/state_id_mappings.csv', function(error, data) {
-    if (error) throw error;
-    stateIdMapData = data;
-  });
-  
-  function stateClicked(d) {
-    if (stateActive.node() === this) {
-      return reset();
-    }
-    stateActive.classed('active', false);
-    stateActive = d3.select(this).classed('active', true);
-
-=======
   // global state bar chart properties
   var barChartOuterWidth = calcChartsWidth($(window).width()); 
   var barChartOuterHeight = barChartOuterWidth;
@@ -274,6 +154,10 @@ var tooltip = d3.select("body").append("div")
                         .attr('height', horizBarChartOuterHeight)
                        .append('g')
                         .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
+
+   var tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 6);
 
   function resizeCharts() {
     var newWidth = calcChartsWidth($(window).width());
@@ -450,7 +334,6 @@ var tooltip = d3.select("body").append("div")
     stateActive.classed('active', false);
     stateActive = d3.select(this).classed('active', true);
 
->>>>>>> master
     var bounds = statesChartPath.bounds(d),
         dx = bounds[1][0] - bounds[0][0],
         dy = bounds[1][1] - bounds[0][1],
@@ -465,42 +348,26 @@ var tooltip = d3.select("body").append("div")
                 .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
 
     if (findStateData(d)) {
-<<<<<<< HEAD
-      dataError.hide();
-      dataWrapper.show();
-    } else {
-      dataWrapper.hide();
-      dataError.show();
-=======
       dataError.fadeOut();
       dataWrapper.fadeIn();
     } else {
       dataWrapper.fadeOut();
       dataError.fadeIn();
->>>>>>> master
     }
   }
 
   function reset() {
     stateActive.classed('active', false);
     stateActive = d3.select(null);
-<<<<<<< HEAD
-=======
     stateData = null;
->>>>>>> master
 
     statesChartG.transition()
                 .duration(750)
                 .style('stroke-width', '1.5px')
                 .attr('transform', '');
 
-<<<<<<< HEAD
-    dataWrapper.hide();
-    dataError.hide();
-=======
     dataWrapper.fadeOut();
     dataError.fadeOut();
->>>>>>> master
   }
 
   function findStateData(d) {
@@ -514,11 +381,7 @@ var tooltip = d3.select("body").append("div")
       return false;
     } 
     else {
-<<<<<<< HEAD
-      var statePrimaryObj = statePrimariesData.find(function(state) {
-=======
       stateData = statePrimariesData.find(function(state) {
->>>>>>> master
         return state.code === stateObj.code;
       });
 
@@ -527,61 +390,12 @@ var tooltip = d3.select("body").append("div")
         return false;
       } 
       else {
-<<<<<<< HEAD
-        populateTables(statePrimaryObj);
-        populatePieCharts(statePrimaryObj)
-=======
         drawStateElements(stateData);
->>>>>>> master
         return true;
       }
     }
   }
 
-<<<<<<< HEAD
-  /*
-      Helper functions to populate the state pie charts
-  */
-  function populatePieCharts(d) {
-    if(pieChartsDrawn) {
-      updatePieCharts(d);
-    } 
-    else {
-      drawPieCharts(d);
-    }
-  }
-
-  function drawPieCharts(d) {
-    pieChartsDrawn = true;
-    pieChartRepPath = pieChartRepSvg.datum(d.rep_candidates).selectAll('path')
-                          .data(pie)
-                          .enter().append('path')
-                            .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
-                            .attr('d', pieChartArc)
-                            .each(function(d) { this._current = d; }); // store the initial angles
-    
-    pieChartDemPath = pieChartDemSvg.datum(d.dem_candidates).selectAll('path')
-                          .data(pie)
-                          .enter().append('path')
-                            .attr('fill', function(d) { return pieChartColorMap[lastName(d.data.name)]; })
-                            .attr('d', pieChartArc)
-                            .each(function(d) { this._current = d; }); // store the initial angles
-  }
-
-  function updatePieCharts(d) {
-    console.log(d);
-    // rep_candidates
-    pieChartRepPath.data(pie(d.rep_candidates));
-    pieChartRepPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
-    // dem_candidates
-    pieChartDemPath.data(pie(d.dem_candidates));
-    pieChartDemPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
-  }
-
-  // Store the displayed angles in _current.
-  // Then, interpolate from _current to the new angles.
-  // During the transition, _current is updated in-place by d3.interpolate.
-=======
   function drawStateElements(d) {
     // always build table no matter what
     buildTables(d);
@@ -812,36 +626,25 @@ var tooltip = d3.select("body").append("div")
     }
   }
 
->>>>>>> master
   function arcTween(angle) {
     var i = d3.interpolate(this._current, angle);
     this._current = i(0);
     return function(t) { return pieChartArc(i(t)); };
   }
 
-<<<<<<< HEAD
-=======
   function validatePartiesData(d) {
     if (isNaN(d[0].votes)) return false;
     return true;
   }
 
->>>>>>> master
   function lastName(name) {
     var splitName = name.split(' ');
     if (splitName.length === 0) { return ''; } 
     else { return splitName[splitName.length - 1]; }
   }
 
-<<<<<<< HEAD
-  /*
-      Helper functions to populate the state tables
-  */
-  function populateTables(d) {
-=======
   
   function buildTables(d) {
->>>>>>> master
     var tables = $('table');
     tables.each(function() { 
       updateCandidatesInfo(this, d);
@@ -867,15 +670,27 @@ var tooltip = d3.select("body").append("div")
     });
   }
 
-<<<<<<< HEAD
-=======
   function drawStatePaths(d) {
     statesChartG.selectAll('path')
         .data(topojson.feature(d, d.objects.states).features)
         .enter().append('path')
           .attr('d', statesChartPath)
           .attr('class', 'state')
-          .on('click', stateClicked);
+          .on('click', stateClicked)
+          .on("mouseover", function(d) {
+            tooltip.transition()
+               .duration(100)
+               .style("opacity", 1);
+                tooltip.html(d.id + "<br/>" + " Population: " + d.population + "<br/>" + "  Democratic Delegates: " + d["dem_delegates"] + "<br/>" + "  Republican Delegates: " + d["rep_delegates"])
+               .style("top", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 5) + "px");
+
+          })
+          .on("mouseout", function(d) {
+               tooltip.transition()
+               . duration(500)
+               .style("opacity", 0);
+          });
 
     statesChartG.append('path')
         .datum(topojson.mesh(d, d.objects.states, function(a, b) { return a !== b; }))
@@ -900,5 +715,4 @@ var tooltip = d3.select("body").append("div")
     stateIdMapData = data;
   });
 
->>>>>>> master
 });
