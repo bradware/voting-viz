@@ -42,6 +42,8 @@ $(document).ready(function() {
   var pieChartWidth =  calcChartsWidth($(window).width());
   var pieChartHeight = pieChartWidth;
   var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
+  var pieChartDemArc, pieChartRepArc;
+  var repText, demText;
   var pieChartRepPath, pieChartDemPath;
   var pie = d3.layout.pie()
                      .value(function(d) { 
@@ -57,7 +59,6 @@ $(document).ready(function() {
                          .attr('height', pieChartHeight)
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
-                         
 
   var pieChartDemSvg = d3.select('#dem-pie-chart').append('svg')
                          .attr('width', pieChartWidth)
@@ -600,7 +601,36 @@ $(document).ready(function() {
                           .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
                           .attr('d', pieChartArc)
                           .each(function(d) { this._current = d; }); // store the initial angles
-      
+
+    //draw the republican pie labels
+    pieChartRepArc = pieChartRepSvg.selectAll("g.slice")
+      .data(pie)
+      .enter()
+      .append("g")
+      .attr("class", "slice");
+
+    repText = pieChartRepArc.append("text")
+      .attr("transform", function(d) {
+        console.log(d)
+        var c = pieChartArc.centroid(d);
+        return "translate(" + c[0] +"," + c[1] + ")";
+      })
+      .text(function (d) {return d.data.percentage_total_votes + "%";});
+
+    //draw the democrat pie labels
+    pieChartDemArc = pieChartDemSvg.selectAll("g.slice")
+      .data(pie)
+      .enter()
+      .append("g")
+      .attr("class", "slice");
+
+    demText = pieChartDemArc.append("text")
+      .attr("transform", function(d) {
+        console.log(d)
+        var c = pieChartArc.centroid(d);
+        return "translate(" + c[0] +"," + c[1] + ")";
+      })
+      .text(function (d) {return d.data.percentage_total_votes + "%";});
   }
 
   function updatePieCharts(d) {
@@ -608,16 +638,38 @@ $(document).ready(function() {
       $('#rep-pie-chart').css('visibility', 'hidden').css('height', '0');
     }
     else {
+      //redraw the arcs
       pieChartRepPath.data(pie(d.rep_candidates));
-      pieChartRepPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
+      pieChartRepPath.transition().duration(750).attrTween('d', arcTween);
+      //move the labels
+      repText.data(pie(d.rep_candidates))
+        .transition().duration(750)
+        .attr("transform", function(d) {
+          var c = pieChartArc.centroid(d);
+          return "translate(" + c[0] +"," + c[1] + ")";
+        });
+      //update label percentages
+      repText.data(pie(d.rep_candidates))
+        .text(function (d) {return d.data.percentage_total_votes + "%"})
       $('#rep-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     if (!validatePartiesData(d.dem_candidates)) {
       $('#dem-pie-chart').css('visibility', 'hidden').css('height', '0');
     }
     else {
+      //redraw the arcs
       pieChartDemPath.data(pie(d.dem_candidates));
-      pieChartDemPath.transition().duration(750).attrTween('d', arcTween); // redraw the arcs
+      pieChartDemPath.transition().duration(750).attrTween('d', arcTween);
+      //move the labels
+      demText.data(pie(d.dem_candidates))
+        .transition().duration(750)
+        .attr("transform", function(d) {
+          var c = pieChartArc.centroid(d);
+          return "translate(" + c[0] +"," + c[1] + ")";
+        });
+      //update label percentages
+      demText.data(pie(d.dem_candidates))
+        .text(function (d) {return d.data.percentage_total_votes + "%"})
       $('#dem-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
   }
