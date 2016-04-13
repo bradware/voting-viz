@@ -1,0 +1,105 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  font-family: 'Lato', sans-serif;
+  border-top: 6px solid red; /* change this */
+  /* Margin bottom by footer height */
+  margin-bottom: 80px;
+  background-color: #FFFFFF;
+}
+.content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+a, a:hover {
+ color: blue; /* change this */
+}
+.data-wrapper, .data-error {
+  padding: 15px;
+}
+.tables-wrapper, .legend-wrapper, .pie-charts-wrapper, .bar-charts-wrapper, .horiz-bar-charts-wrapper {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+td {
+  background: white;
+}
+
+/*
+  candidate styling
+*/
+.clinton { background: #BB8AE8; }
+.sanders { background: #FFA6D2; }
+.cruz { background: #63D9F6; }
+.kasich { background: #FFFF44; }
+.rubio { background: #8CC767; }
+.trump { background: #FF6D6D; }
+
+
+/*
+  us states chart styling:
+*/
+.background {
+  fill: none;
+  pointer-events: all;
+}
+.state {
+  fill: #CCCCCC;
+  cursor: pointer;
+}
+.state.active {
+  fill: red !important;
+}
+.state:hover {
+  fill: blue;
+}
+.mesh {
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 
+  bar chart styling
+*/
+.bar:hover {
+  opacity: 50%;
+}
+.axis text {
+  font: 11px sans-serif;
+}
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.x.axis path {
+  display: none;
+}
+
+/*
+  legend styling
+*/
+.legend-label {
+  height: 22px;
+}
+.legend-text {
+  font-weight: bold;
+}
+
+
+/*
+ footer styling
+*/
+.panel-footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 80px;
+}
+.copyright {
+  margin: 10px 0;
+}

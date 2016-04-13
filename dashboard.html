@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Voting Viz</title>
+		<title>Dashboard</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,49 +14,50 @@
 
 		<!-- CSS -->
 		<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<<<<<<< HEAD
-		<link href="styles/styles.css" rel="stylesheet">
-=======
-		<link href="styles/index.css" rel="stylesheet">
-		<link href="styles/mobile.css" rel="stylesheet">
->>>>>>> master
+		<link href="styles/dashboard.css" rel="stylesheet">
 
 		<!-- JS -->
 	    <script src="bower_components/jquery/dist/jquery.min.js"></script>
 	    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	    <script src="bower_components/d3/d3.min.js"></script>
+	    <script src="bower_components/topojson/topojson.min.js"></script>
 	    <script src="js/loader.js"></script>
+	    <script src="js/main.js"></script>
 	    <!-- END OF HEADER -->
     </head>
 	<body class="container-fluid">
-<<<<<<< HEAD
 		<!-- Header Inserted -->
 	    <header class="row panel-heading"></header>
 	    <!-- End of Header -->
+	    <p><a href="/">← Back</a></p>
 	    <main class="content">
+	    	<h1 class="text-center">Dashboard</h1>
 	    	<div id="us-states-chart" class="text-center"></div>
 	    	<div class="data-wrapper">
-		    	<div id="tables-wrapper" class="row"></div>
-		    	<div class="pie-charts-wrapper">
-		    		<div id="rep-pie-chart" class="col-md-12 col-lg-6"></div>
+		    	<div class="tables-wrapper row"></div>
+		    	<div class="legend-wrapper row text-center"></div>
+		    	<div class="pie-charts-wrapper row text-center">
+		    		<h3>Candidate Votes %</h3>
 		    		<div id="dem-pie-chart" class="col-md-12 col-lg-6"></div>
+		    		<div id="rep-pie-chart" class="col-md-12 col-lg-6"></div>
+		    	</div>
+		    	<div class="bar-charts-wrapper row text-center">
+		    		<h3>Candidate Votes</h3>
+		    		<div id="dem-bar-chart" class="chart col-md-12 col-lg-6"></div>
+		    		<div id="rep-bar-chart" class="chart col-md-12 col-lg-6"></div>
+		    	</div>
+		    	<div class="horiz-bar-charts-wrapper row text-center">
+		    		<h3>Candidate Delegates</h3>
+		    		<div id="dem-horiz-bar-chart" class="chart col-md-12 col-lg-6"></div>
+		    		<div id="rep-horiz-bar-chart" class="chart col-md-12 col-lg-6"></div>
 		    	</div>
 		    </div>
 		    <div class="data-error text-center">
 		    	<h3>Primary results have not come in for this state!</h3>
 		    	<h4>Please select another one</h4>
 		    </div>
-=======
-	    <main class="content text-center">
-	    	<div class="section">
-	    		<h1>Voting Viz</h1>
-	    		<i>Coming soon to a monitor near you.</i>
-	    	</div>
-	    	<div class="section">
-    			<h2><a href="dashboard.html">Enter Dashboard</a></h2>
-    		</div>
->>>>>>> master
 	    </main>
-	    <!-- Footer Inserted -->
+	     <!-- Footer Inserted -->
 	    <footer class="row panel-footer text-center"></footer>
 	    <!-- End of Footer -->
 	</body>
