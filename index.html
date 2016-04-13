@@ -26,15 +26,14 @@
 	    		resizeContentHeight();
 		    	$(window).on('resize', resizeContentHeight);
 
-		    	// This is necessary because cannot d3.select the wrapper divs for the state charts
-			  	// Sometimes they are hidden from DOM and return width as 0 --> not good
 			  	function resizeContentHeight() { 
 			  		var windowHeight = $(window).height();
 			  		$('.content').height(calcContentHeight(windowHeight));
 			  	}
 
 			  	function calcContentHeight(height) {
-				    if (height <= 600) { return 365; } // iPhone5
+			  		if (height <= 350) { return height; }
+				    else if (height <= 600) { return 365; } // iPhone5
 				    else if (height <= 700) { return 375; } // iPhone6
 				    else if (height <= 775) { return 385; } // iPhone6+ & Nexus 6P
 				    else if (height <= 775) { return 385; } // iPhone6+
