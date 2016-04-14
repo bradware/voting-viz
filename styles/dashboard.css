@@ -24,7 +24,7 @@ a, a:hover {
   padding-bottom: 15px;
 }
 td {
-  background: white;
+  background: #FFFFFF;
 }
 
 /*
@@ -36,6 +36,8 @@ td {
 .kasich { background: #FFFF44; }
 .rubio { background: #8CC767; }
 .trump { background: #FF6D6D; }
+.democrat { color: #1975D1; }
+.republican { color: #CC3333; }
 
 /*
   us states chart styling:
@@ -84,23 +86,12 @@ td {
 */
 .tooltip {
   line-height: 1;
-  font-weight: bold;
+  font-weight: 400;
   padding: 5px;
   background: #9F000F; 
   color: #FFFFFF;
   border-radius: 2px;
 }
-/*.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 50%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}*/
 
 /*
   legend styling

@@ -744,13 +744,13 @@ $(document).ready(function() {
            .style('opacity', 1);
     if (state === undefined) {
       tooltip.html('Results are not in for this state!' + '<br/>' + 'Please check back later')
-         .style('top', (d3.event.pageX + 5) + 'px')
-         .style('top', (d3.event.pageY - 5) + 'px');
+         .style('top', (d3.event.pageX) + 'px')
+         .style('top', (d3.event.pageY) + 'px');
     } else {
-      tooltip.html(state.name + '<br/>' + ' Population: ' + state.population.toLocaleString() + '<br/>' + 
-          '  Democratic Delegates: ' + state.dem_delegates + '<br/>' + '  Republican Delegates: ' + state.dem_delegates)
-         .style('top', (d3.event.pageX + 5) + 'px')
-         .style('top', (d3.event.pageY - 5) + 'px');
+      tooltip.html('<span style="font-weight:bold">' + state.name + ' - ' + state.code + '</span>' + '<br/>' + ' Population: ' + state.population.toLocaleString() + '<br/>' + 
+          '  Dem Delegates: ' + state.dem_delegates + '<br/>' + '  Rep Delegates: ' + state.dem_delegates)
+         .style('top', (d3.event.pageX) + 'px')
+         .style('top', (d3.event.pageY) + 'px');
     }
   }
 
