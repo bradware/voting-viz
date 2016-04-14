@@ -156,9 +156,9 @@ $(document).ready(function() {
                        .append('g')
                         .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
 
-   var tooltip = d3.select("body").append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 6);
+   var tooltip = d3.select('body').append('div')
+                   .attr('class', 'tooltip')
+                   .style('opacity', 0);
 
   function resizeCharts() {
     var newWidth = calcChartsWidth($(window).width());
@@ -372,29 +372,28 @@ $(document).ready(function() {
   }
 
   function findStateData(d) {
+    var stateData = matchStateData(d);
+    if (stateData !== undefined) {
+      drawStateElements(stateData);
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  function matchStateData(d) {
+    var stateData;
     var stateObj = stateIdMapData.find(function(state) {
       // state.id is a String so use '==' instead of '==='
       return d.id == state.id; 
     });
-
-    if (stateObj === undefined) {
-      console.log('ERROR MATCHING STATE ID TO OBJECT');
-      return false;
-    } 
-    else {
+    if (stateObj !== undefined) {
       stateData = statePrimariesData.find(function(state) {
         return state.code === stateObj.code;
       });
-
-      if (stateData === undefined) {
-        console.log('ERROR MATCHING STATE CODE TO OBJECT');
-        return false;
-      } 
-      else {
-        drawStateElements(stateData);
-        return true;
-      }
     }
+    return stateData;
   }
 
   function drawStateElements(d) {
@@ -729,25 +728,36 @@ $(document).ready(function() {
           .attr('d', statesChartPath)
           .attr('class', 'state')
           .on('click', stateClicked)
-          .on("mouseover", function(d) {
-            tooltip.transition()
-               .duration(100)
-               .style("opacity", 1);
-                tooltip.html(d.name + "<br/>" + " Population: " + d.population + "<br/>" + "  Democratic Delegates: " + d["dem_delegates"] + "<br/>" + "  Republican Delegates: " + d["rep_delegates"])
-               .style("top", (d3.event.pageX + 5) + "px")
-               .style("top", (d3.event.pageY - 5) + "px");
-
-          })
-          .on("mouseout", function(d) {
-               tooltip.transition()
-               . duration(500)
-               .style("opacity", 0);
-          });
+          .on('mouseover', drawTooltip)
+          .on('mouseout', hideTooltip);
 
     statesChartG.append('path')
         .datum(topojson.mesh(d, d.objects.states, function(a, b) { return a !== b; }))
         .attr('class', 'mesh')
         .attr('d', statesChartPath);
+  }
+
+  function drawTooltip(d) {
+    var state = matchStateData(d);
+    tooltip.transition()
+           .duration(100)
+           .style('opacity', 1);
+    if (state === undefined) {
+      tooltip.html('Results are not in for this state!' + '<br/>' + 'Please check back later')
+         .style('top', (d3.event.pageX + 5) + 'px')
+         .style('top', (d3.event.pageY - 5) + 'px');
+    } else {
+      tooltip.html(state.name + '<br/>' + ' Population: ' + state.population.toLocaleString() + '<br/>' + 
+          '  Democratic Delegates: ' + state.dem_delegates + '<br/>' + '  Republican Delegates: ' + state.dem_delegates)
+         .style('top', (d3.event.pageX + 5) + 'px')
+         .style('top', (d3.event.pageY - 5) + 'px');
+    }
+  }
+
+  function hideTooltip() {
+    tooltip.transition()
+            .duration(500)
+            .style('opacity', 0);
   }
 
   // External data files loaded
