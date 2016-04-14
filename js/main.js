@@ -38,6 +38,10 @@ $(document).ready(function() {
 
   var statesChartG = statesChartSvg.append('g').style('stroke-width', '1.5px');
 
+  var tooltip = d3.select('#us-states-chart').append('div')
+                  .attr('class', 'tooltip')
+                  .style('opacity', 0);
+
   // global state pie chart properties
   var pieChartWidth =  calcChartsWidth($(window).width());
   var pieChartHeight = pieChartWidth;
@@ -155,10 +159,6 @@ $(document).ready(function() {
                         .attr('height', horizBarChartOuterHeight)
                        .append('g')
                         .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
-
-   var tooltip = d3.select('body').append('div')
-                   .attr('class', 'tooltip')
-                   .style('opacity', 0);
 
   function resizeCharts() {
     var newWidth = calcChartsWidth($(window).width());
