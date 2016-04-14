@@ -102,3 +102,12 @@ td {
 .copyright {
   margin: 10px 0;
 }
+
+.tooltip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 5px;
+  background: #9F000F; 
+  color: #fff;
+  border-radius: 2px;
+}

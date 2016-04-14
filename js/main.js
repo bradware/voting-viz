@@ -156,6 +156,10 @@ $(document).ready(function() {
                        .append('g')
                         .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
 
+   var tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 6);
+
   function resizeCharts() {
     var newWidth = calcChartsWidth($(window).width());
     // doesn't have parameter b/c calculates width itself
@@ -724,7 +728,21 @@ $(document).ready(function() {
         .enter().append('path')
           .attr('d', statesChartPath)
           .attr('class', 'state')
-          .on('click', stateClicked);
+          .on('click', stateClicked)
+          .on("mouseover", function(d) {
+            tooltip.transition()
+               .duration(100)
+               .style("opacity", 1);
+                tooltip.html(d.name + "<br/>" + " Population: " + d.population + "<br/>" + "  Democratic Delegates: " + d["dem_delegates"] + "<br/>" + "  Republican Delegates: " + d["rep_delegates"])
+               .style("top", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 5) + "px");
+
+          })
+          .on("mouseout", function(d) {
+               tooltip.transition()
+               . duration(500)
+               .style("opacity", 0);
+          });
 
     statesChartG.append('path')
         .datum(topojson.mesh(d, d.objects.states, function(a, b) { return a !== b; }))
