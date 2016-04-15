@@ -122,14 +122,10 @@ $(document).ready(function() {
   var horizBarChartWidth  = horizBarChartOuterWidth - horizBarChartMargin.left - horizBarChartMargin.right;
   var horizBarChartHeight = horizBarChartOuterHeight - horizBarChartMargin.top - horizBarChartMargin.bottom;
    
-  var repHorizBarChartXScale = d3.scale.ordinal()
-                                 .rangeRoundBands([0, horizBarChartWidth], .1);
-  var repHorizBarChartYScale = d3.scale.linear()
-                                 .range([horizBarChartHeight, 0]);
-  var demHorizBarChartXScale = d3.scale.ordinal()
-                                 .rangeRoundBands([0, horizBarChartWidth], .1);
-  var demHorizBarChartYScale = d3.scale.linear()
-                                 .range([horizBarChartHeight, 0]);
+  var repHorizBarChartXScale = d3.scale.linear().range([0, horizBarChartWidth]);
+  var repHorizBarChartYScale = d3.scale.ordinal().rangeRoundBands([0, horizBarChartHeight], 0.4);
+  var demHorizBarChartXScale = d3.scale.linear().range([0, horizBarChartWidth]);
+  var demHorizBarChartYScale = d3.scale.ordinal().rangeRoundBands([0, horizBarChartHeight], 0.4);
    
   var repHorizBarChartXAxis = d3.svg.axis()
                                 .scale(repHorizBarChartXScale)
@@ -270,15 +266,11 @@ $(document).ready(function() {
     horizBarChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
     horizBarChartWidth  = horizBarChartOuterWidth - horizBarChartMargin.left - horizBarChartMargin.right;
     horizBarChartHeight = horizBarChartOuterHeight - horizBarChartMargin.top - horizBarChartMargin.bottom;
-     
-    repHorizBarChartXScale = d3.scale.ordinal()
-                               .rangeRoundBands([0, horizBarChartWidth], .1);
-    repHorizBarChartYScale = d3.scale.linear()
-                               .range([horizBarChartHeight, 0]);
-    demHorizBarChartXScale = d3.scale.ordinal()
-                               .rangeRoundBands([0, horizBarChartWidth], .1);
-    demHorizBarChartYScale = d3.scale.linear()
-                               .range([horizBarChartHeight, 0]);
+
+    var repHorizBarChartXScale = d3.scale.linear().range([0, horizBarChartWidth]);
+    var repHorizBarChartYScale = d3.scale.ordinal().rangeRoundBands([0, horizBarChartHeight], 0.4);
+    var demHorizBarChartXScale = d3.scale.linear().range([0, horizBarChartWidth]);
+    var demHorizBarChartYScale = d3.scale.ordinal().rangeRoundBands([0, horizBarChartHeight], 0.4);
      
     repHorizBarChartXAxis = d3.svg.axis()
                              .scale(repHorizBarChartXScale)
@@ -500,19 +492,19 @@ $(document).ready(function() {
       $('#rep-horiz-bar-chart').css('visibility', 'hidden').css('height', '0');
      } 
     else {
-      repHorizBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
-      repHorizBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.total_delegates; })]);
+      repHorizBarChart.select('.x.axis').remove();
+      repHorizBarChartXScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.total_delegates; })]);
+      repHorizBarChartYScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
       repHorizBarChart.append('g')
                .attr('class', 'x axis')
                .attr('transform', 'translate(0,' + horizBarChartHeight + ')') 
-               .call(repBarChartXAxis);
-      repHorizBarChart.select('.y.axis').remove();
+               .call(repHorizBarChartXAxis);
       repHorizBarChart.append('g')
                .attr('class', 'y axis')
                .call(repHorizBarChartYAxis)
                .append('text')
-                .attr('x', -5)
-                .attr('y', -15)
+                .attr('x', 27)
+                .attr('y', horizBarChartHeight + 19)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Delegates');
@@ -520,18 +512,18 @@ $(document).ready(function() {
       // new data appended
       repHorizBars.enter().append('rect')
              .attr('class', 'bar')
-             .attr('x', function(cand) { return repHorizBarChartXScale(lastName(cand.name)); })
-             .attr('y', function(cand) { return repHorizBarChartYScale(cand.total_delegates); })
-             .attr('height', function(cand) { return horizBarChartHeight - repHorizBarChartYScale(cand.total_delegates); })
-             .attr('width', repHorizBarChartXScale.rangeBand())
+             .attr('x', 1)
+             .attr('y', function(cand) { return repHorizBarChartYScale(lastName(cand.name)); })
+             .attr('width', function(cand) { return repHorizBarChartXScale(cand.total_delegates); })
+             .attr('height', repHorizBarChartYScale.rangeBand())
              .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
       // remove old data
       repHorizBars.exit().remove();
       // update data bindings
       repHorizBars.transition()
              .duration(750)
-             .attr('y', function(cand) { return repHorizBarChartYScale(cand.total_delegates); })
-             .attr('height', function(cand) { return horizBarChartHeight - repHorizBarChartYScale(cand.total_delegates); })
+             .attr('y', function(cand) { return repHorizBarChartYScale(lastName(cand.name)); })
+             .attr('height', repHorizBarChartYScale.rangeBand())
       // show new bar chart
       $('#rep-horiz-bar-chart').css('visibility', 'visible').css('height', 'auto');
     }
@@ -541,19 +533,19 @@ $(document).ready(function() {
       $('#dem-horiz-bar-chart').css('visibility', 'hidden').css('height', '0');
     } 
     else {
-      demHorizBarChartXScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
-      demHorizBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.total_delegates; })]);
+      demHorizBarChart.select('.x.axis').remove();
+      demHorizBarChartXScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.total_delegates; })]);
+      demHorizBarChartYScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
       demHorizBarChart.append('g')
                  .attr('class', 'x axis')
                  .attr('transform', 'translate(0,' + horizBarChartHeight + ')') 
                  .call(demHorizBarChartXAxis);
-      demHorizBarChart.select('.y.axis').remove();
       demHorizBarChart.append('g')
                  .attr('class', 'y axis')
                  .call(demHorizBarChartYAxis)
                  .append('text')
-                  .attr('x', -5)
-                  .attr('y', -15)
+                  .attr('x', 27)
+                  .attr('y', horizBarChartHeight + 19)
                   .attr('dy', '.71em')
                   .style('text-anchor', 'end')
                   .text('Delegates');
@@ -561,18 +553,18 @@ $(document).ready(function() {
       // new data appended
       demHorizBars.enter().append('rect')
              .attr('class', 'bar')
-             .attr('x', function(cand) { return demHorizBarChartXScale(lastName(cand.name)); })
-             .attr('y', function(cand) { return demHorizBarChartYScale(cand.total_delegates); })
-             .attr('height', function(cand) { return horizBarChartHeight - demHorizBarChartYScale(cand.total_delegates); })
-             .attr('width', demHorizBarChartXScale.rangeBand())
+             .attr('x', 1)
+             .attr('y', function(cand) { return demHorizBarChartYScale(lastName(cand.name)); })
+             .attr('width', function(cand) { return demHorizBarChartXScale(cand.total_delegates); })
+             .attr('height', demHorizBarChartYScale.rangeBand())
              .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
       // remove old data
       demHorizBars.exit().remove();
       // update data bindings
       demHorizBars.transition()
              .duration(750)
-             .attr('y', function(cand) { return demHorizBarChartYScale(cand.total_delegates); })
-             .attr('height', function(cand) { return horizBarChartHeight - demHorizBarChartYScale(cand.total_delegates); })
+             .attr('y', function(cand) { return demHorizBarChartYScale(lastName(cand.name)); })
+             .attr('height', demHorizBarChartYScale.rangeBand())
       // show new bar chart
       $('#dem-horiz-bar-chart').css('visibility', 'visible').css('height', 'auto');
     }
