@@ -77,7 +77,12 @@ td {
   stroke: #000;
   shape-rendering: crispEdges;
 }
-.x.axis path {
+
+#rep-bar-chart .x.axis path {
+  display: none;
+}
+
+#dem-bar-chart .x.axis path{
   display: none;
 }
 
