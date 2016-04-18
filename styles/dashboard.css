@@ -4,7 +4,7 @@ html {
 }
 body {
   font-family: 'Lato', sans-serif;
-  border-top: 6px solid red; /* change this */
+  border-top: 6px solid #CC3333; 
   /* Margin bottom by footer height */
   margin-bottom: 80px;
   background-color: #FFFFFF;
@@ -13,9 +13,6 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-a, a:hover {
- color: blue; /* change this */
-}
 .data-wrapper, .data-error {
   padding: 15px;
 }
@@ -23,6 +20,7 @@ a, a:hover {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
 td {
   background: #FFFFFF;
 }
@@ -36,8 +34,8 @@ td {
 .kasich { background: #FFFF44; }
 .rubio { background: #8CC767; }
 .trump { background: #FF6D6D; }
-.democrat { color: #1975D1; }
-.republican { color: #CC3333; }
+.democrat, .democrat:hover { color: #1975D1; }
+.republican, .republican:hover { color: #CC3333; }
 
 /*
   us states chart styling:
@@ -93,7 +91,7 @@ td {
   line-height: 1;
   font-weight: 400;
   padding: 5px;
-  background: #9F000F; 
+  background: #CC3333; 
   color: #FFFFFF;
   border-radius: 2px;
 }

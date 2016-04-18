@@ -43,7 +43,10 @@ h2 {
 }
 .section {
   padding: 15px;
-} 
+}
+
+.democrat, .democrat:hover { color: #1975D1; }
+.republican, .republican:hover { color: #CC3333; }
 
 /*
  footer styling

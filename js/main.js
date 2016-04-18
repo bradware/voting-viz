@@ -165,7 +165,7 @@ $(document).ready(function() {
     resizeBarCharts(newWidth);
     resizeHorizBarCharts(newWidth);
     
-    if (stateData != null) {
+    if (stateData !== undefined) {
       drawPieCharts(stateData);
       drawBarCharts(stateData);
       drawHorizBarCharts(stateData);
@@ -352,7 +352,7 @@ $(document).ready(function() {
   function reset() {
     stateActive.classed('active', false);
     stateActive = d3.select(null);
-    stateData = null;
+    stateData = undefined;
 
     statesChartG.transition()
                 .duration(750)
@@ -364,7 +364,7 @@ $(document).ready(function() {
   }
 
   function findStateData(d) {
-    var stateData = matchStateData(d);
+    stateData = matchStateData(d);
     if (stateData !== undefined) {
       drawStateElements(stateData);
       return true;
@@ -375,17 +375,17 @@ $(document).ready(function() {
   }
 
   function matchStateData(d) {
-    var stateData;
+    var newStateData;
     var stateObj = stateIdMapData.find(function(state) {
       // state.id is a String so use '==' instead of '==='
       return d.id == state.id; 
     });
     if (stateObj !== undefined) {
-      stateData = statePrimariesData.find(function(state) {
+      newStateData = statePrimariesData.find(function(state) {
         return state.code === stateObj.code;
       });
     }
-    return stateData;
+    return newStateData;
   }
 
   function drawStateElements(d) {
