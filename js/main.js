@@ -6,7 +6,6 @@ $(document).ready(function() {
 
   // setup and global logic vars 
   var stateChartsDrawn = false;
-  var stateChartsDrawnAfterResize = true;
   var stateIdMapData;
   var statePrimariesData;
   var usStatesData;
