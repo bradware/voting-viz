@@ -129,18 +129,18 @@ $(document).ready(function() {
    
   var repHorizBarChartXAxis = d3.svg.axis()
                                 .scale(repHorizBarChartXScale)
-                                .orient('bottom');
+                                .orient('bottom')
+                                .ticks(10);
   var repHorizBarChartYAxis = d3.svg.axis()
                                 .scale(repHorizBarChartYScale)
                                 .orient('left')
-                                .ticks(10);
   var demHorizBarChartXAxis = d3.svg.axis()
                                 .scale(demHorizBarChartXScale)
-                                .orient('bottom');
+                                .orient('bottom')
+                                .ticks(10);
   var demHorizBarChartYAxis = d3.svg.axis()
                                 .scale(demHorizBarChartYScale)
-                                .orient('left')
-                                .ticks(10);
+                                .orient('left')                       
   
   var repHorizBarChart = d3.select('#rep-horiz-bar-chart')
                            .append('svg')
@@ -274,18 +274,18 @@ $(document).ready(function() {
      
     repHorizBarChartXAxis = d3.svg.axis()
                              .scale(repHorizBarChartXScale)
-                             .orient('bottom');
+                             .orient('bottom')
+                              .ticks(10);
     repHorizBarChartYAxis = d3.svg.axis()
                              .scale(repHorizBarChartYScale)
                              .orient('left')
-                             .ticks(10);
     demHorizBarChartXAxis = d3.svg.axis()
                              .scale(demHorizBarChartXScale)
-                             .orient('bottom');
+                             .orient('bottom')
+                             .ticks(10);
     demHorizBarChartYAxis = d3.svg.axis()
                              .scale(demHorizBarChartYScale)
                              .orient('left')
-                             .ticks(10);
     
     repHorizBarChart = d3.select('#rep-horiz-bar-chart').selectAll('svg').remove();
     demHorizBarChart = d3.select('#dem-horiz-bar-chart').selectAll('svg').remove();
