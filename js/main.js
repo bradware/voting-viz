@@ -2,7 +2,7 @@ $(document).ready(function() {
   // global vars for editing the DOM
   var dataWrapper = $('.data-wrapper').hide();
   var dataError = $('.data-error').hide();
-  d3.select(window).on('resize', resizeCharts);
+  $(window).on('resize', resizeCharts);
 
   // setup and global logic vars 
   var stateChartsDrawn = false;
@@ -14,7 +14,7 @@ $(document).ready(function() {
                   'Kasich': '#FFFF44', 'Rubio': '#8CC767', 'Trump': '#FF6D6D'};
   
   // global us states chart properties
-  var statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
+  var statesChartWidth = calcStatesChartWidth($(window).width());
   var statesChartRatio = 0.5;
   var statesChartHeight = statesChartWidth * statesChartRatio;
   var stateActive = d3.select(null);
@@ -152,13 +152,13 @@ $(document).ready(function() {
                         .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
 
   function resizeCharts() {
-    var newWidth = calcChartsWidth($(window).width());
-    // doesn't have parameter b/c calculates width itself
-    // this is b/c us-states-chart is always in DOM and never hidden
-    resizeStatesChart();
-    resizePieCharts(newWidth);
-    resizeBarCharts(newWidth);
-    resizeHorizBarCharts(newWidth);
+    var statesChartWidth = calcStatesChartWidth($(window).width());
+    var chartsWidth = calcChartsWidth($(window).width());
+    
+    resizeStatesChart(statesChartWidth);
+    resizePieCharts(chartsWidth);
+    resizeBarCharts(chartsWidth);
+    resizeHorizBarCharts(chartsWidth);
     
     if (stateData !== undefined) {
       drawPieCharts(stateData);
@@ -171,8 +171,8 @@ $(document).ready(function() {
     }
   }
 
-  function resizeStatesChart() {
-    statesChartWidth = parseInt(d3.select('#us-states-chart').style('width'));
+  function resizeStatesChart(width) {
+    statesChartWidth = width;
     statesChartHeight = statesChartWidth * statesChartRatio;
     projection.translate([statesChartWidth / 2, statesChartHeight / 2]).scale(statesChartWidth);
     statesChartSvg.style('width', statesChartWidth + 'px').style('height', statesChartHeight + 'px');
@@ -296,18 +296,22 @@ $(document).ready(function() {
                           .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
   }
 
+  function calcStatesChartWidth(width) {
+    if (width <= 900) { return parseInt(d3.select('#us-states-chart').style('width')); }
+    else if (width <= 1200) {  return parseInt(d3.select('#us-states-chart').style('width')) * 0.90; }
+    else if (width <= 1600) {  return parseInt(d3.select('#us-states-chart').style('width')) * 0.85; }
+    else { return parseInt(d3.select('#us-states-chart').style('width')) * 0.75; }
+  }
+
   // This is necessary because cannot d3.select the wrapper divs for the state charts
   // Sometimes they are hidden from DOM and return width as 0 --> not good
   function calcChartsWidth(width) { 
     if (width <= 350) { return 250; } // iPhone5
     else if (width <= 400) { return 275; } // iPhone6
     else if (width <= 600) { return 300; } // iPhone6+
-    else if (width <= 900) { return 500; } // one column width
-    else if (width <= 1184) { return 550; } // one column width
-    else if (width <= 1300) { return 500; } // two column width
-    else if (width <= 1500) { return 550; } // two column width
-    else if (width <= 1800) { return 600; } // two column width
-    else return 750; // two column width
+    else if (width <= 900) { return 350; } // one column width
+    else if (width <= 1600) { return 450; } // two column width
+    else return 500; // two column width
   }
   
   // functions based on user actions
@@ -331,6 +335,8 @@ $(document).ready(function() {
                 .style('stroke-width', 1.5 / scale + 'px')
                 .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
 
+    hideTooltip();
+              
     if (findStateData(d)) {
       dataError.fadeOut();
       dataWrapper.fadeIn();
@@ -721,26 +727,37 @@ $(document).ready(function() {
   }
 
   function drawTooltip(d) {
-    var state = matchStateData(d);
-    tooltip.transition()
-           .duration(100)
-           .style('opacity', 1);
-    if (state === undefined) {
-      tooltip.html('Results are not in for this state!' + '<br/>' + 'Please check back later')
-         .style('top', (d3.event.pageX) + 'px')
-         .style('top', (d3.event.pageY) + 'px');
-    } else {
-      tooltip.html('<span style="font-weight:bold">' + state.name + ' - ' + state.code + '</span>' + '<br/>' + ' Population: ' + state.population.toLocaleString() + '<br/>' + 
-          '  Dem Delegates: ' + state.dem_delegates + '<br/>' + '  Rep Delegates: ' + state.dem_delegates)
-         .style('top', (d3.event.pageX) + 'px')
-         .style('top', (d3.event.pageY) + 'px');
+    if (stateActive.node() === this) {
+      hideTooltip();
+    }
+    else {
+      var width = $(window).width();
+      var state = matchStateData(d);
+      if (state === undefined) {
+        tooltip.html('Results are not in for this state!' + '<br/>' + 'Please check back later')
+      } 
+      else {
+        tooltip.html('<span style="font-weight:bold">' + state.name + ' - ' + state.code + '</span>' + '<br/>' + ' Population: ' + state.population.toLocaleString() + '<br/>' + 
+            '  Dem Delegates: ' + state.dem_delegates + '<br/>' + '  Rep Delegates: ' + state.dem_delegates)
+      }
+      if (width <= 900) {
+        tooltip.style('top', (d3.event.pageY + 50) + 'px');
+        tooltip.style('left', 15 + 'px');
+      } 
+      else {
+        tooltip.style('top', (d3.event.pageY + 25) + 'px');
+        tooltip.style('left', (d3.event.pageX + 5) + 'px');
+      }
+      tooltip.transition()
+             .duration(100)
+             .style('opacity', 1);
     }
   }
 
   function hideTooltip() {
     tooltip.transition()
-            .duration(500)
-            .style('opacity', 0);
+           .duration(100)
+           .style('opacity', 0);
   }
 
   // External data files loaded
