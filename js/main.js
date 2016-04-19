@@ -77,14 +77,10 @@ $(document).ready(function() {
   var barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
   var barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
    
-  var repBarChartXScale = d3.scale.ordinal()
-                            .rangeRoundBands([0, barChartWidth], .1);
-  var repBarChartYScale = d3.scale.linear()
-                            .range([barChartHeight, 0]);
-  var demBarChartXScale = d3.scale.ordinal()
-                            .rangeRoundBands([0, barChartWidth], .1);
-  var demBarChartYScale = d3.scale.linear()
-                            .range([barChartHeight, 0]);
+  var repBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
+  var repBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+  var demBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
+  var demBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
    
   var repBarChartXAxis = d3.svg.axis()
                            .scale(repBarChartXScale)
@@ -218,14 +214,10 @@ $(document).ready(function() {
     barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
     barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
      
-    repBarChartXScale = d3.scale.ordinal()
-                              .rangeRoundBands([0, barChartWidth], .1);
-    repBarChartYScale = d3.scale.linear()
-                              .range([barChartHeight, 0]);
-    demBarChartXScale = d3.scale.ordinal()
-                              .rangeRoundBands([0, barChartWidth], .1);
-    demBarChartYScale = d3.scale.linear()
-                              .range([barChartHeight, 0]);
+    repBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
+    repBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+    demBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
+    demBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
      
     repBarChartXAxis = d3.svg.axis()
                              .scale(repBarChartXScale)
