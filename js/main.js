@@ -523,7 +523,7 @@ $(document).ready(function() {
       repHorizBars.transition()
              .duration(750)
              .attr('y', function(cand) { return repHorizBarChartYScale(lastName(cand.name)); })
-             .attr('height', repHorizBarChartYScale.rangeBand())
+             .attr('width', function(cand) { return repHorizBarChartXScale(cand.total_delegates); })
       // show new bar chart
       $('#rep-horiz-bar-chart').css('visibility', 'visible').css('height', 'auto');
     }
@@ -564,7 +564,7 @@ $(document).ready(function() {
       demHorizBars.transition()
              .duration(750)
              .attr('y', function(cand) { return demHorizBarChartYScale(lastName(cand.name)); })
-             .attr('height', demHorizBarChartYScale.rangeBand())
+             .attr('width', function(cand) { return demHorizBarChartXScale(cand.total_delegates); })
       // show new bar chart
       $('#dem-horiz-bar-chart').css('visibility', 'visible').css('height', 'auto');
     }
