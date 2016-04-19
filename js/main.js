@@ -336,6 +336,7 @@ $(document).ready(function() {
                 .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
 
     hideTooltip();
+    // Add text to the data here
               
     if (findStateData(d)) {
       dataError.fadeOut();
