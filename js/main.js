@@ -69,41 +69,43 @@ $(document).ready(function() {
                          .append('g')
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
 
-  // global state bar chart properties
+  // global state bar chart properties shared among all
   var barChartOuterWidth = calcBarChartsWidth($(window).width()); 
   var barChartOuterHeight = barChartOuterWidth;
   var barChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
   var barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
   var barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
-   
+  
   var repBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
-  var repBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
   var demBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
-  var demBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
-   
+
   var repBarChartXAxis = d3.svg.axis()
                            .scale(repBarChartXScale)
                            .orient('bottom');
-  var repBarChartYAxis = d3.svg.axis()
-                           .scale(repBarChartYScale)
-                           .orient('left')
-                           .ticks(10);
   var demBarChartXAxis = d3.svg.axis()
                            .scale(demBarChartXScale)
-                           .orient('bottom');
-  var demBarChartYAxis = d3.svg.axis()
-                           .scale(demBarChartYScale)
+                           .orient('bottom');                        
+  // global state votes bar chart properties
+  var repVotBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+  var demVotBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+  
+  var repVotBarChartYAxis = d3.svg.axis()
+                           .scale(repVotBarChartYScale)
+                           .orient('left')
+                           .ticks(10);
+  var demVotBarChartYAxis = d3.svg.axis()
+                           .scale(demVotBarChartYScale)
                            .orient('left')
                            .ticks(10);
   
-  var repBarChart = d3.select('#rep-bar-chart')
+  var repVotBarChart = d3.select('#rep-vot-bar-chart')
                       .append('svg')
                         .attr('width', barChartOuterWidth)
                         .attr('height', barChartOuterHeight)
                       .append('g')
                         .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
-  var demBarChart = d3.select('#dem-bar-chart')
+  var demVotBarChart = d3.select('#dem-vot-bar-chart')
                       .append('svg')
                         .attr('width', barChartOuterWidth)
                         .attr('height', barChartOuterHeight)
@@ -111,21 +113,13 @@ $(document).ready(function() {
                         .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
   // global state delegate bar chart properties
-  var repDelBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
   var repDelBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
-  var demDelBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
   var demDelBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
    
-  var repDelBarChartXAxis = d3.svg.axis()
-                              .scale(repDelBarChartXScale)
-                              .orient('bottom');
   var repDelBarChartYAxis = d3.svg.axis()
                               .scale(repDelBarChartYScale)
                               .orient('left')
                               .ticks(10);
-  var demDelBarChartXAxis = d3.svg.axis()
-                              .scale(demDelBarChartXScale)
-                              .orient('bottom');
   var demDelBarChartYAxis = d3.svg.axis()
                               .scale(demDelBarChartYScale)
                               .orient('left')
@@ -146,8 +140,9 @@ $(document).ready(function() {
                         .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
   function resizeCharts() {
-    var statesChartWidth = calcStatesChartWidth($(window).width());
-    var chartsWidth = calcBarChartsWidth($(window).width());
+    var windowWidth = $(window).width();
+    var statesChartWidth = calcStatesChartWidth(windowWidth);
+    var chartsWidth = calcBarChartsWidth(windowWidth);
     
     resizeStatesChart(statesChartWidth);
     resizePieCharts(chartsWidth);
@@ -156,7 +151,6 @@ $(document).ready(function() {
     if (stateData !== undefined) {
       drawPieCharts(stateData);
       drawBarCharts(stateData);
-      drawDelBarCharts(stateData);
       stateChartsDrawn = true;
     }
     else {
@@ -200,55 +194,49 @@ $(document).ready(function() {
   }
 
   function resizeBarCharts(width) {
-    // these vars are shared
+    // global bar chart properties
     barChartOuterWidth = width;
     barChartOuterHeight = barChartOuterWidth;
     barChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
     barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
     barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
     
-    // votes bar chart
     repBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
-    repBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
     demBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
-    demBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
-     
+
     repBarChartXAxis = d3.svg.axis()
                              .scale(repBarChartXScale)
                              .orient('bottom');
-    repBarChartYAxis = d3.svg.axis()
-                             .scale(repBarChartYScale)
-                             .orient('left')
-                             .ticks(10);
     demBarChartXAxis = d3.svg.axis()
                              .scale(demBarChartXScale)
                              .orient('bottom');
-    demBarChartYAxis = d3.svg.axis()
-                             .scale(demBarChartYScale)
+
+    // votes bar chart
+    repVotBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+    demVotBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+     
+    repVotBarChartYAxis = d3.svg.axis()
+                             .scale(repVotBarChartYScale)
+                             .orient('left')
+                             .ticks(10);
+    demVotBarChartYAxis = d3.svg.axis()
+                             .scale(demVotBarChartYScale)
                              .orient('left')
                              .ticks(10);
 
-    repBarChart = d3.select('#rep-bar-chart').selectAll('svg').remove();
-    demBarChart = d3.select('#dem-bar-chart').selectAll('svg').remove();
+    repVotBarChart = d3.select('#rep-vot-bar-chart').selectAll('svg').remove();
+    demVotBarChart = d3.select('#dem-vot-bar-chart').selectAll('svg').remove();
     
     // delegates bar chart
-    repDelBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
     repDelBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
-    demDelBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
     demDelBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
      
-    repDelBarChartXAxis = d3.svg.axis()
-                            .scale(repBarChartXScale)
-                            .orient('bottom');
     repDelBarChartYAxis = d3.svg.axis()
-                            .scale(repBarChartYScale)
+                            .scale(repDelBarChartYScale)
                             .orient('left')
                             .ticks(10);
-    demDelBarChartXAxis = d3.svg.axis()
-                            .scale(demBarChartXScale)
-                            .orient('bottom');
     demDelBarChartYAxis = d3.svg.axis()
-                            .scale(demBarChartYScale)
+                            .scale(demDelBarChartYScale)
                             .orient('left')
                             .ticks(10);
 
@@ -256,14 +244,14 @@ $(document).ready(function() {
     demDelBarChart = d3.select('#dem-del-bar-chart').selectAll('svg').remove();
 
     // redrawing both the charts
-    repBarChart = d3.select('#rep-bar-chart')
+    repVotBarChart = d3.select('#rep-vot-bar-chart')
                         .append('svg')
                           .attr('width', barChartOuterWidth)
                           .attr('height', barChartOuterHeight)
                         .append('g')
                           .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
-    demBarChart = d3.select('#dem-bar-chart')
+    demVotBarChart = d3.select('#dem-vot-bar-chart')
                         .append('svg')
                           .attr('width', barChartOuterWidth)
                           .attr('height', barChartOuterHeight)
@@ -387,175 +375,174 @@ $(document).ready(function() {
     else updatePieCharts(d);
     // always draw bar charts b/c of axes
     drawBarCharts(d);
-    drawDelBarCharts(d);
   }
 
   function drawBarCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
       // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
-      $('#rep-bar-chart').css('visibility', 'hidden').css('height', '0');
+      $('#rep-vot-bar-chart').css('visibility', 'hidden').css('height', '0');
+      $('#rep-del-bar-chart').css('visibility', 'hidden').css('height', '0');
      } 
     else {
       repBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
-      repBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.votes; })]);
-      repBarChart.append('g')
+      repVotBarChart.append('g')
                .attr('class', 'x axis')
                .attr('transform', 'translate(0,' + barChartHeight + ')') 
                .call(repBarChartXAxis);
-      repBarChart.select('.y.axis').remove();
-      repBarChart.append('g')
-                 .attr('class', 'y axis')
-                 .call(repBarChartYAxis)
-                 .append('text')
-                  .attr('x', -5)
-                  .attr('y', -15)
-                  .attr('dy', '.71em')
-                  .style('text-anchor', 'end')
-                  .text('Votes');
-      var repBars = repBarChart.selectAll('.bar').data(d.rep_candidates, function(cand) { return lastName(cand.name); });
-      // new data appended
-      repBars.enter().append('rect')
-             .attr('class', 'bar')
-             .attr('x', function(cand) { return repBarChartXScale(lastName(cand.name)); })
-             .attr('y', function(cand) { return repBarChartYScale(cand.votes); })
-             .attr('height', function(cand) { return barChartHeight - repBarChartYScale(cand.votes); })
-             .attr('width', repBarChartXScale.rangeBand())
-             .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
-      // remove old data
-      repBars.exit().remove();
-      // update data bindings
-      repBars.transition()
-             .duration(750)
-             .attr('y', function(cand) { return repBarChartYScale(cand.votes); })
-             .attr('height', function(cand) { return barChartHeight - repBarChartYScale(cand.votes); })
-      // show new bar chart
-      $('#rep-bar-chart').css('visibility', 'visible').css('height', 'auto');
-    }
-
-    if (!validatePartiesData(d.dem_candidates)) {
-      // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
-      $('#dem-bar-chart').css('visibility', 'hidden').css('height', '0');
-    } 
-    else {
-      demBarChartXScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
-      demBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.votes; })]);
-      demBarChart.append('g')
-                 .attr('class', 'x axis')
-                 .attr('transform', 'translate(0,' + barChartHeight + ')') 
-                 .call(demBarChartXAxis);
-      demBarChart.select('.y.axis').remove();
-      demBarChart.append('g')
-                 .attr('class', 'y axis')
-                 .call(demBarChartYAxis)
-                 .append('text')
-                  .attr('x', -5)
-                  .attr('y', -15)
-                  .attr('dy', '.71em')
-                  .style('text-anchor', 'end')
-                  .text('Votes');
-      var demBars = demBarChart.selectAll('.bar').data(d.dem_candidates, function(cand) { return lastName(cand.name); });
-      // new data appended
-      demBars.enter().append('rect')
-             .attr('class', 'bar')
-             .attr('x', function(cand) { return demBarChartXScale(lastName(cand.name)); })
-             .attr('y', function(cand) { return demBarChartYScale(cand.votes); })
-             .attr('height', function(cand) { return barChartHeight - demBarChartYScale(cand.votes); })
-             .attr('width', demBarChartXScale.rangeBand())
-             .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
-      // remove old data
-      demBars.exit().remove();
-      // update data bindings
-      demBars.transition()
-             .duration(750)
-             .attr('y', function(cand) { return demBarChartYScale(cand.votes); })
-             .attr('height', function(cand) { return barChartHeight - demBarChartYScale(cand.votes); })
-      // show new bar chart
-      $('#dem-bar-chart').css('visibility', 'visible').css('height', 'auto');
-    }
-  }
-
-  function drawDelBarCharts(d) {
-    if (!validatePartiesData(d.rep_candidates)) {
-     // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
-     $('#rep-del-bar-chart').css('visibility', 'hidden').css('height', '0');
-    } 
-    else {
-      repDelBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
-      repDelBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.total_delegates; })]);
       repDelBarChart.append('g')
                .attr('class', 'x axis')
                .attr('transform', 'translate(0,' + barChartHeight + ')') 
                .call(repBarChartXAxis);
-      repDelBarChart.select('.y.axis').remove();
-      repDelBarChart.append('g')
-                 .attr('class', 'y axis')
-                 .call(repDelBarChartYAxis)
-                 .append('text')
-                  .attr('x', -5)
-                  .attr('y', -15)
-                  .attr('dy', '.71em')
-                  .style('text-anchor', 'end')
-                  .text('Delegates');
-      var repDelBars = repDelBarChart.selectAll('.bar').data(d.rep_candidates, function(cand) { return lastName(cand.name); });
-      // new data appended
-      repDelBars.enter().append('rect')
-             .attr('class', 'bar')
-             .attr('x', function(cand) { return repDelBarChartXScale(lastName(cand.name)); })
-             .attr('y', function(cand) { return repDelBarChartYScale(cand.total_delegates); })
-             .attr('height', function(cand) { return barChartHeight - repDelBarChartYScale(cand.total_delegates); })
-             .attr('width', repDelBarChartXScale.rangeBand())
-             .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
-      // remove old data
-      repDelBars.exit().remove();
-      // update data bindings
-      repDelBars.transition()
-             .duration(750)
-             .attr('y', function(cand) { return repDelBarChartYScale(cand.total_delegates); })
-             .attr('height', function(cand) { return barChartHeight - repDelBarChartYScale(cand.total_delegates); })
-      // show new bar chart
+      
+      // draw both bar charts by updating y-scale and y-axis
+      drawRepVotBarCharts(d);
+      drawRepDelBarCharts(d);
+      $('#rep-vot-bar-chart').css('visibility', 'visible').css('height', 'auto');
       $('#rep-del-bar-chart').css('visibility', 'visible').css('height', 'auto');
+      
     }
-
     if (!validatePartiesData(d.dem_candidates)) {
       // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
+      $('#dem-vot-bar-chart').css('visibility', 'hidden').css('height', '0');
       $('#dem-del-bar-chart').css('visibility', 'hidden').css('height', '0');
     } 
     else {
-      demDelBarChartXScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
-      demDelBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.total_delegates; })]);
+      demBarChartXScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
+      demVotBarChart.append('g')
+               .attr('class', 'x axis')
+               .attr('transform', 'translate(0,' + barChartHeight + ')') 
+               .call(repBarChartXAxis);
       demDelBarChart.append('g')
-                 .attr('class', 'x axis')
-                 .attr('transform', 'translate(0,' + barChartHeight + ')') 
-                 .call(demDelBarChartXAxis);
-      demDelBarChart.select('.y.axis').remove();
-      demDelBarChart.append('g')
-                 .attr('class', 'y axis')
-                 .call(demDelBarChartYAxis)
-                 .append('text')
-                  .attr('x', -5)
-                  .attr('y', -15)
-                  .attr('dy', '.71em')
-                  .style('text-anchor', 'end')
-                  .text('Delegates');
-      var demDelBars = demDelBarChart.selectAll('.bar').data(d.dem_candidates, function(cand) { return lastName(cand.name); });
-      // new data appended
-      demDelBars.enter().append('rect')
-             .attr('class', 'bar')
-             .attr('x', function(cand) { return demDelBarChartXScale(lastName(cand.name)); })
-             .attr('y', function(cand) { return demDelBarChartYScale(cand.total_delegates); })
-             .attr('height', function(cand) { return barChartHeight - demDelBarChartYScale(cand.total_delegates); })
-             .attr('width', demDelBarChartXScale.rangeBand())
-             .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
-      // remove old data
-      demDelBars.exit().remove();
-      // update data bindings
-      demDelBars.transition()
-             .duration(750)
-             .attr('y', function(cand) { return demDelBarChartYScale(cand.total_delegates); })
-             .attr('height', function(cand) { return barChartHeight - demDelBarChartYScale(cand.total_delegates); })
-      // show new bar chart
+               .attr('class', 'x axis')
+               .attr('transform', 'translate(0,' + barChartHeight + ')') 
+               .call(demBarChartXAxis);
+      
+      // draw both bar charts by updating y-scale and y-axis
+      drawDemVotBarCharts(d);
+      drawDemDelBarCharts(d);
+      $('#dem-vot-bar-chart').css('visibility', 'visible').css('height', 'auto');
       $('#dem-del-bar-chart').css('visibility', 'visible').css('height', 'auto');
-    } 
+    }
+  }
+
+  function drawRepVotBarCharts(d) {
+    repVotBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.votes; })]);
+    repVotBarChart.select('.y.axis').remove();
+    repVotBarChart.append('g')
+               .attr('class', 'y axis')
+               .call(repVotBarChartYAxis)
+               .append('text')
+                .attr('x', -8)
+                .attr('y', -15)
+                .attr('dy', '.71em')
+                .style('text-anchor', 'end')
+                .text('Votes');
+    var repVotBars = repVotBarChart.selectAll('.bar').data(d.rep_candidates, function(cand) { return lastName(cand.name); });
+    // new data appended
+    repVotBars.enter().append('rect')
+           .attr('class', 'bar')
+           .attr('x', function(cand) { return repBarChartXScale(lastName(cand.name)); })
+           .attr('y', function(cand) { return repVotBarChartYScale(cand.votes); })
+           .attr('height', function(cand) { return barChartHeight - repVotBarChartYScale(cand.votes); })
+           .attr('width', repBarChartXScale.rangeBand())
+           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+    // remove old data
+    repVotBars.exit().remove();
+    // update data bindings
+    repVotBars.transition()
+           .duration(750)
+           .attr('y', function(cand) { return repVotBarChartYScale(cand.votes); })
+           .attr('height', function(cand) { return barChartHeight - repVotBarChartYScale(cand.votes); })
+  }
+
+  function drawRepDelBarCharts(d) {
+    repDelBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.total_delegates; })]);
+    repDelBarChart.select('.y.axis').remove();
+    repDelBarChart.append('g')
+               .attr('class', 'y axis')
+               .call(repDelBarChartYAxis)
+               .append('text')
+                .attr('x', -8)
+                .attr('y', -15)
+                .attr('dy', '.71em')
+                .style('text-anchor', 'end')
+                .text('Delegates');
+    var repDelBars = repDelBarChart.selectAll('.bar').data(d.rep_candidates, function(cand) { return lastName(cand.name); });
+    // new data appended
+    repDelBars.enter().append('rect')
+           .attr('class', 'bar')
+           .attr('x', function(cand) { return repBarChartXScale(lastName(cand.name)); })
+           .attr('y', function(cand) { return repDelBarChartYScale(cand.total_delegates); })
+           .attr('height', function(cand) { return barChartHeight - repDelBarChartYScale(cand.total_delegates); })
+           .attr('width', repBarChartXScale.rangeBand())
+           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+    // remove old data
+    repDelBars.exit().remove();
+    // update data bindings
+    repDelBars.transition()
+           .duration(750)
+           .attr('y', function(cand) { return repDelBarChartYScale(cand.total_delegates); })
+           .attr('height', function(cand) { return barChartHeight - repDelBarChartYScale(cand.total_delegates); })
+  }
+
+  function drawDemVotBarCharts(d) {
+    demVotBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.votes; })]);
+    demVotBarChart.select('.y.axis').remove();
+    demVotBarChart.append('g')
+               .attr('class', 'y axis')
+               .call(demVotBarChartYAxis)
+               .append('text')
+                .attr('x', -8)
+                .attr('y', -15)
+                .attr('dy', '.71em')
+                .style('text-anchor', 'end')
+                .text('Votes');
+    var demVotBars = demVotBarChart.selectAll('.bar').data(d.dem_candidates, function(cand) { return lastName(cand.name); });
+    // new data appended
+    demVotBars.enter().append('rect')
+           .attr('class', 'bar')
+           .attr('x', function(cand) { return demBarChartXScale(lastName(cand.name)); })
+           .attr('y', function(cand) { return demVotBarChartYScale(cand.votes); })
+           .attr('height', function(cand) { return barChartHeight - demVotBarChartYScale(cand.votes); })
+           .attr('width', demBarChartXScale.rangeBand())
+           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+    // remove old data
+    demVotBars.exit().remove();
+    // update data bindings
+    demVotBars.transition()
+           .duration(750)
+           .attr('y', function(cand) { return demVotBarChartYScale(cand.votes); })
+           .attr('height', function(cand) { return barChartHeight - demVotBarChartYScale(cand.votes); })
+  }
+
+  function drawDemDelBarCharts(d) {
+    demDelBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.total_delegates; })]);
+    demDelBarChart.select('.y.axis').remove();
+    demDelBarChart.append('g')
+               .attr('class', 'y axis')
+               .call(demDelBarChartYAxis)
+               .append('text')
+                .attr('x', -8)
+                .attr('y', -15)
+                .attr('dy', '.71em')
+                .style('text-anchor', 'end')
+                .text('Delegates');
+    var demDelBars = demDelBarChart.selectAll('.bar').data(d.dem_candidates, function(cand) { return lastName(cand.name); });
+    // new data appended
+    demDelBars.enter().append('rect')
+           .attr('class', 'bar')
+           .attr('x', function(cand) { return demBarChartXScale(lastName(cand.name)); })
+           .attr('y', function(cand) { return demDelBarChartYScale(cand.total_delegates); })
+           .attr('height', function(cand) { return barChartHeight - demDelBarChartYScale(cand.total_delegates); })
+           .attr('width', demBarChartXScale.rangeBand())
+           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+    // remove old data
+    demDelBars.exit().remove();
+    // update data bindings
+    demDelBars.transition()
+           .duration(750)
+           .attr('y', function(cand) { return demDelBarChartYScale(cand.total_delegates); })
+           .attr('height', function(cand) { return barChartHeight - demDelBarChartYScale(cand.total_delegates); })
   }
 
   function drawPieCharts(d) {
@@ -566,7 +553,7 @@ $(document).ready(function() {
     }
     if (!validatePartiesData(d.dem_candidates)) {
       $('#dem-pie-chart').css('visibility', 'hidden').css('height', '0');
-    }else {
+    } else {
       $('#dem-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     
