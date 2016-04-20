@@ -16,7 +16,7 @@ body {
 .data-wrapper, .data-error {
   padding: 15px;
 }
-.tables-wrapper, .legend-wrapper, .pie-charts-wrapper, .bar-charts-wrapper, .horiz-bar-charts-wrapper {
+.party-wrapper, .legend-wrapper, .pie-charts-wrapper, .bar-charts-wrapper, .del-bar-charts-wrapper {
   padding-top: 15px;
   padding-bottom: 15px;
 }

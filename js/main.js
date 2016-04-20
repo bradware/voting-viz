@@ -42,7 +42,7 @@ $(document).ready(function() {
                   .style('opacity', 0);
 
   // global state pie chart properties
-  var pieChartWidth =  calcChartsWidth($(window).width());
+  var pieChartWidth =  calcBarChartsWidth($(window).width());
   var pieChartHeight = pieChartWidth;
   var pieChartRadius = Math.min(pieChartWidth, pieChartHeight) / 2;
   var pieChartDemArc, pieChartRepArc;
@@ -70,7 +70,7 @@ $(document).ready(function() {
                           .attr('transform', 'translate(' + pieChartWidth / 2 + ',' + pieChartHeight / 2 + ')');
 
   // global state bar chart properties
-  var barChartOuterWidth = calcChartsWidth($(window).width()); 
+  var barChartOuterWidth = calcBarChartsWidth($(window).width()); 
   var barChartOuterHeight = barChartOuterWidth;
   var barChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
   var barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
@@ -110,60 +110,53 @@ $(document).ready(function() {
                       .append('g')
                         .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
-  // global state horizontal bar chart properties
-  var horizBarChartOuterWidth = calcChartsWidth($(window).width()); 
-  var horizBarChartOuterHeight = horizBarChartOuterWidth;
-  var horizBarChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
-  var horizBarChartWidth  = horizBarChartOuterWidth - horizBarChartMargin.left - horizBarChartMargin.right;
-  var horizBarChartHeight = horizBarChartOuterHeight - horizBarChartMargin.top - horizBarChartMargin.bottom;
+  // global state delegate bar chart properties
+  var repDelBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
+  var repDelBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+  var demDelBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
+  var demDelBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
    
-  var repHorizBarChartXScale = d3.scale.linear().range([0, horizBarChartWidth]);
-  var repHorizBarChartYScale = d3.scale.ordinal().rangeRoundBands([0, horizBarChartHeight], 0.4);
-  var demHorizBarChartXScale = d3.scale.linear().range([0, horizBarChartWidth]);
-  var demHorizBarChartYScale = d3.scale.ordinal().rangeRoundBands([0, horizBarChartHeight], 0.4);
-   
-  var repHorizBarChartXAxis = d3.svg.axis()
-                                .scale(repHorizBarChartXScale)
-                                .orient('bottom')
-                                .ticks(10);
-  var repHorizBarChartYAxis = d3.svg.axis()
-                                .scale(repHorizBarChartYScale)
-                                .orient('left')
-  var demHorizBarChartXAxis = d3.svg.axis()
-                                .scale(demHorizBarChartXScale)
-                                .orient('bottom')
-                                .ticks(10);
-  var demHorizBarChartYAxis = d3.svg.axis()
-                                .scale(demHorizBarChartYScale)
-                                .orient('left')                       
+  var repDelBarChartXAxis = d3.svg.axis()
+                              .scale(repDelBarChartXScale)
+                              .orient('bottom');
+  var repDelBarChartYAxis = d3.svg.axis()
+                              .scale(repDelBarChartYScale)
+                              .orient('left')
+                              .ticks(10);
+  var demDelBarChartXAxis = d3.svg.axis()
+                              .scale(demDelBarChartXScale)
+                              .orient('bottom');
+  var demDelBarChartYAxis = d3.svg.axis()
+                              .scale(demDelBarChartYScale)
+                              .orient('left')
+                              .ticks(10);
   
-  var repHorizBarChart = d3.select('#rep-horiz-bar-chart')
-                           .append('svg')
-                            .attr('width', horizBarChartOuterWidth)
-                            .attr('height', horizBarChartOuterHeight)
-                           .append('g')
-                            .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
+  var repDelBarChart = d3.select('#rep-del-bar-chart')
+                        .append('svg')
+                          .attr('width', barChartOuterWidth)
+                          .attr('height', barChartOuterHeight)
+                        .append('g')
+                          .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
-  var demHorizBarChart = d3.select('#dem-horiz-bar-chart')
+  var demDelBarChart = d3.select('#dem-del-bar-chart')
                       .append('svg')
-                        .attr('width', horizBarChartOuterWidth)
-                        .attr('height', horizBarChartOuterHeight)
-                       .append('g')
-                        .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
+                        .attr('width', barChartOuterWidth)
+                        .attr('height', barChartOuterHeight)
+                      .append('g')
+                        .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
   function resizeCharts() {
     var statesChartWidth = calcStatesChartWidth($(window).width());
-    var chartsWidth = calcChartsWidth($(window).width());
+    var chartsWidth = calcBarChartsWidth($(window).width());
     
     resizeStatesChart(statesChartWidth);
     resizePieCharts(chartsWidth);
     resizeBarCharts(chartsWidth);
-    resizeHorizBarCharts(chartsWidth);
     
     if (stateData !== undefined) {
       drawPieCharts(stateData);
       drawBarCharts(stateData);
-      drawHorizBarCharts(stateData);
+      drawDelBarCharts(stateData);
       stateChartsDrawn = true;
     }
     else {
@@ -207,12 +200,14 @@ $(document).ready(function() {
   }
 
   function resizeBarCharts(width) {
+    // these vars are shared
     barChartOuterWidth = width;
     barChartOuterHeight = barChartOuterWidth;
     barChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
     barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
     barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
-     
+    
+    // votes bar chart
     repBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
     repBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
     demBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
@@ -232,10 +227,35 @@ $(document).ready(function() {
                              .scale(demBarChartYScale)
                              .orient('left')
                              .ticks(10);
-    
+
     repBarChart = d3.select('#rep-bar-chart').selectAll('svg').remove();
     demBarChart = d3.select('#dem-bar-chart').selectAll('svg').remove();
+    
+    // delegates bar chart
+    repDelBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
+    repDelBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+    demDelBarChartXScale = d3.scale.ordinal().rangeRoundBands([0, barChartWidth], .1);
+    demDelBarChartYScale = d3.scale.linear().range([barChartHeight, 0]);
+     
+    repDelBarChartXAxis = d3.svg.axis()
+                            .scale(repBarChartXScale)
+                            .orient('bottom');
+    repDelBarChartYAxis = d3.svg.axis()
+                            .scale(repBarChartYScale)
+                            .orient('left')
+                            .ticks(10);
+    demDelBarChartXAxis = d3.svg.axis()
+                            .scale(demBarChartXScale)
+                            .orient('bottom');
+    demDelBarChartYAxis = d3.svg.axis()
+                            .scale(demBarChartYScale)
+                            .orient('left')
+                            .ticks(10);
 
+    repDelBarChart = d3.select('#rep-del-bar-chart').selectAll('svg').remove();
+    demDelBarChart = d3.select('#dem-del-bar-chart').selectAll('svg').remove();
+
+    // redrawing both the charts
     repBarChart = d3.select('#rep-bar-chart')
                         .append('svg')
                           .attr('width', barChartOuterWidth)
@@ -249,52 +269,22 @@ $(document).ready(function() {
                           .attr('height', barChartOuterHeight)
                         .append('g')
                           .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
-  }
 
-  function resizeHorizBarCharts(width) {
-    horizBarChartOuterWidth = width;
-    horizBarChartOuterHeight = horizBarChartOuterWidth;
-    horizBarChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
-    horizBarChartWidth  = horizBarChartOuterWidth - horizBarChartMargin.left - horizBarChartMargin.right;
-    horizBarChartHeight = horizBarChartOuterHeight - horizBarChartMargin.top - horizBarChartMargin.bottom;
-
-    var repHorizBarChartXScale = d3.scale.linear().range([0, horizBarChartWidth]);
-    var repHorizBarChartYScale = d3.scale.ordinal().rangeRoundBands([0, horizBarChartHeight], 0.4);
-    var demHorizBarChartXScale = d3.scale.linear().range([0, horizBarChartWidth]);
-    var demHorizBarChartYScale = d3.scale.ordinal().rangeRoundBands([0, horizBarChartHeight], 0.4);
-     
-    repHorizBarChartXAxis = d3.svg.axis()
-                             .scale(repHorizBarChartXScale)
-                             .orient('bottom')
-                              .ticks(10);
-    repHorizBarChartYAxis = d3.svg.axis()
-                             .scale(repHorizBarChartYScale)
-                             .orient('left')
-    demHorizBarChartXAxis = d3.svg.axis()
-                             .scale(demHorizBarChartXScale)
-                             .orient('bottom')
-                             .ticks(10);
-    demHorizBarChartYAxis = d3.svg.axis()
-                             .scale(demHorizBarChartYScale)
-                             .orient('left')
-    
-    repHorizBarChart = d3.select('#rep-horiz-bar-chart').selectAll('svg').remove();
-    demHorizBarChart = d3.select('#dem-horiz-bar-chart').selectAll('svg').remove();
-
-    repHorizBarChart = d3.select('#rep-horiz-bar-chart')
+    repDelBarChart = d3.select('#rep-del-bar-chart')
                         .append('svg')
-                          .attr('width', horizBarChartOuterWidth)
-                          .attr('height', horizBarChartOuterHeight)
+                          .attr('width', barChartOuterWidth)
+                          .attr('height', barChartOuterHeight)
                         .append('g')
-                          .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
+                          .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
-    demHorizBarChart = d3.select('#dem-horiz-bar-chart')
-                         .append('svg')
-                          .attr('width', horizBarChartOuterWidth)
-                          .attr('height', horizBarChartOuterHeight)
-                         .append('g')
-                          .attr('transform', 'translate(' + horizBarChartMargin.left + ',' + horizBarChartMargin.top + ')');
+    demDelBarChart = d3.select('#dem-del-bar-chart')
+                        .append('svg')
+                          .attr('width', barChartOuterWidth)
+                          .attr('height', barChartOuterHeight)
+                        .append('g')
+                          .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
   }
+
 
   function calcStatesChartWidth(width) {
     if (width <= 900) { return parseInt(d3.select('#us-states-chart').style('width')); }
@@ -305,7 +295,7 @@ $(document).ready(function() {
 
   // This is necessary because cannot d3.select the wrapper divs for the state charts
   // Sometimes they are hidden from DOM and return width as 0 --> not good
-  function calcChartsWidth(width) { 
+  function calcBarChartsWidth(width) { 
     if (width <= 350) { return 250; } // iPhone5
     else if (width <= 400) { return 275; } // iPhone6
     else if (width <= 600) { return 300; } // iPhone6+
@@ -397,7 +387,7 @@ $(document).ready(function() {
     else updatePieCharts(d);
     // always draw bar charts b/c of axes
     drawBarCharts(d);
-    drawHorizBarCharts(d);
+    drawDelBarCharts(d);
   }
 
   function drawBarCharts(d) {
@@ -484,90 +474,89 @@ $(document).ready(function() {
     }
   }
 
-  function drawHorizBarCharts(d) {
+  function drawDelBarCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
-      // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
-      $('#rep-horiz-bar-chart').css('visibility', 'hidden').css('height', '0');
-     } 
+     // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
+     $('#rep-del-bar-chart').css('visibility', 'hidden').css('height', '0');
+    } 
     else {
-      repHorizBarChart.select('.x.axis').remove();
-      repHorizBarChartXScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.total_delegates; })]);
-      repHorizBarChartYScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
-      repHorizBarChart.append('g')
+      repDelBarChartXScale.domain(d.rep_candidates.map(function(cand) { return lastName(cand.name); }));
+      repDelBarChartYScale.domain([0, d3.max(d.rep_candidates, function(cand) { return cand.total_delegates; })]);
+      repDelBarChart.append('g')
                .attr('class', 'x axis')
-               .attr('transform', 'translate(0,' + horizBarChartHeight + ')') 
-               .call(repHorizBarChartXAxis);
-      repHorizBarChart.append('g')
-               .attr('class', 'y axis')
-               .call(repHorizBarChartYAxis)
-               .append('text')
-                .attr('x', 27)
-                .attr('y', horizBarChartHeight + 19)
-                .attr('dy', '.71em')
-                .style('text-anchor', 'end')
-                .text('Delegates');
-      var repHorizBars = repHorizBarChart.selectAll('.bar').data(d.rep_candidates, function(cand) { return lastName(cand.name); });
+               .attr('transform', 'translate(0,' + barChartHeight + ')') 
+               .call(repBarChartXAxis);
+      repDelBarChart.select('.y.axis').remove();
+      repDelBarChart.append('g')
+                 .attr('class', 'y axis')
+                 .call(repDelBarChartYAxis)
+                 .append('text')
+                  .attr('x', -5)
+                  .attr('y', -15)
+                  .attr('dy', '.71em')
+                  .style('text-anchor', 'end')
+                  .text('Delegates');
+      var repDelBars = repDelBarChart.selectAll('.bar').data(d.rep_candidates, function(cand) { return lastName(cand.name); });
       // new data appended
-      repHorizBars.enter().append('rect')
+      repDelBars.enter().append('rect')
              .attr('class', 'bar')
-             .attr('x', 1)
-             .attr('y', function(cand) { return repHorizBarChartYScale(lastName(cand.name)); })
-             .attr('width', function(cand) { return repHorizBarChartXScale(cand.total_delegates); })
-             .attr('height', repHorizBarChartYScale.rangeBand())
+             .attr('x', function(cand) { return repDelBarChartXScale(lastName(cand.name)); })
+             .attr('y', function(cand) { return repDelBarChartYScale(cand.total_delegates); })
+             .attr('height', function(cand) { return barChartHeight - repDelBarChartYScale(cand.total_delegates); })
+             .attr('width', repDelBarChartXScale.rangeBand())
              .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
       // remove old data
-      repHorizBars.exit().remove();
+      repDelBars.exit().remove();
       // update data bindings
-      repHorizBars.transition()
+      repDelBars.transition()
              .duration(750)
-             .attr('y', function(cand) { return repHorizBarChartYScale(lastName(cand.name)); })
-             .attr('width', function(cand) { return repHorizBarChartXScale(cand.total_delegates); })
+             .attr('y', function(cand) { return repDelBarChartYScale(cand.total_delegates); })
+             .attr('height', function(cand) { return barChartHeight - repDelBarChartYScale(cand.total_delegates); })
       // show new bar chart
-      $('#rep-horiz-bar-chart').css('visibility', 'visible').css('height', 'auto');
+      $('#rep-del-bar-chart').css('visibility', 'visible').css('height', 'auto');
     }
 
     if (!validatePartiesData(d.dem_candidates)) {
       // DO NOT HIDE - ELEMENT IS REMOVED FROM DOM AND SPACING IS WRONG
-      $('#dem-horiz-bar-chart').css('visibility', 'hidden').css('height', '0');
+      $('#dem-del-bar-chart').css('visibility', 'hidden').css('height', '0');
     } 
     else {
-      demHorizBarChart.select('.x.axis').remove();
-      demHorizBarChartXScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.total_delegates; })]);
-      demHorizBarChartYScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
-      demHorizBarChart.append('g')
+      demDelBarChartXScale.domain(d.dem_candidates.map(function(cand) { return lastName(cand.name); }));
+      demDelBarChartYScale.domain([0, d3.max(d.dem_candidates, function(cand) { return cand.total_delegates; })]);
+      demDelBarChart.append('g')
                  .attr('class', 'x axis')
-                 .attr('transform', 'translate(0,' + horizBarChartHeight + ')') 
-                 .call(demHorizBarChartXAxis);
-      demHorizBarChart.append('g')
+                 .attr('transform', 'translate(0,' + barChartHeight + ')') 
+                 .call(demDelBarChartXAxis);
+      demDelBarChart.select('.y.axis').remove();
+      demDelBarChart.append('g')
                  .attr('class', 'y axis')
-                 .call(demHorizBarChartYAxis)
+                 .call(demDelBarChartYAxis)
                  .append('text')
-                  .attr('x', 27)
-                  .attr('y', horizBarChartHeight + 19)
+                  .attr('x', -5)
+                  .attr('y', -15)
                   .attr('dy', '.71em')
                   .style('text-anchor', 'end')
                   .text('Delegates');
-      var demHorizBars = demHorizBarChart.selectAll('.bar').data(d.dem_candidates, function(cand) { return lastName(cand.name); });
+      var demDelBars = demDelBarChart.selectAll('.bar').data(d.dem_candidates, function(cand) { return lastName(cand.name); });
       // new data appended
-      demHorizBars.enter().append('rect')
+      demDelBars.enter().append('rect')
              .attr('class', 'bar')
-             .attr('x', 1)
-             .attr('y', function(cand) { return demHorizBarChartYScale(lastName(cand.name)); })
-             .attr('width', function(cand) { return demHorizBarChartXScale(cand.total_delegates); })
-             .attr('height', demHorizBarChartYScale.rangeBand())
+             .attr('x', function(cand) { return demDelBarChartXScale(lastName(cand.name)); })
+             .attr('y', function(cand) { return demDelBarChartYScale(cand.total_delegates); })
+             .attr('height', function(cand) { return barChartHeight - demDelBarChartYScale(cand.total_delegates); })
+             .attr('width', demDelBarChartXScale.rangeBand())
              .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
       // remove old data
-      demHorizBars.exit().remove();
+      demDelBars.exit().remove();
       // update data bindings
-      demHorizBars.transition()
+      demDelBars.transition()
              .duration(750)
-             .attr('y', function(cand) { return demHorizBarChartYScale(lastName(cand.name)); })
-             .attr('width', function(cand) { return demHorizBarChartXScale(cand.total_delegates); })
+             .attr('y', function(cand) { return demDelBarChartYScale(cand.total_delegates); })
+             .attr('height', function(cand) { return barChartHeight - demDelBarChartYScale(cand.total_delegates); })
       // show new bar chart
-      $('#dem-horiz-bar-chart').css('visibility', 'visible').css('height', 'auto');
-    }
+      $('#dem-del-bar-chart').css('visibility', 'visible').css('height', 'auto');
+    } 
   }
-  
 
   function drawPieCharts(d) {
     if (!validatePartiesData(d.rep_candidates)) {
