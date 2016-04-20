@@ -746,7 +746,7 @@ $(document).ready(function() {
         tooltip.style('left', 15 + 'px');
       } 
       else {
-        tooltip.style('top', (d3.event.pageY + 25) + 'px');
+        tooltip.style('top', (d3.event.pageY + 30) + 'px');
         tooltip.style('left', (d3.event.pageX + 5) + 'px');
       }
       tooltip.transition()
@@ -777,5 +777,4 @@ $(document).ready(function() {
     if (error) throw error;
     stateIdMapData = data;
   });
-
 });
