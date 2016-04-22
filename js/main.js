@@ -411,7 +411,7 @@ $(document).ready(function() {
       demVotBarChart.append('g')
                .attr('class', 'x axis')
                .attr('transform', 'translate(0,' + barChartHeight + ')') 
-               .call(repBarChartXAxis);
+               .call(demBarChartXAxis);
       demDelBarChart.append('g')
                .attr('class', 'x axis')
                .attr('transform', 'translate(0,' + barChartHeight + ')') 
