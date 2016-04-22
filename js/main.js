@@ -341,13 +341,13 @@ $(document).ready(function() {
 
   function findStateData(d) {
     stateData = matchStateData(d);
-    if (stateData !== undefined) {
-      drawStateElements(stateData);
-      return true;
+    if (stateData !== undefined) { 
+      if (validatePartiesData(stateData.rep_candidates) || validatePartiesData(stateData.dem_candidates)) {
+        drawStateElements(stateData);
+        return true;
+      }
     }
-    else {
-      return false;
-    }
+    return false;
   }
 
   function matchStateData(d) {
