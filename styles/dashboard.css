@@ -28,12 +28,12 @@ td {
 /*
   candidate styling
 */
-.clinton { background: #BB8AE8; }
-.sanders { background: #FFA6D2; }
-.cruz { background: #63D9F6; }
-.kasich { background: #FFFF44; }
-.rubio { background: #8CC767; }
-.trump { background: #FF6D6D; }
+.clinton { background: #6464FF; }
+.sanders { background: #C8C8FF; }
+.cruz { background: #FFD2D2; }
+.kasich { background: #FF8C8C; }
+.rubio { background: #FF4646; }
+.trump { background: #FF0000; }
 .democrat, .democrat:hover { color: #1975D1; }
 .republican, .republican:hover { color: #CC3333; }
 
