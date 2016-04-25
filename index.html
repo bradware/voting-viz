@@ -17,32 +17,10 @@
 		<link href="styles/index.css" rel="stylesheet">
 
 		<!-- JS -->
-	    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-	    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	    <script src="js/loader.js"></script>
-	    <script>
-	    	$(document).ready(function() {
-	    		resizeContentHeight();
-		    	$(window).on('resize', resizeContentHeight);
-
-			  	function resizeContentHeight() { 
-			  		var windowHeight = $(window).height();
-			  		$('.content').height(calcContentHeight(windowHeight));
-			  	}
-
-			  	function calcContentHeight(height) {
-			  		if (height <= 350) { return height; }
-				    else if (height <= 600) { return 365; } // iPhone5
-				    else if (height <= 700) { return 375; } // iPhone6
-				    else if (height <= 775) { return 385; } // iPhone6+ & Nexus 6P
-				    else if (height <= 775) { return 385; } // iPhone6+
-				    else if (height <= 1025) { return 405; } // iPad
-				    else if (height <= 1200) { return 425; } // normal browser
-				    else return 430; // large browser
-			  	}
-			});
-	    </script>
-	    <!-- END OF HEADER -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+	  <!-- END OF HEADER -->
     </head>
 	<body class="container-fluid">
 	    <main class="content text-center">

@@ -1,4 +1,8 @@
 $(document).ready(function() {
+  $('footer').load('templates/footer.html');
+  //$('.tables-wrapper').load('templates/tables.html');
+  $('.legend-wrapper').load('templates/legend.html');
+
   // global vars for editing the DOM
   var dataWrapper = $('.data-wrapper').hide();
   var dataError = $('.data-error').hide();
@@ -72,7 +76,7 @@ $(document).ready(function() {
   // global state bar chart properties shared among all
   var barChartOuterWidth = calcBarChartsWidth($(window).width()); 
   var barChartOuterHeight = barChartOuterWidth;
-  var barChartMargin = { top: 20, right: 20, bottom: 30, left: 60 };
+  var barChartMargin = { top: 30, right: 20, bottom: 30, left: 60 };
   var barChartWidth  = barChartOuterWidth - barChartMargin.left - barChartMargin.right;
   var barChartHeight = barChartOuterHeight - barChartMargin.top - barChartMargin.bottom;
   
@@ -138,14 +142,6 @@ $(document).ready(function() {
                         .attr('height', barChartOuterHeight)
                       .append('g')
                         .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
-
-  /*                     
-  var candTooltip = d3.select('.data-wrapper')
-                      .append('div')
-                      .attr('class', 'tooltip')
-                      .style('opacity', 0);
-  console.log(candTooltip);
-  */
 
   function resizeCharts() {
     var windowWidth = $(window).width();
@@ -296,7 +292,7 @@ $(document).ready(function() {
     else if (width <= 400) { return 275; } // iPhone6
     else if (width <= 600) { return 300; } // iPhone6+
     else if (width <= 900) { return 350; } // one column width
-    else if (width <= 1600) { return 450; } // two column width
+    else if (width <= 1600) { return 425; } // two column width
     else return 500; // two column width
   }
   
@@ -323,7 +319,6 @@ $(document).ready(function() {
 
     hideTooltip();
     // Add text to the data here
-              
     if (findStateData(d)) {
       dataError.fadeOut();
       dataWrapper.fadeIn();
@@ -349,6 +344,7 @@ $(document).ready(function() {
 
   function findStateData(d) {
     stateData = matchStateData(d);
+    updateStateTitle(stateData);          
     if (stateData !== undefined) { 
       if (validatePartiesData(stateData.rep_candidates) || validatePartiesData(stateData.dem_candidates)) {
         drawStateElements(stateData);
@@ -383,6 +379,10 @@ $(document).ready(function() {
     else updatePieCharts(d);
     // always draw bar charts b/c of axes
     drawBarCharts(d);
+  }
+
+  function updateStateTitle(d) {
+    $('.state-title').html(d.name + ' - ' + d.code);
   }
 
   function drawBarCharts(d) {

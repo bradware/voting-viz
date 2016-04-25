@@ -13,16 +13,25 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+h1, h2, h3 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+td {
+  background: #FFFFFF;
+}
+.state-title {
+  font-size: 34px;
+}
 .data-wrapper, .data-error {
   padding: 15px;
 }
-.party-wrapper, .legend-wrapper, .pie-charts-wrapper, .vot-bar-charts-wrapper, .del-bar-charts-wrapper {
-  padding-top: 15px;
-  padding-bottom: 15px;
+.data-wrapper > div {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
-
-td {
-  background: #FFFFFF;
+.legend {
+  margin-top: 10px;
 }
 
 /*
@@ -34,11 +43,9 @@ td {
 .kasich { background: #FF8C8C; }
 .rubio { background: #FF4646; }
 .trump { background: #FF0000; }
-.democrat, .democrat:hover { color: #1975D1; }
-.republican, .republican:hover { color: #CC3333; }
 
 /*
-  us states chart styling:
+  us states chart styling
 */
 .background {
   fill: none;
@@ -49,10 +56,10 @@ td {
   cursor: pointer;
 }
 .state.active {
-  fill: #CC3333 !important;
+  fill: #666666 !important;
 }
 .state:hover {
-  fill: #1975D1;
+  fill: #999999;
 }
 .mesh {
   fill: none;
@@ -64,9 +71,6 @@ td {
 /* 
   bar chart styling
 */
-.bar:hover {
-  opacity: 50%;
-}
 .axis text {
   font-size: 12px;
 }
@@ -82,10 +86,12 @@ td {
 .tooltip {
   line-height: 1;
   font-weight: 400;
+  font-size: 14px;
   padding: 5px;
-  background: #CC3333; 
+  background: #008000; 
   color: #FFFFFF;
   border-radius: 2px;
+  border: 1px solid #333333;
 }
 
 /*
@@ -109,4 +115,13 @@ td {
 }
 .copyright {
   margin: 10px 0;
+}
+
+/*
+  mobile styling
+*/
+@media screen and (max-width: 1000px) {
+  .tooltip {
+    font-size: 12px;
+  }
 }
