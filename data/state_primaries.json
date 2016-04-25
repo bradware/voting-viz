@@ -475,7 +475,7 @@
 		"name": "Kentucky",
 		"code": "KY",
 		"population": 4425092,
-		"dem_delegates": 0,
+		"dem_delegates": 60,
 		"rep_delegates": 46,
 		"dem_candidates": [
 			{
@@ -1125,7 +1125,7 @@
 		"code": "NE",
 		"population": 1896190,
 		"dem_delegates": 30,
-		"rep_delegates": 0,
+		"rep_delegates": 36,
 		"dem_candidates": [
 			{
 				"name": "Hillary Clinton",
@@ -1184,7 +1184,7 @@
 		"code": "CO",
 		"population": 5456574,
 		"dem_delegates": 79,
-		"rep_delegates": 0,
+		"rep_delegates": 37,
 		"dem_candidates": [
 			{
 				"name": "Hillary Clinton",
@@ -1360,23 +1360,23 @@
 		"name": "Alaska",
 		"code": "AK",
 		"population": 738432,
-		"dem_delegates": 0,
+		"dem_delegates": 20,
 		"rep_delegates": 28,
 		"dem_candidates": [
 			{
 				"name": "Hillary Clinton",
-				"votes": "No results yet",
-				"percentage_total_votes": "No results yet",
-				"total_delegates": "No results yet",
-				"super_delegates": "No results yet",
+				"votes": 99,
+				"percentage_total_votes": 18.4,
+				"total_delegates": 4,
+				"super_delegates": 0,
 				"twitter_username": "HillaryClinton"
 			},
 			{
 				"name": "Bernie Sanders",
-				"votes": "No results yet",
-				"percentage_total_votes": "No results yet",
-				"total_delegates": "No results yet",
-				"super_delegates": "No results yet",
+				"votes": 440,
+				"percentage_total_votes": 81.6,
+				"total_delegates": 14,
+				"super_delegates": 0,
 				"twitter_username": "BernieSanders"
 			} 
 		],
@@ -1833,7 +1833,7 @@
 		"code": "WA",
 		"population": 7170351,
 		"dem_delegates": 118,
-		"rep_delegates": 0,
+		"rep_delegates": 44,
 		"dem_candidates": [
 			{
 				"name": "Hillary Clinton",
@@ -1891,23 +1891,23 @@
 		"name": "Wyoming",
 		"code": "WY",
 		"population": 586107,
-		"dem_delegates": 0,
+		"dem_delegates": 18,
 		"rep_delegates": 29,
 		"dem_candidates": [
 			{
 				"name": "Hillary Clinton",
-				"votes": "No results yet",
-				"percentage_total_votes": "No results yet",
-				"total_delegates": "No results yet",
-				"super_delegates": "No results yet",
+				"votes": 124,
+				"percentage_total_votes": 44.3,
+				"total_delegates": 11,
+				"super_delegates": 0,
 				"twitter_username": "HillaryClinton"
 			},
 			{
 				"name": "Bernie Sanders",
-				"votes": "No results yet",
-				"percentage_total_votes": "No results yet",
-				"total_delegates": "No results yet",
-				"super_delegates": "No results yet",
+				"votes": 156,
+				"percentage_total_votes": 55.7,
+				"total_delegates": 11,
+				"super_delegates": 0,
 				"twitter_username": "BernieSanders"
 			} 
 		],
@@ -1941,6 +1941,1009 @@
 				"votes": 70,
 				"percentage_total_votes": 7.2,
 				"total_delegates": 1,
+				"super_delegates": 0,
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "California",
+		"code": "CA",
+		"population": 39350000,
+		"dem_delegates": 548,
+		"rep_delegates": 172,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Connecticut",
+		"code": "CT",
+		"population": 3597000,
+		"dem_delegates": 71,
+		"rep_delegates": 28,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Delaware",
+		"code": "DE",
+		"population": 935614,
+		"dem_delegates": 31,
+		"rep_delegates": 16,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Indiana",
+		"code": "IN",
+		"population": 6597000,
+		"dem_delegates": 92,
+		"rep_delegates": 57,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Maryland",
+		"code": "MD",
+		"population": 5976000,
+		"dem_delegates": 118,
+		"rep_delegates": 38,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Montana",
+		"code": "MT",
+		"population": 1024000,
+		"dem_delegates": 27,
+		"rep_delegates": 27,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "New Jersey",
+		"code": "NJ",
+		"population": 8938000,
+		"dem_delegates": 142,
+		"rep_delegates": 51,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "New Mexico",
+		"code": "NM",
+		"population": 2086000,
+		"dem_delegates": 43,
+		"rep_delegates": 24,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "New York",
+		"code": "NY",
+		"population": 19865000,
+		"dem_delegates": 291,
+		"rep_delegates": 95,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": 1054083,
+				"percentage_total_votes": 58.0,
+				"total_delegates": 175,
+				"super_delegates": 0,
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": 763469,
+				"percentage_total_votes": 42.0,
+				"total_delegates": 106,
+				"super_delegates": 0,
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": 126151,
+				"percentage_total_votes": 14.5,
+				"total_delegates": 0,
+				"super_delegates": 0,
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": 217904,
+				"percentage_total_votes": 25.1,
+				"total_delegates": 4,
+				"super_delegates": 0,
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": 0,
+				"percentage_total_votes": 0.0,
+				"total_delegates": 0,
+				"super_delegates": 0,
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": 524932,
+				"percentage_total_votes": 60.4,
+				"total_delegates": 89,
+				"super_delegates": 0,
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "North Dakota",
+		"code": "ND",
+		"population": 739862,
+		"dem_delegates": 23,
+		"rep_delegates": 28,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Oregon",
+		"code": "OR",
+		"population": 3970000,
+		"dem_delegates": 74,
+		"rep_delegates": 28,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Pennsylvania",
+		"code": "PA",
+		"population": 12790000,
+		"dem_delegates": 210,
+		"rep_delegates": 71,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Rhode Island",
+		"code": "RI",
+		"population": 1055000,
+		"dem_delegates": 33,
+		"rep_delegates": 19,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "South Dakota",
+		"code": "SD",
+		"population": 853175,
+		"dem_delegates": 25,
+		"rep_delegates": 29,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Utah",
+		"code": "UT",
+		"population": 2943000,
+		"dem_delegates": 37,
+		"rep_delegates": 40,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": 15666,
+				"percentage_total_votes": 20.3,
+				"total_delegates": 8,
+				"super_delegates": 0,
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": 61333,
+				"percentage_total_votes": 79.3,
+				"total_delegates": 29,
+				"super_delegates": 0,
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": 122567,
+				"percentage_total_votes": 69.2,
+				"total_delegates": 40,
+				"super_delegates": 0,
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": 29773,
+				"percentage_total_votes": 16.8,
+				"total_delegates": 0,
+				"super_delegates": 0,
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": 0,
+				"percentage_total_votes": 0.0,
+				"total_delegates": 0,
+				"super_delegates": 0,
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": 24864,
+				"percentage_total_votes": 14.0,
+				"total_delegates": 0,
+				"super_delegates": 0,
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "West Virginia",
+		"code": "WV",
+		"population": 1850000,
+		"dem_delegates": 37,
+		"rep_delegates": 34,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": "No results yet",
+				"percentage_total_votes": "No results yet",
+				"total_delegates": "No results yet",
+				"super_delegates": "No results yet",
+				"twitter_username": "realDonaldTrump"
+			}
+		]
+	},
+	{
+		"name": "Wisconsin",
+		"code": "WI",
+		"population": 5758000,
+		"dem_delegates": 96,
+		"rep_delegates": 42,
+		"dem_candidates": [
+			{
+				"name": "Hillary Clinton",
+				"votes": 432767,
+				"percentage_total_votes": 43.1,
+				"total_delegates": 45,
+				"super_delegates": 0,
+				"twitter_username": "HillaryClinton"
+			},
+			{
+				"name": "Bernie Sanders",
+				"votes": 567936,
+				"percentage_total_votes": 56.6,
+				"total_delegates": 49,
+				"super_delegates": 0,
+				"twitter_username": "BernieSanders"
+			} 
+		],
+		"rep_candidates": [
+			{
+				"name": "Ted Cruz",
+				"votes": 531129,
+				"percentage_total_votes": 48.2,
+				"total_delegates": 36,
+				"super_delegates": 0,
+				"twitter_username": "tedcruz"
+			},
+			{
+				"name": "John Kasich",
+				"votes": 155200,
+				"percentage_total_votes": 14.1,
+				"total_delegates": 0,
+				"super_delegates": 0,
+				"twitter_username": "JohnKasich"
+			},
+			{
+				"name": "Marco Rubio",
+				"votes": 10569,
+				"percentage_total_votes": 1.0,
+				"total_delegates": 0,
+				"super_delegates": 0,
+				"twitter_username": "marcorubio"
+			},
+			{
+				"name": "Donald J. Trump",
+				"votes": 386370,
+				"percentage_total_votes": 35.1,
+				"total_delegates": 6,
 				"super_delegates": 0,
 				"twitter_username": "realDonaldTrump"
 			}

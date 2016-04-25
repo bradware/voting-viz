@@ -441,7 +441,7 @@ $(document).ready(function() {
                .call(repVotBarChartYAxis)
                .append('text')
                 .attr('x', -8)
-                .attr('y', -15)
+                .attr('y', -20)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Votes');
@@ -473,7 +473,7 @@ $(document).ready(function() {
                .call(repDelBarChartYAxis)
                .append('text')
                 .attr('x', -8)
-                .attr('y', -15)
+                .attr('y', -20)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Delegates');
@@ -505,7 +505,7 @@ $(document).ready(function() {
                .call(demVotBarChartYAxis)
                .append('text')
                 .attr('x', -8)
-                .attr('y', -15)
+                .attr('y', -20)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Votes');
@@ -537,7 +537,7 @@ $(document).ready(function() {
                .call(demDelBarChartYAxis)
                .append('text')
                 .attr('x', -8)
-                .attr('y', -15)
+                .attr('y', -20)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Delegates');
@@ -715,7 +715,7 @@ $(document).ready(function() {
           .attr('d', statesChartPath)
           .attr('class', 'state')
           .on('click', stateClicked)
-          .on('mouseover', drawTooltip)
+          .on('mouseover', drawStateTooltip)
           .on('mouseout', hideTooltip);
 
     statesChartG.append('path')
@@ -724,7 +724,7 @@ $(document).ready(function() {
         .attr('d', statesChartPath);
   }
 
-  function drawTooltip(d) {
+  function drawStateTooltip(d) {
     if (stateActive.node() === this) {
       hideTooltip();
     }

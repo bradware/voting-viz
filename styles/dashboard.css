@@ -72,16 +72,8 @@ td {
 }
 .axis path, .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #333333;
   shape-rendering: crispEdges;
-}
-
-#rep-bar-chart .x.axis path {
-  display: none;
-}
-
-#dem-bar-chart .x.axis path{
-  display: none;
 }
 
 /*
@@ -105,7 +97,6 @@ td {
 .legend-text {
   font-weight: bold;
 }
-
 
 /*
  footer styling
