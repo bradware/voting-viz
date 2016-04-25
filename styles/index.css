@@ -34,30 +34,13 @@ h2 {
   height: 425px;
 
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   
   margin: auto;
 }
 .section {
   padding: 15px;
-}
-
-.democrat, .democrat:hover { color: #1975D1; }
-.republican, .republican:hover { color: #CC3333; }
-
-/*
- footer styling
-*/
-.panel-footer {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  height: 80px;
-  color: #333333;
-}
-.copyright {
-  margin: 10px 0px;
 }
