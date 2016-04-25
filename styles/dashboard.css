@@ -24,7 +24,7 @@ td {
   font-size: 34px;
 }
 .data-wrapper, .data-error {
-  padding: 15px;
+  padding: 20px;
 }
 .data-wrapper > div {
   padding-top: 10px;
@@ -37,12 +37,14 @@ td {
 /*
   candidate styling
 */
-.clinton { background: #6464FF; }
-.sanders { background: #C8C8FF; }
-.cruz { background: #FFD2D2; }
-.kasich { background: #FF8C8C; }
-.rubio { background: #FF4646; }
-.trump { background: #FF0000; }
+.clinton { background: #99CCFF; }
+.sanders { background: #5491CD; }
+.cruz { background: #FFD6D6; }
+.kasich { background: #FFAAAA; }
+.rubio { background: #FF7777; }
+.trump { background: #E55B5B; border-right: 1px solid #333333; }
+.democrat, .democrat:hover { color: #1975D1; }
+.republican, .republican:hover { color: #CC3333; }
 
 /*
   us states chart styling
@@ -88,10 +90,10 @@ td {
   font-weight: 400;
   font-size: 14px;
   padding: 5px;
-  background: #008000; 
+  background: #34655F; 
   color: #FFFFFF;
   border-radius: 2px;
-  border: 1px solid #333333;
+  border: 2px solid #333333;
 }
 
 /*
@@ -99,9 +101,14 @@ td {
 */
 .legend-label {
   height: 22px;
+  border-top: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #333333;
+  /* only trump has border-right */
 }
 .legend-text {
   font-weight: bold;
+  color: #000000;
 }
 
 /*
