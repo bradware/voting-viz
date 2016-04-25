@@ -441,7 +441,7 @@ $(document).ready(function() {
                .call(repVotBarChartYAxis)
                .append('text')
                 .attr('x', -8)
-                .attr('y', -20)
+                .attr('y', -18)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Votes');
@@ -473,7 +473,7 @@ $(document).ready(function() {
                .call(repDelBarChartYAxis)
                .append('text')
                 .attr('x', -8)
-                .attr('y', -20)
+                .attr('y', -18)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Delegates');
@@ -505,7 +505,7 @@ $(document).ready(function() {
                .call(demVotBarChartYAxis)
                .append('text')
                 .attr('x', -8)
-                .attr('y', -20)
+                .attr('y', -18)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Votes');
@@ -537,7 +537,7 @@ $(document).ready(function() {
                .call(demDelBarChartYAxis)
                .append('text')
                 .attr('x', -8)
-                .attr('y', -20)
+                .attr('y', -18)
                 .attr('dy', '.71em')
                 .style('text-anchor', 'end')
                 .text('Delegates');
@@ -605,7 +605,8 @@ $(document).ready(function() {
         return 'translate(' + c[0] +',' + c[1] + ')';
       })
       .text(function (d) { return d.data.percentage_total_votes + '%'; })
-      .style('font-weight', 'bold');
+      .style('font-weight', 'bold')
+      .style('color', '#000000');
 
     //draw the democrat pie labels
     pieChartDemArc = pieChartDemSvg.selectAll('g.slice')
@@ -620,7 +621,8 @@ $(document).ready(function() {
         return 'translate(' + c[0] +',' + c[1] + ')';
       })
       .text(function (d) { return d.data.percentage_total_votes + '%'; })
-      .style('font-weight', 'bold');
+      .style('font-weight', 'bold')
+      .style('color', '#000000');
   }
 
   function updatePieCharts(d) {

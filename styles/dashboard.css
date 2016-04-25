@@ -132,3 +132,18 @@ td {
     font-size: 12px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .legend-label {
+    height: 22px;
+    border-top: 1px solid #333333;
+    border-left: 1px solid #333333;
+    border-bottom: none;
+    /* only trump and rubio has border-bottom */
+    /* only clinton, cruz, and rubio need border-right */
+  }
+  .rubio { border-bottom: 1px solid #333333; }
+  .trump { border-bottom: 1px solid #333333; }
+  .sanders { border-right: 1px solid #333333; }
+  .kasich { border-right: 1px solid #333333; }
+}
