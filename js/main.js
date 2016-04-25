@@ -139,6 +139,14 @@ $(document).ready(function() {
                       .append('g')
                         .attr('transform', 'translate(' + barChartMargin.left + ',' + barChartMargin.top + ')');
 
+  /*                     
+  var candTooltip = d3.select('.data-wrapper')
+                      .append('div')
+                      .attr('class', 'tooltip')
+                      .style('opacity', 0);
+  console.log(candTooltip);
+  */
+
   function resizeCharts() {
     var windowWidth = $(window).width();
     var statesChartWidth = calcStatesChartWidth(windowWidth);
@@ -445,7 +453,9 @@ $(document).ready(function() {
            .attr('y', function(cand) { return repVotBarChartYScale(cand.votes); })
            .attr('height', function(cand) { return barChartHeight - repVotBarChartYScale(cand.votes); })
            .attr('width', repBarChartXScale.rangeBand())
-           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; })
+           .on('mouseover', drawCandTooltip)
+           .on('mouseout', hideTooltip);
     // remove old data
     repVotBars.exit().remove();
     // update data bindings
@@ -475,7 +485,9 @@ $(document).ready(function() {
            .attr('y', function(cand) { return repDelBarChartYScale(cand.total_delegates); })
            .attr('height', function(cand) { return barChartHeight - repDelBarChartYScale(cand.total_delegates); })
            .attr('width', repBarChartXScale.rangeBand())
-           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; })
+           .on('mouseover', drawCandTooltip)
+           .on('mouseout', hideTooltip);
     // remove old data
     repDelBars.exit().remove();
     // update data bindings
@@ -505,7 +517,9 @@ $(document).ready(function() {
            .attr('y', function(cand) { return demVotBarChartYScale(cand.votes); })
            .attr('height', function(cand) { return barChartHeight - demVotBarChartYScale(cand.votes); })
            .attr('width', demBarChartXScale.rangeBand())
-           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; })
+           .on('mouseover', drawCandTooltip)
+           .on('mouseout', hideTooltip);
     // remove old data
     demVotBars.exit().remove();
     // update data bindings
@@ -535,7 +549,9 @@ $(document).ready(function() {
            .attr('y', function(cand) { return demDelBarChartYScale(cand.total_delegates); })
            .attr('height', function(cand) { return barChartHeight - demDelBarChartYScale(cand.total_delegates); })
            .attr('width', demBarChartXScale.rangeBand())
-           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; });
+           .attr('fill', function(cand) { return colorMap[lastName(cand.name)]; })
+           .on('mouseover', drawCandTooltip)
+           .on('mouseout', hideTooltip);
     // remove old data
     demDelBars.exit().remove();
     // update data bindings
@@ -563,14 +579,19 @@ $(document).ready(function() {
                         .enter().append('path')
                           .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
                           .attr('d', pieChartArc)
+                          .on('mouseover', drawCandTooltip)
+                          .on('mouseout', hideTooltip)
                           .each(function(d) { this._current = d; }); // store the initial angles
+                          
     pieChartDemPath = pieChartDemSvg.datum(d.dem_candidates).selectAll('path')
                         .data(pie)
                         .enter().append('path')
                           .attr('fill', function(d) { return colorMap[lastName(d.data.name)]; })
                           .attr('d', pieChartArc)
-                          .each(function(d) { this._current = d; }); // store the initial angles
-
+                          .on('mouseover', drawCandTooltip)
+                          .on('mouseout', hideTooltip)
+                          .each(function(d) { this._current = d; }); // store the initial angles                         
+    
     //draw the republican pie labels
     pieChartRepArc = pieChartRepSvg.selectAll('g.slice')
       .data(pie)
@@ -609,7 +630,7 @@ $(document).ready(function() {
     else {
       //redraw the arcs
       pieChartRepPath.data(pie(d.rep_candidates));
-      pieChartRepPath.transition().duration(750).attrTween('d', arcTween);
+      pieChartRepPath.transition().duration(750).attrTween('d', arcTween)
       //move the labels
       repPieChartText.data(pie(d.rep_candidates))
         .transition().duration(750)
@@ -628,7 +649,7 @@ $(document).ready(function() {
     else {
       //redraw the arcs
       pieChartDemPath.data(pie(d.dem_candidates));
-      pieChartDemPath.transition().duration(750).attrTween('d', arcTween);
+      pieChartDemPath.transition().duration(750).attrTween('d', arcTween)          
       //move the labels
       demPieChartText.data(pie(d.dem_candidates))
         .transition().duration(750)
@@ -714,21 +735,35 @@ $(document).ready(function() {
         tooltip.html('Results are not in for this state!' + '<br/>' + 'Please check back later')
       } 
       else {
-        tooltip.html('<span style="font-weight:bold">' + state.name + ' - ' + state.code + '</span>' + '<br/>' + ' Population: ' + state.population.toLocaleString() + '<br/>' + 
-            '  Dem Delegates: ' + state.dem_delegates + '<br/>' + '  Rep Delegates: ' + state.dem_delegates)
+        tooltip.html('<span style="font-weight:bold">' + state.name + ' - ' + state.code + '</span>' + '<br/>' + 'Population: ' + state.population.toLocaleString() + '<br/>' + 
+            'Dem Delegates: ' + state.dem_delegates + '<br/>' + 'Rep Delegates: ' + state.dem_delegates);
       }
       if (width <= 900) {
         tooltip.style('top', (d3.event.pageY + 50) + 'px');
         tooltip.style('left', 15 + 'px');
       } 
       else {
-        tooltip.style('top', (d3.event.pageY + 30) + 'px');
-        tooltip.style('left', (d3.event.pageX + 5) + 'px');
+        tooltip.style('top', (d3.event.pageY + 20) + 'px');
+        tooltip.style('left', d3.event.pageX + 'px');
       }
       tooltip.transition()
              .duration(100)
              .style('opacity', 1);
     }
+  }
+
+  function drawCandTooltip(d) {
+    var cand;
+    if (d.data !== undefined) { cand = d.data; } 
+    else { cand = d; }
+    
+    tooltip.html('<span style="font-weight:bold">' + cand.name + '</span>' + '<br/>' + 'Votes: ' + cand.votes.toLocaleString() + '<br/>' + 
+        'Percentage: ' + cand.percentage_total_votes + '<br/>' + 'Delegates: ' + cand.total_delegates + '<br/>' + 'Twitter: @' + cand.twitter_username);
+    tooltip.style('top', (d3.event.pageY + 10) + 'px');
+    tooltip.style('left', d3.event.pageX + 'px');
+    tooltip.transition()
+           .duration(100)
+           .style('opacity', 1);
   }
 
   function hideTooltip() {
