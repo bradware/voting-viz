@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Dashboard | VotingViz</title>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="keywords" content="2016 Election, Donald Trump, Bernie Sanders, Hillary Clinton, Marco Rubio, Ted Cruz, John Kasich, Republicans, Democrats, United States Presidential Election, 2016 election, donald trump, bernie sanders, hillary clinton, marco rubio, ted cruz, john kasich, republicans, democrats, united states presidential election, us election">
-		<meta name="description" content="#Voting Viz is a visualization tool for the 2016 presidential election.">
-		<meta name="author" content="Brad Ware, Spencer Powell, McKenzie Elliott, Joel Anderson">
+  <head>
+    <title>Dashboard | VotingViz</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="2016 Election, Donald Trump, Bernie Sanders, Hillary Clinton, Marco Rubio, Ted Cruz, John Kasich, Republicans, Democrats, United States Presidential Election, 2016 election, donald trump, bernie sanders, hillary clinton, marco rubio, ted cruz, john kasich, republicans, democrats, united states presidential election, us election">
+    <meta name="description" content="#Voting Viz is a visualization tool for the 2016 presidential election.">
+    <meta name="author" content="Brad Ware, Spencer Powell, McKenzie Elliott, Joel Anderson">
 
-		<!-- Google Font -->
-		<link href="https://fonts.googleapis.com/css?family=Lato:400,400italic,700,300" rel="stylesheet" type="text/css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400italic,700,300" rel="stylesheet" type="text/css">
 
-		<!-- CSS -->
-		<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link href="styles/dashboard.css" rel="stylesheet">
-		<link href="styles/footer.css" rel="stylesheet">
+    <!-- CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/dashboard.css" rel="stylesheet">
+    <link href="styles/footer.css" rel="stylesheet">
 
-		<!-- JS -->
+    <!-- JS -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/topojson/topojson.min.js"></script>
-    <script src="js/main.js"></script>
-	  <!-- END OF HEADER -->
-    </head>
-	<body class="container-fluid">
+    <script src="js/dashboard.js"></script>
+    <!-- END OF HEADER -->
+  </head>
+  <body class="container-fluid">
     <main class="content">
       <a href="/" class="democrat">← Back</a>
-    	<h1 class="text-center">Dashboard</h1>
-    	<div id="us-states-chart" class="text-center"></div>
-    	<div class="data-wrapper text-center">
-	    	<!--<div class="tables-wrapper row"></div> -->
-	    	<h2 class="state-title">State Title</h2>
-	    	<div class="party-wrapper row">
-		    	<h2 class="democrat col-xs-6">Democrats</h2>
-				  <h2 class="republican col-xs-6">Republicans</h2>
-				</div>
-	    	<div class="legend-wrapper row"></div>
-	    	<div class="pie-charts-wrapper row">
-	    		<h3>Candidate Percentage</h3>
-	    		<div id="dem-pie-chart" class="col-sm-12 col-md-6"></div>
-	    		<div id="rep-pie-chart" class="ccol-sm-12 col-md-6"></div>
-	    	</div>
-	    	<div class="vot-bar-charts-wrapper row">
-	    		<h3>Candidate Votes</h3>
-	    		<div id="dem-vot-bar-chart" class="chart col-sm-12 col-md-6"></div>
-	    		<div id="rep-vot-bar-chart" class="chart col-sm-12 col-md-6"></div>
-	    	</div>
-	    	<div class="del-bar-charts-wrapper row">
-	    		<h3>Candidate Delegates</h3>
-	    		<div id="dem-del-bar-chart" class="chart col-sm-12 col-md-6"></div>
-	    		<div id="rep-del-bar-chart" class="chart col-sm-12 col-md-6"></div>
-	    	</div>
-	    </div>
-	    <div class="data-error text-center">
-	    	<h2 class="state-title">State Title</h2>
-	    	<h3>Primary results have not come in for this state!</h3>
-	    	<h4>Please select another one</h4>
-	    </div>
+      <h1 class="text-center">Dashboard</h1>
+      <div id="us-states-chart" class="text-center"></div>
+      <div class="data-wrapper text-center">
+        <!--<div class="tables-wrapper row"></div> -->
+        <h2 class="state-title">State Title</h2>
+        <div class="party-wrapper row">
+          <h2 class="democrat col-xs-6">Democrats</h2>
+          <h2 class="republican col-xs-6">Republicans</h2>
+        </div>
+        <div class="legend-wrapper row"></div>
+        <div class="pie-charts-wrapper row">
+          <h3>Candidate Percentage</h3>
+          <div id="dem-pie-chart" class="col-sm-12 col-md-6"></div>
+          <div id="rep-pie-chart" class="ccol-sm-12 col-md-6"></div>
+        </div>
+        <div class="vot-bar-charts-wrapper row">
+          <h3>Candidate Votes</h3>
+          <div id="dem-vot-bar-chart" class="chart col-sm-12 col-md-6"></div>
+          <div id="rep-vot-bar-chart" class="chart col-sm-12 col-md-6"></div>
+        </div>
+        <div class="del-bar-charts-wrapper row">
+          <h3>Candidate Delegates</h3>
+          <div id="dem-del-bar-chart" class="chart col-sm-12 col-md-6"></div>
+          <div id="rep-del-bar-chart" class="chart col-sm-12 col-md-6"></div>
+        </div>
+      </div>
+      <div class="data-error text-center">
+        <h2 class="state-title">State Title</h2>
+        <h3>Primary results have not come in for this state!</h3>
+        <h4>Please select another one</h4>
+      </div>
     </main>
-     <!-- Footer Inserted -->
+    <!-- Footer Inserted -->
     <footer class="row panel-footer text-center"></footer>
     <!-- End of Footer -->
-	</body>
+  </body>
 </html>
