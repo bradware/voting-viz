@@ -145,6 +145,14 @@ $(document).ready(function() {
 
   function resizeCharts() {
     var windowWidth = $(window).width();
+    var statesChart = d3.select('#us-states-chart');
+    
+    if (windowWidth > 767) {
+      statesChart.style('margin-top', '-25px');
+    } else {
+      statesChart.style('margin-top', '25px');
+    }
+
     var statesChartWidth = calcStatesChartWidth(windowWidth);
     var chartsWidth = calcBarChartsWidth(windowWidth);
     
@@ -351,12 +359,9 @@ $(document).ready(function() {
 
   function handleZoomOut(width) {
     var statesChart = d3.select('#us-states-chart');
-    if (width > 767) {
-      statesChart.transition().delay(500).duration(250).style('margin-top', '-25px');
-    } 
-    else {
+    if (width < 767) {
       statesChart.transition().duration(750).style('margin-top', '25px');
-    }
+    } 
   }
 
   function findStateData(d) {
