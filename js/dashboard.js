@@ -604,7 +604,7 @@ $(document).ready(function() {
         var c = pieChartArc.centroid(d);
         return 'translate(' + c[0] +',' + c[1] + ')';
       })
-      .text(function (d) { return d.data.percentage_total_votes + '%'; })
+      .text(function (d) { return pieChartText(d); })
       .style('font-weight', 'bold')
       .style('color', '#000000');
 
@@ -620,9 +620,15 @@ $(document).ready(function() {
         var c = pieChartArc.centroid(d);
         return 'translate(' + c[0] +',' + c[1] + ')';
       })
-      .text(function (d) { return d.data.percentage_total_votes + '%'; })
+      .text(function (d) { return pieChartText(d); })
       .style('font-weight', 'bold')
       .style('color', '#000000');
+  }
+
+  function pieChartText(d) {
+    if (d.data.percentage_total_votes > 0) {
+      return d.data.percentage_total_votes + '%';
+    } 
   }
 
   function updatePieCharts(d) {
