@@ -9,6 +9,9 @@ body {
   margin-bottom: 80px;
   background-color: #FFFFFF;
 }
+.back {
+  margin-top: 10px;
+}
 .content {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -16,9 +19,20 @@ body {
 h1, h2, h3 {
   margin-top: 0px;
   margin-bottom: 5px;
+  font-weight: 400;
+}
+i {
+  font-size: 16px;
+  font-weight: 400;
 }
 td {
   background: #FFFFFF;
+}
+.title {
+  margin-bottom: 5px;
+}
+#us-states-chart {
+  margin-top: -25px;
 }
 .state-title {
   font-size: 34px;
@@ -136,7 +150,9 @@ td {
   #us-states-chart { margin-top: 15px; }
 
   h1 { margin-top: 15px; font-size: 26px; }
+  .title { margin-bottom: 5px; }
   .state-title { font-size: 24px; }
   h2 { font-size: 22px; }
   h3 { font-size: 20px; }
+  i { font-size: 14px; }
 }

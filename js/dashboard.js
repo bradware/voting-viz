@@ -312,13 +312,18 @@ $(document).ready(function() {
         scale = .9 / Math.max(dx / statesChartWidth, dy / statesChartHeight),
         translate = [statesChartWidth / 2 - scale * x, statesChartHeight / 2 - scale * y];
 
+    d3.select('#us-states-chart')
+                .transition()
+                .duration(250)
+                .style('margin-top', '0px');
+
     statesChartG.transition()
                 .duration(750)
                 .style('stroke-width', 1.5 / scale + 'px')
                 .attr('transform', 'translate(' + translate + ')scale(' + scale + ')');
-
+            
     hideTooltip();
-    // Add text to the data here
+    
     if (findStateData(d)) {
       dataError.fadeOut();
       dataWrapper.fadeIn();
@@ -338,6 +343,12 @@ $(document).ready(function() {
                 .style('stroke-width', '1.5px')
                 .attr('transform', '');
 
+    d3.select('#us-states-chart')
+                .transition()
+                .delay(500)
+                .duration(250)
+                .style('margin-top', '-25px');
+               
     dataWrapper.fadeOut();
     dataError.fadeOut();
   }

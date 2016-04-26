@@ -26,11 +26,14 @@
     <!-- END OF HEADER -->
   </head>
   <body class="container-fluid">
-    <main class="content">
-      <a href="/" class="democrat">← Back</a>
-      <h1 class="text-center">Dashboard</h1>
-      <div id="us-states-chart" class="text-center"></div>
-      <div class="data-wrapper text-center">
+    <div class="back"><a href="/" class="democrat">← Back</a></div>
+    <main class="content text-center">
+      <div class="title">
+        <h1>2016 Presidential Primaries</h1>
+        <i>Select a state to view the primary results.</i>
+      </div>
+      <div id="us-states-chart"></div>
+      <div class="data-wrapper">
         <!--<div class="tables-wrapper row"></div> -->
         <h2 class="state-title">State Title</h2>
         <div class="party-wrapper row">
@@ -54,7 +57,7 @@
           <div id="rep-del-bar-chart" class="chart col-sm-12 col-md-6"></div>
         </div>
       </div>
-      <div class="data-error text-center">
+      <div class="data-error">
         <h2 class="state-title">State Title</h2>
         <h3>Primary results have not come in for this state!</h3>
         <h4>Please select another one</h4>
