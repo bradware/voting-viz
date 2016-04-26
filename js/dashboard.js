@@ -343,14 +343,20 @@ $(document).ready(function() {
                 .style('stroke-width', '1.5px')
                 .attr('transform', '');
 
-    d3.select('#us-states-chart')
-                .transition()
-                .delay(500)
-                .duration(250)
-                .style('margin-top', '-25px');
-               
+    handleZoomOut($(window).width());           
+          
     dataWrapper.fadeOut();
     dataError.fadeOut();
+  }
+
+  function handleZoomOut(width) {
+    var statesChart = d3.select('#us-states-chart');
+    if (width > 767) {
+      statesChart.transition().delay(500).duration(250).style('margin-top', '-25px');
+    } 
+    else {
+      statesChart.transition().duration(750).style('margin-top', '25px');
+    }
   }
 
   function findStateData(d) {
