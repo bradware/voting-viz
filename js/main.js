@@ -614,7 +614,7 @@ $(document).ready(function() {
       .enter()
       .append('g')
       .attr('class', 'slice');
-
+      
     demPieChartText = pieChartDemArc.append('text')
       .attr('transform', function(d) {
         var c = pieChartArc.centroid(d);
