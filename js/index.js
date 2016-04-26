@@ -1,6 +1,5 @@
 $(document).ready(function() {
   $('footer').load('templates/footer.html');
-  
   resizeContentHeight();
   $(window).on('resize', resizeContentHeight);
 
