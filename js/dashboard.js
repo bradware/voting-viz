@@ -615,7 +615,7 @@ $(document).ready(function() {
         var c = pieChartArc.centroid(d);
         return 'translate(' + c[0] +',' + c[1] + ')';
       })
-      .text(function (d) { return pieChartText(d); })
+      .text(function(d) { return pieChartText(d); })
       .style('font-weight', 'bold')
       .style('color', '#000000');
 
@@ -631,15 +631,9 @@ $(document).ready(function() {
         var c = pieChartArc.centroid(d);
         return 'translate(' + c[0] +',' + c[1] + ')';
       })
-      .text(function (d) { return pieChartText(d); })
+      .text(function(d) { return pieChartText(d); })
       .style('font-weight', 'bold')
       .style('color', '#000000');
-  }
-
-  function pieChartText(d) {
-    if (d.data.percentage_total_votes > 0) {
-      return d.data.percentage_total_votes + '%';
-    } 
   }
 
   function updatePieCharts(d) {
@@ -652,14 +646,14 @@ $(document).ready(function() {
       pieChartRepPath.transition().duration(750).attrTween('d', arcTween)
       //move the labels
       repPieChartText.data(pie(d.rep_candidates))
-        .transition().duration(750)
-        .attr('transform', function(d) {
-          var c = pieChartArc.centroid(d);
-          return 'translate(' + c[0] +',' + c[1] + ')';
-        });
+                     .transition().duration(750)
+                     .attr('transform', function(d) {
+                       var c = pieChartArc.centroid(d);
+                       return 'translate(' + c[0] +',' + c[1] + ')';
+                     });
       //update label percentages
       repPieChartText.data(pie(d.rep_candidates))
-        .text(function (d) {return d.data.percentage_total_votes + '%'})
+                     .text(function(d) { return pieChartText(d); });
       $('#rep-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
     if (!validatePartiesData(d.dem_candidates)) {
@@ -671,16 +665,22 @@ $(document).ready(function() {
       pieChartDemPath.transition().duration(750).attrTween('d', arcTween)          
       //move the labels
       demPieChartText.data(pie(d.dem_candidates))
-        .transition().duration(750)
-        .attr('transform', function(d) {
-          var c = pieChartArc.centroid(d);
-          return 'translate(' + c[0] +',' + c[1] + ')';
-        });
+                     .transition().duration(750)
+                     .attr('transform', function(d) {
+                        var c = pieChartArc.centroid(d);
+                        return 'translate(' + c[0] +',' + c[1] + ')';
+                     });
       //update label percentages
       demPieChartText.data(pie(d.dem_candidates))
-        .text(function (d) {return d.data.percentage_total_votes + '%'})
+                     .text(function(d) { return pieChartText(d); });
       $('#dem-pie-chart').css('visibility', 'visible').css('height', 'auto');
     }
+  }
+
+  function pieChartText(d) {
+    if (d.data.percentage_total_votes > 0) {
+      return d.data.percentage_total_votes + '%';
+    } 
   }
 
   function arcTween(angle) {
