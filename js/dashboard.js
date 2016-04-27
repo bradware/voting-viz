@@ -145,17 +145,11 @@ $(document).ready(function() {
 
   function resizeCharts() {
     var windowWidth = $(window).width();
-    var statesChart = d3.select('#us-states-chart');
-    
-    if (windowWidth > 767) {
-      statesChart.style('margin-top', '-25px');
-    } else {
-      statesChart.style('margin-top', '25px');
-    }
-
+    var statesChartMargin = calcStatesChartMargin(windowWidth);
     var statesChartWidth = calcStatesChartWidth(windowWidth);
     var chartsWidth = calcBarChartsWidth(windowWidth);
-    
+
+    resizeStatesChartMargin(statesChartMargin);
     resizeStatesChart(statesChartWidth);
     resizePieCharts(chartsWidth);
     resizeBarCharts(chartsWidth);
@@ -168,6 +162,16 @@ $(document).ready(function() {
     else {
       stateChartsDrawn = false;
     }
+  }
+
+  function calcStatesChartMargin(width) {
+    if (width <= 767) { return 20; } 
+    else if (width <= 1000) { return 0; }
+    else { return -20; }
+  }
+
+  function resizeStatesChartMargin(margin) {
+    d3.select('#us-states-chart').style('margin-top', margin + 'px');
   }
 
   function resizeStatesChart(width) {
@@ -320,11 +324,7 @@ $(document).ready(function() {
         scale = .9 / Math.max(dx / statesChartWidth, dy / statesChartHeight),
         translate = [statesChartWidth / 2 - scale * x, statesChartHeight / 2 - scale * y];
 
-    d3.select('#us-states-chart')
-                .transition()
-                .duration(250)
-                .style('margin-top', '0px');
-
+    handleZoomIn();
     statesChartG.transition()
                 .duration(750)
                 .style('stroke-width', 1.5 / scale + 'px')
@@ -351,17 +351,20 @@ $(document).ready(function() {
                 .style('stroke-width', '1.5px')
                 .attr('transform', '');
 
-    handleZoomOut($(window).width());           
-          
+  
+    handleZoomOut(calcStatesChartMargin($(window).width()));           
     dataWrapper.fadeOut();
     dataError.fadeOut();
   }
 
-  function handleZoomOut(width) {
+  function handleZoomIn() {
     var statesChart = d3.select('#us-states-chart');
-    if (width < 767) {
-      statesChart.transition().duration(750).style('margin-top', '25px');
-    } 
+    statesChart.transition().duration(250).style('margin-top', '10px');
+  }
+
+  function handleZoomOut(margin) {
+    var statesChart = d3.select('#us-states-chart');
+    statesChart.transition().delay(500).duration(250).style('margin-top', margin + 'px');
   }
 
   function findStateData(d) {
