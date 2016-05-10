@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $('footer').load('templates/footer.html');
-  //$('.tables-wrapper').load('templates/tables.html');
+  $('.tables-wrapper').load('templates/tables.html');
   $('.legend-wrapper').load('templates/legend.html');
 
   // global vars for editing the DOM

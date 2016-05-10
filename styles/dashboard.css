@@ -26,9 +26,6 @@ i {
   font-size: 16px;
   font-weight: 400;
 }
-td {
-  background: #FFFFFF;
-}
 .title {
   margin-bottom: 5px;
 }
@@ -57,7 +54,7 @@ td {
 .cruz { background: #FFD6D6; }
 .kasich { background: #FFAAAA; }
 .rubio { background: #FF7777; }
-.trump { background: #E55B5B; border-right: 1px solid #333333; }
+.trump { background: #E55B5B; }
 
 /*
   us states chart styling
@@ -81,6 +78,14 @@ td {
   stroke: #FFFFFF;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* 
+  table styling
+*/
+th, td {
+  text-align: center;
+  background: #FFFFFF;
 }
 
 /* 
@@ -123,6 +128,9 @@ td {
   font-weight: bold;
   color: #000000; /* Needs to be black for contrast */
 }
+.legend > .trump {
+  border-right: 1px solid #333333;
+}
 
 /*
   mobile styling
@@ -141,10 +149,10 @@ td {
     /* only trump and rubio has border-bottom */
     /* only clinton, cruz, and rubio need border-right */
   }
-  .rubio { border-bottom: 1px solid #333333; }
-  .trump { border-bottom: 1px solid #333333; }
-  .sanders { border-right: 1px solid #333333; }
-  .kasich { border-right: 1px solid #333333; }
+  .legend > .rubio { border-bottom: 1px solid #333333; }
+  .legend > .trump { border-bottom: 1px solid #333333; }
+  .legend > .sanders { border-right: 1px solid #333333; }
+  .legend > .kasich { border-right: 1px solid #333333; }
 
   .content { margin-top: 10px; }
   #us-states-chart { margin-top: 20px; }
