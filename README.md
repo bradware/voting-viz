@@ -1,5 +1,5 @@
 # VotingViz
 
-Check it out at [votingviz.com](http://votingviz.com)
+Check it out at [votingviz.bradware.com](//votingviz.bradware.com)
 
-![VotingViz](https://github.com/bradware/voting-viz/blob/gh-pages/votingviz.png)
+![VotingViz](//github.com/bradware/voting-viz/blob/master/votingviz.png)
